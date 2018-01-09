@@ -22,6 +22,7 @@ let g:jsx_ext_required = 0
 " Color theme
 colorscheme molokai
 let g:molokai_original = 1
+hi MatchParen ctermfg=014 ctermbg=208 cterm=bold
 
 " NERDTree
 map <C-n> :NERDTreeToggle<CR>
