@@ -5,6 +5,8 @@ inoremap jk <ESC>
 set expandtab
 set shiftwidth=2
 set softtabstop=2
+set ignorecase
+set smartcase
 
 " YouCompleteMe related autocomplete
 let g:ycm_semantic_triggers = {
@@ -19,6 +21,7 @@ let g:jsx_ext_required = 0
 
 " Color theme
 colorscheme molokai
+let g:molokai_original = 1
 
 " NERDTree
 map <C-n> :NERDTreeToggle<CR>
