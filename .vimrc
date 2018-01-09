@@ -26,3 +26,6 @@ hi MatchParen ctermfg=208 ctermbg=233 cterm=bold
 
 " NERDTree
 map <C-n> :NERDTreeToggle<CR>
+
+" Ctrl-p ignore
+let g:ctrlp_custom_ignore = 'node_modules\|\.git'
