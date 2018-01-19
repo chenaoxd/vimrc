@@ -15,6 +15,7 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jceb/vim-orgmode'
+Plugin 'tpope/vim-speeddating'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
