@@ -9,6 +9,7 @@ set ignorecase
 set smartcase
 set hidden
 set incsearch
+set tabstop=2
 
 " YouCompleteMe related autocomplete
 let g:ycm_semantic_triggers = {
