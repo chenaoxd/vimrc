@@ -46,5 +46,12 @@ endfunction"}}}
 
 " Language Server
 let g:LanguageClient_autoStart = 1
-let g:LanguageClient_serverCommands = {}
-let g:LanguageClient_serverCommands.java = ['/home/dreamszl/softwares/jdt-language-server-0.12.1/java-lang-server.sh']
+let g:LanguageClient_serverCommands = {
+  \'java': ['/home/dreamszl/softwares/jdt-language-server-0.12.1/java-lang-server.sh'],
+  \'javascript': ['javascript-typescript-stdio'],
+  \'javascript.jsx': ['javascript-typescript-stdio'],
+  \'typescript': ['javascript-typescript-stdio']
+  \}
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
