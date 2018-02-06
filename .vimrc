@@ -31,3 +31,20 @@ map <C-n> :NERDTreeToggle<CR>
 
 " Ctrl-p ignore
 let g:ctrlp_custom_ignore = 'node_modules\|\.git'
+
+" deoplete
+let g:deoplete#enable_at_startup = 1
+
+inoremap <silent><expr> <TAB>
+    \ pumvisible() ? "\<C-n>" :
+    \ <SID>check_back_space() ? "\<TAB>" :
+    \ deoplete#mappings#manual_complete()
+function! s:check_back_space() abort "{{{
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction"}}}
+
+" Language Server
+let g:LanguageClient_autoStart = 1
+let g:LanguageClient_serverCommands = {}
+let g:LanguageClient_serverCommands.java = ['/home/dreamszl/softwares/jdt-language-server-0.12.1/java-lang-server.sh']
