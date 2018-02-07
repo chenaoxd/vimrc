@@ -2,9 +2,13 @@ source ~/.vim_config/vundle_init.vim
 
 " Basic
 inoremap jk <ESC>
+
 set expandtab
 set shiftwidth=2
 set softtabstop=2
+set smarttab
+set autoindent
+
 set ignorecase
 set smartcase
 set hidden
@@ -51,8 +55,12 @@ let g:LanguageClient_serverCommands = {
   \'java': ['/home/dreamszl/softwares/jdt-language-server-0.12.1/java-lang-server.sh'],
   \'javascript': ['javascript-typescript-stdio'],
   \'javascript.jsx': ['javascript-typescript-stdio'],
-  \'typescript': ['javascript-typescript-stdio']
+  \'typescript': ['javascript-typescript-stdio'],
+  \'python': ['pyls']
   \}
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+" python-pep8-indent
+autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
