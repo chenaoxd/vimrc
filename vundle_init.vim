@@ -6,7 +6,7 @@ call vundle#begin('~/.vim_config/bundle/')
 
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'flazz/vim-colorschemes'
-" Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'elzr/vim-json'
 Plugin 'kien/ctrlp.vim'
 Plugin 'leafgarland/typescript-vim'
@@ -16,8 +16,8 @@ Plugin 'mxw/vim-jsx'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jceb/vim-orgmode'
 Plugin 'tpope/vim-speeddating'
-Plugin 'autozimu/LanguageClient-neovim'
-Plugin 'Shougo/deoplete.nvim'
+" Plugin 'autozimu/LanguageClient-neovim'
+" Plugin 'Shougo/deoplete.nvim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
