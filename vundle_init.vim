@@ -16,7 +16,7 @@ Plugin 'mxw/vim-jsx'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jceb/vim-orgmode'
 Plugin 'tpope/vim-speeddating'
-" Plugin 'autozimu/LanguageClient-neovim'
+Plugin 'autozimu/LanguageClient-neovim'
 " Plugin 'Shougo/deoplete.nvim'
 
 call vundle#end()            " required
