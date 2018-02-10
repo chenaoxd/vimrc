@@ -4,16 +4,17 @@ source ~/.vim_config/vundle_init.vim
 inoremap jk <ESC>
 
 set expandtab
-set shiftwidth=2
-set softtabstop=2
+set shiftwidth=4
+set softtabstop=4
 set smarttab
 set autoindent
+set autoread
 
 set ignorecase
 set smartcase
 set hidden
 set incsearch
-set tabstop=2
+set tabstop=4
 
 " YouCompleteMe related autocomplete
 let g:ycm_semantic_triggers = {
@@ -63,4 +64,4 @@ nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
 " python-pep8-indent
-autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
+" autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
