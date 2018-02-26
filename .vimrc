@@ -17,15 +17,12 @@ set incsearch
 set tabstop=2
 
 " YouCompleteMe related autocomplete
-let g:ycm_semantic_triggers = {
-      \   'css': [ 're!^\s{2}', 're!:\s+' ],
-      \   'less': [ 're!^\s{2}', 're!:\s+' ],
-      \ }
+" let g:ycm_semantic_triggers = { \   'css': [ 're!^\s{2}', 're!:\s+' ], \   'less': [ 're!^\s{2}', 're!:\s+' ],
+"      \ }
 
 :iabbrev </ </<C-X><C-O>
 
-" JSX related
-let g:jsx_ext_required = 0
+" JSX related let g:jsx_ext_required = 0
 
 " Color theme
 colorscheme molokai
@@ -64,7 +61,7 @@ nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
 " python-pep8-indent
-" autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
+autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
 " html&js indent
 autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
