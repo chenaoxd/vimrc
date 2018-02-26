@@ -4,8 +4,8 @@ source ~/.vim_config/vundle_init.vim
 inoremap jk <ESC>
 
 set expandtab
-set shiftwidth=4
-set softtabstop=4
+set shiftwidth=2
+set softtabstop=2
 set smarttab
 set autoindent
 set autoread
@@ -14,7 +14,7 @@ set ignorecase
 set smartcase
 set hidden
 set incsearch
-set tabstop=4
+set tabstop=2
 
 " YouCompleteMe related autocomplete
 let g:ycm_semantic_triggers = {
