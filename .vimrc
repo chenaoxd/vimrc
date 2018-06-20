@@ -16,6 +16,10 @@ set hidden
 set incsearch
 set tabstop=2
 
+" swap ^ & 0
+nnoremap 0 ^
+nnoremap ^ 0
+
 " YouCompleteMe related autocomplete
 " let g:ycm_semantic_triggers = { \   'css': [ 're!^\s{2}', 're!:\s+' ], \   'less': [ 're!^\s{2}', 're!:\s+' ],
 "      \ }
