@@ -58,7 +58,8 @@ let g:LanguageClient_serverCommands = {
   \'javascript': ['javascript-typescript-stdio'],
   \'javascript.jsx': ['javascript-typescript-stdio'],
   \'typescript': ['javascript-typescript-stdio'],
-  \'python': ['pyls']
+  \'python': ['pyls'],
+  \'go': ['go-langserver'],
   \}
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
