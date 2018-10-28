@@ -77,3 +77,7 @@ nnoremap <SPACE> <Nop>
 let mapleader=" "
 
 nmap <leader>w :w!<cr>
+nmap <leader>o <C-W>o
+nmap <leader>h <C-W>h
+nmap <leader>l <C-W>l
+nmap <leader>v <C-W>v
