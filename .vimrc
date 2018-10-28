@@ -42,6 +42,7 @@ let g:ctrlp_custom_ignore = 'node_modules\|\.git'
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_complete_delay = 0
 
 inoremap <silent><expr> <TAB>
     \ pumvisible() ? "\<C-n>" :
