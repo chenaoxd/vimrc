@@ -9,6 +9,7 @@ set softtabstop=2
 set smarttab
 set autoindent
 set autoread
+set number
 
 set ignorecase
 set smartcase
@@ -79,5 +80,8 @@ let mapleader=" "
 nmap <leader>w :w!<cr>
 nmap <leader>o <C-W>o
 nmap <leader>h <C-W>h
+nmap <leader>k <C-W>k
+nmap <leader>j <C-W>j
 nmap <leader>l <C-W>l
+nmap <leader>i <C-W>k<C-W>q
 nmap <leader>v <C-W>v
