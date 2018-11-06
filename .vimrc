@@ -30,9 +30,8 @@ nnoremap ^ 0
 " JSX related let g:jsx_ext_required = 0
 
 " Color theme
-colorscheme molokai
-let g:molokai_original = 1
-hi MatchParen ctermfg=208 ctermbg=233 cterm=bold
+colorscheme Monokai
+" let g:molokai_original = 1
 
 " NERDTree
 map <C-n> :NERDTreeToggle<CR>
