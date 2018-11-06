@@ -1,4 +1,4 @@
-source ~/.vim_config/vundle_init.vim
+source ~/.config/nvim/vundle_init.vim
 
 " Basic
 inoremap jk <ESC>
@@ -30,8 +30,8 @@ nnoremap ^ 0
 " JSX related let g:jsx_ext_required = 0
 
 " Color theme
-colorscheme Monokai
-" let g:molokai_original = 1
+colorscheme molokai
+" hi MatchParen ctermfg=249 ctermbg=236 cterm=bold
 
 " NERDTree
 map <C-n> :NERDTreeToggle<CR>
