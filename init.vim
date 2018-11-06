@@ -85,3 +85,4 @@ nmap <leader>j <C-W>j
 nmap <leader>l <C-W>l
 nmap <leader>i <C-W>k<C-W>q
 nmap <leader>v <C-W>v
+nmap <leader>s :noh<cr>
