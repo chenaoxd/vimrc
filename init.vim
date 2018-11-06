@@ -73,6 +73,9 @@ autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
+" gitgutter
+set updatetime=50
+
 " set leader
 nnoremap <SPACE> <Nop>
 let mapleader=" "
