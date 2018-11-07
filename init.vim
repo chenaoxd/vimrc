@@ -42,6 +42,8 @@ let g:ctrlp_custom_ignore = 'node_modules\|\.git'
 " deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_delay = 0
+let g:deoplete#go#gocode_binary = '/home/dreamszl/go/bin/gocode'
+set completeopt=menu
 
 inoremap <silent><expr> <TAB>
     \ pumvisible() ? "\<C-n>" :
