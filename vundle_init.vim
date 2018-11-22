@@ -21,6 +21,7 @@ Plugin 'Shougo/deoplete.nvim'
 Plugin 'fatih/vim-go'
 Plugin 'zchee/deoplete-go'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'martinda/Jenkinsfile-vim-syntax'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
