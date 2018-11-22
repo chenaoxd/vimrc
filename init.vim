@@ -41,8 +41,9 @@ let g:ctrlp_custom_ignore = 'node_modules\|\.git'
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_complete_delay = 0
-let g:deoplete#go#gocode_binary = '/home/dreamszl/go/bin/gocode'
+let g:deoplete#auto_complete_delay = 100
+let g:deoplete#go#gocode_binary = '~/go/bin/gocode'
+let g:deoplete#sources#go#source_importer = 1
 set completeopt=menu
 
 inoremap <silent><expr> <TAB>
