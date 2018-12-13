@@ -40,7 +40,7 @@ let g:ctrlp_custom_ignore = 'node_modules\|\.git\|vendor'
 " deoplete
 set completeopt=menu
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_complete_delay = 100
+let g:deoplete#auto_complete_delay = 20
 " let g:deoplete#go#gocode_binary = '~/go/bin/gocode'
 " let g:deoplete#sources#go#source_importer = 1
 inoremap <silent><expr> <TAB>
@@ -66,7 +66,6 @@ let g:LanguageClient_rootMarkers = {
       \ }
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
 " python-pep8-indentation
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
@@ -110,8 +109,12 @@ let g:go_highlight_types = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_extra_types = 1
 
+let g:go_gocode_propose_source=0
+
 let g:go_auto_type_info = 1
 let g:go_addtags_transform = "snakecase"
+
+nnoremap <silent> <F2> :GoRename<CR>
 
 " Error and warning signs.
 let g:ale_sign_error = 'x'
