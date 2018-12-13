@@ -1,8 +1,6 @@
 source ~/.config/nvim/vundle_init.vim
 
 " Basic
-inoremap jk <ESC>
-
 set expandtab
 set shiftwidth=2
 set softtabstop=2
@@ -37,7 +35,7 @@ colorscheme molokai
 map <C-n> :NERDTreeToggle<CR>
 
 " Ctrl-p ignore
-let g:ctrlp_custom_ignore = 'node_modules\|\.git'
+let g:ctrlp_custom_ignore = 'node_modules\|\.git\|vendor'
 
 " deoplete
 set completeopt=menu
@@ -115,3 +113,4 @@ let g:go_addtags_transform = "snakecase"
 " Error and warning signs.
 let g:ale_sign_error = '⤫'
 let g:ale_sign_warning = '⚠'
+highlight ALEWarning ctermbg=DarkGreen
