@@ -40,44 +40,51 @@ map <C-n> :NERDTreeToggle<CR>
 let g:ctrlp_custom_ignore = 'node_modules\|\.git'
 
 " deoplete
+set completeopt=menu
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_delay = 100
-let g:deoplete#go#gocode_binary = '~/go/bin/gocode'
-let g:deoplete#sources#go#source_importer = 1
-set completeopt=menu
-
+" let g:deoplete#go#gocode_binary = '~/go/bin/gocode'
+" let g:deoplete#sources#go#source_importer = 1
 inoremap <silent><expr> <TAB>
-    \ pumvisible() ? "\<C-n>" :
-    \ <SID>check_back_space() ? "\<TAB>" :
-    \ deoplete#mappings#manual_complete()
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ deoplete#mappings#manual_complete()
 function! s:check_back_space() abort "{{{
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
 endfunction"}}}
 
 " Language Server
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
-  \'java': ['/home/dreamszl/softwares/jdt-language-server-0.12.1/java-lang-server.sh'],
-  \'javascript': ['javascript-typescript-stdio'],
-  \'javascript.jsx': ['javascript-typescript-stdio'],
-  \'typescript': ['javascript-typescript-stdio'],
-  \'python': ['pyls'],
-  \'go': ['go-langserver'],
-  \}
+      \'java': ['/home/dreamszl/softwares/jdt-language-server-0.12.1/java-lang-server.sh'],
+      \'javascript': ['javascript-typescript-stdio'],
+      \'javascript.jsx': ['javascript-typescript-stdio'],
+      \'typescript': ['javascript-typescript-stdio'],
+      \'python': ['pyls'],
+      \}
+let g:LanguageClient_rootMarkers = {
+      \ 'go': ['go.mod'],
+      \ }
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
-" python-pep8-indent
+" python-pep8-indentation
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
-" html&js indent
+" html&js indentation
 autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
+" golang indentation
+au FileType go set noexpandtab
+au FileType go set shiftwidth=4
+au FileType go set softtabstop=4
+au FileType go set tabstop=4
+
 " gitgutter
-set updatetime=50
+set updatetime=10
 
 " set leader
 nnoremap <SPACE> <Nop>
@@ -92,3 +99,19 @@ nmap <leader>l <C-W>l
 nmap <leader>i <C-W>k<C-W>q
 nmap <leader>v <C-W>v
 nmap <leader>s :noh<cr>
+
+" vim-go
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
+let g:go_fmt_command = "goimports"
+let g:go_auto_type_info = 1
+let g:go_addtags_transform = "snakecase"
+
+" Error and warning signs.
+let g:ale_sign_error = '⤫'
+let g:ale_sign_warning = '⚠'
