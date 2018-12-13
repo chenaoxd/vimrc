@@ -103,14 +103,25 @@ let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_types = 1
-let g:go_fmt_command = "goimports"
+let g:go_highlight_function_calls = 1
+let g:go_highlight_extra_types = 1
+
 let g:go_auto_type_info = 1
 let g:go_addtags_transform = "snakecase"
 
 " Error and warning signs.
-let g:ale_sign_error = '⤫'
-let g:ale_sign_warning = '⚠'
+let g:ale_sign_error = 'x'
+let g:ale_sign_warning = '?'
 highlight ALEWarning ctermbg=DarkGreen
+highlight ALEError ctermbg=Yellow
+highlight clear ALEErrorSign
+highlight clear ALEWarningSign
+
+" gitgutter
+nmap <leader>gp <Plug>GitGutterPreviewHunk
+nmap <leader>gu <Plug>GitGutterUndoHunk
+nmap <leader>gs <Plug>GitGutterStageHunk
