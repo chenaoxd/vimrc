@@ -19,6 +19,12 @@ set tabstop=2
 nnoremap 0 ^
 nnoremap ^ 0
 
+" swap gj&j gk&k
+nnoremap gj j
+nnoremap j gj
+nnoremap gk k
+nnoremap k gk
+
 " YouCompleteMe related autocomplete
 " let g:ycm_semantic_triggers = { \   'css': [ 're!^\s{2}', 're!:\s+' ], \   'less': [ 're!^\s{2}', 're!:\s+' ],
 "      \ }
@@ -35,7 +41,7 @@ colorscheme molokai
 map <C-n> :NERDTreeToggle<CR>
 
 " Ctrl-p ignore
-let g:ctrlp_custom_ignore = 'node_modules\|\.git\|vendor'
+let g:ctrlp_custom_ignore = 'node_modules\|\.git\|vendor\|*.pyc\|__pycache__'
 
 " deoplete
 set completeopt=menu
@@ -60,12 +66,14 @@ let g:LanguageClient_serverCommands = {
       \'javascript.jsx': ['javascript-typescript-stdio'],
       \'typescript': ['javascript-typescript-stdio'],
       \'python': ['pyls'],
+      \ 'go': ['bingo', '--mode', 'stdio', '--logfile', '/tmp/lspserver.log','--trace', '--pprof', ':6060'],
       \}
 let g:LanguageClient_rootMarkers = {
       \ 'go': ['go.mod'],
       \ }
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
 " python-pep8-indentation
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
@@ -96,6 +104,8 @@ nmap <leader>l <C-W>l
 nmap <leader>i <C-W>k<C-W>q
 nmap <leader>v <C-W>v
 nmap <leader>s :noh<cr>
+nmap <leader>y "+y
+nmap <leader>p "+p
 
 " vim-go
 let g:go_highlight_build_constraints = 1
@@ -111,10 +121,8 @@ let g:go_highlight_extra_types = 1
 
 let g:go_gocode_propose_source=0
 
-let g:go_auto_type_info = 1
+" let g:go_auto_type_info = 1
 let g:go_addtags_transform = "snakecase"
-
-nnoremap <silent> <F2> :GoRename<CR>
 
 " Error and warning signs.
 let g:ale_sign_error = 'x'
