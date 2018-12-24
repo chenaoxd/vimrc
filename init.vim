@@ -34,8 +34,7 @@ nnoremap k gk
 " JSX related let g:jsx_ext_required = 0
 
 " Color theme
-colorscheme molokai
-" hi MatchParen ctermfg=249 ctermbg=236 cterm=bold
+colorscheme molokai " hi MatchParen ctermfg=249 ctermbg=236 cterm=bold
 
 " NERDTree
 map <C-n> :NERDTreeToggle<CR>
@@ -74,6 +73,7 @@ let g:LanguageClient_rootMarkers = {
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+let g:LanguageClient_diagnosticsEnable = 0
 
 " python-pep8-indentation
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
@@ -106,6 +106,7 @@ nmap <leader>v <C-W>v
 nmap <leader>s :noh<cr>
 nmap <leader>y "+y
 nmap <leader>p "+p
+nmap <leader>r :e!<cr>
 
 " vim-go
 let g:go_highlight_build_constraints = 1
