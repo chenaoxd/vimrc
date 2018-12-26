@@ -24,6 +24,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'martinda/Jenkinsfile-vim-syntax'
 Plugin 'w0rp/ale'
 Plugin 'sebdah/vim-delve'
+Plugin 'chr4/nginx.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
