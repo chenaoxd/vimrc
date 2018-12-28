@@ -17,7 +17,7 @@ Plugin 'jceb/vim-orgmode'
 Plugin 'tpope/vim-speeddating'
 Plugin 'autozimu/LanguageClient-neovim'
 Plugin 'fatih/vim-go'
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
 " Plugin 'Shougo/deoplete.nvim'
 " Plugin 'zchee/deoplete-go'
 Plugin 'airblade/vim-gitgutter'
@@ -25,6 +25,8 @@ Plugin 'martinda/Jenkinsfile-vim-syntax'
 Plugin 'w0rp/ale'
 Plugin 'sebdah/vim-delve'
 Plugin 'chr4/nginx.vim'
+Plugin 'ncm2/ncm2'
+Plugin 'roxma/nvim-yarp'
 
 call vundle#end()            " required
 filetype plugin indent on    " required

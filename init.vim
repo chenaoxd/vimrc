@@ -40,10 +40,10 @@ colorscheme molokai " hi MatchParen ctermfg=249 ctermbg=236 cterm=bold
 map <C-n> :NERDTreeToggle<CR>
 
 " Ctrl-p ignore
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 let g:ctrlp_custom_ignore = 'node_modules\|\.git\|vendor\|*.pyc\|__pycache__'
 
 " deoplete
-set completeopt=menu
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_delay = 20
 " let g:deoplete#go#gocode_binary = '~/go/bin/gocode'
@@ -56,6 +56,12 @@ function! s:check_back_space() abort "{{{
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~ '\s'
 endfunction"}}}
+
+" ncm2
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Language Server
 let g:LanguageClient_autoStart = 1
