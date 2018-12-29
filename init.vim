@@ -1,9 +1,12 @@
 source ~/.config/nvim/vundle_init.vim
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Basic
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set expandtab
-set shiftwidth=2
-set softtabstop=2
+" set shiftwidth=2
+" set softtabstop=2
 set smarttab
 set autoindent
 set autoread
@@ -13,7 +16,7 @@ set ignorecase
 set smartcase
 set hidden
 set incsearch
-set tabstop=2
+" set tabstop=2
 
 " swap ^ & 0
 nnoremap 0 ^
@@ -25,25 +28,38 @@ nnoremap j gj
 nnoremap gk k
 nnoremap k gk
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " YouCompleteMe related autocomplete
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let g:ycm_semantic_triggers = { \   'css': [ 're!^\s{2}', 're!:\s+' ], \   'less': [ 're!^\s{2}', 're!:\s+' ],
 "      \ }
-
-:iabbrev </ </<C-X><C-O>
-
+" :iabbrev </ </<C-X><C-O>
 " JSX related let g:jsx_ext_required = 0
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Color theme
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 colorscheme molokai " hi MatchParen ctermfg=249 ctermbg=236 cterm=bold
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NERDTree
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <C-n> :NERDTreeToggle<CR>
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ctrl-p ignore
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 let g:ctrlp_custom_ignore = 'node_modules\|\.git\|vendor\|*.pyc\|__pycache__'
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " deoplete
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_delay = 20
 " let g:deoplete#go#gocode_binary = '~/go/bin/gocode'
@@ -57,13 +73,30 @@ function! s:check_back_space() abort "{{{
   return !col || getline('.')[col - 1]  =~ '\s'
 endfunction"}}}
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ncm2
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ncm2-ultisnips
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+" c-j c-k for moving in snippet
+let g:UltiSnipsExpandTrigger    = "<Plug>(ultisnips_expand)"
+let g:UltiSnipsJumpForwardTrigger = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger  = "<c-k>"
+let g:UltiSnipsRemoveSelectModeMappings = 0
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Language Server
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
       \'java': ['/home/dreamszl/softwares/jdt-language-server-0.12.1/java-lang-server.sh'],
@@ -81,23 +114,38 @@ nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 let g:LanguageClient_diagnosticsEnable = 0
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " python-pep8-indentation
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " html&js indentation
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " golang indentation
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 au FileType go set noexpandtab
 au FileType go set shiftwidth=4
 au FileType go set softtabstop=4
 au FileType go set tabstop=4
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gitgutter
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set updatetime=10
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " set leader
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <SPACE> <Nop>
 let mapleader=" "
 
@@ -114,7 +162,10 @@ nmap <leader>y "+y
 nmap <leader>p "+p
 nmap <leader>r :e!<cr>
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-go
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_functions = 1
@@ -128,10 +179,16 @@ let g:go_highlight_extra_types = 1
 
 let g:go_gocode_propose_source=0
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let g:go_auto_type_info = 1
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:go_addtags_transform = "snakecase"
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Error and warning signs.
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ale_sign_error = 'x'
 let g:ale_sign_warning = '?'
 highlight ALEWarning ctermbg=DarkGreen
@@ -139,7 +196,10 @@ highlight ALEError ctermbg=Yellow
 highlight clear ALEErrorSign
 highlight clear ALEWarningSign
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gitgutter
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <leader>gp <Plug>GitGutterPreviewHunk
 nmap <leader>gu <Plug>GitGutterUndoHunk
 nmap <leader>gs <Plug>GitGutterStageHunk
