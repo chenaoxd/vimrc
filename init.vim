@@ -71,7 +71,7 @@ let g:LanguageClient_serverCommands = {
       \'javascript.jsx': ['javascript-typescript-stdio'],
       \'typescript': ['javascript-typescript-stdio'],
       \'python': ['pyls'],
-      \ 'go': ['bingo', '--mode', 'stdio', '--logfile', '/tmp/lspserver.log','--trace', '--pprof', ':6060'],
+      \ 'go': ['bingo', '--enable-global-cache', 'true', '--mode', 'stdio', '--logfile', '/tmp/lspserver.log','--trace', '--pprof', ':6060'],
       \}
 let g:LanguageClient_rootMarkers = {
       \ 'go': ['go.mod'],
