@@ -176,14 +176,17 @@ let g:go_highlight_structs = 1
 let g:go_highlight_types = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_extra_types = 1
-
 let g:go_gocode_propose_source=0
+" let g:go_auto_type_info = 1
+let g:go_addtags_transform = "snakecase"
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let g:go_auto_type_info = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:go_addtags_transform = "snakecase"
+nnoremap <silent> <F8> :DlvConnect localhost:33333<CR>
+nnoremap <silent> <F9> :DlvToggleBreakpoint<CR>
+nnoremap <silent> <F10> :DlvClearAll<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
