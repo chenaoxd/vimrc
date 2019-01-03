@@ -5,8 +5,8 @@ source ~/.config/nvim/vundle_init.vim
 " Basic
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set expandtab
-" set shiftwidth=2
-" set softtabstop=2
+set shiftwidth=2
+set softtabstop=2
 set smarttab
 set autoindent
 set autoread
@@ -16,7 +16,7 @@ set ignorecase
 set smartcase
 set hidden
 set incsearch
-" set tabstop=2
+set tabstop=2
 
 " swap ^ & 0
 nnoremap 0 ^
@@ -106,13 +106,19 @@ let g:LanguageClient_serverCommands = {
       \'python': ['pyls'],
       \ 'go': ['bingo', '--enable-global-cache', 'true', '--mode', 'stdio', '--logfile', '/tmp/lspserver.log','--trace', '--pprof', ':6060'],
       \}
+
+" use virtualenv pyls if is in virtualenv
+if !empty($VIRTUAL_ENV)
+  let g:LanguageClient_serverCommands['python'] = [$VIRTUAL_ENV.'/bin/pyls']
+endif
+
 let g:LanguageClient_rootMarkers = {
       \ 'go': ['go.mod'],
       \ }
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-let g:LanguageClient_diagnosticsEnable = 0
+" let g:LanguageClient_diagnosticsEnable = 0
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
