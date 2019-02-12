@@ -118,7 +118,7 @@ let g:LanguageClient_rootMarkers = {
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-" let g:LanguageClient_diagnosticsEnable = 0
+let g:LanguageClient_diagnosticsEnable = 0
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -157,6 +157,7 @@ let mapleader=" "
 
 nmap <leader>w :w!<cr>
 nmap <leader>o <C-W>o
+nmap <leader>q <C-W>q
 nmap <leader>h <C-W>h
 nmap <leader>k <C-W>k
 nmap <leader>j <C-W>j
@@ -167,6 +168,7 @@ nmap <leader>s :noh<cr>
 nmap <leader>y "+y
 nmap <leader>p "+p
 nmap <leader>r :e!<cr>
+nmap <leader>c cT(
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -198,8 +200,8 @@ nnoremap <silent> <F10> :DlvClearAll<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Error and warning signs.
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:ale_sign_error = 'x'
-let g:ale_sign_warning = '?'
+" let g:ale_sign_error = 'x'
+" let g:ale_sign_warning = '?'
 highlight ALEWarning ctermbg=DarkGreen
 highlight ALEError ctermbg=Yellow
 highlight clear ALEErrorSign
