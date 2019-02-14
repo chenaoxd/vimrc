@@ -206,7 +206,7 @@ highlight ALEWarning ctermbg=DarkGreen
 highlight ALEError ctermbg=Yellow
 highlight clear ALEErrorSign
 highlight clear ALEWarningSign
-let b:ale_linters = ['flake8']
+let b:ale_linters = ['pylint']
 let b:ale_fixers = ['yapf']
 
 
