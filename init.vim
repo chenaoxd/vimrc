@@ -105,6 +105,7 @@ let g:LanguageClient_serverCommands = {
       \'typescript': ['javascript-typescript-stdio'],
       \'python': ['pyls'],
       \ 'go': ['bingo', '--enable-global-cache', 'true', '--mode', 'stdio', '--logfile', '/tmp/lspserver.log','--trace', '--pprof', ':6060'],
+      \ 'html': ['html-languageserver', '--stdio']
       \}
 
 " use virtualenv pyls if is in virtualenv
