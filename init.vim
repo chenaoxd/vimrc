@@ -100,11 +100,12 @@ let g:UltiSnipsRemoveSelectModeMappings = 0
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
       \'java': ['/home/dreamszl/softwares/jdt-language-server-0.12.1/java-lang-server.sh'],
+      \'css': ['css-languageserver', '--stdio'],
       \'javascript': ['javascript-typescript-stdio'],
       \'javascript.jsx': ['javascript-typescript-stdio'],
       \'typescript': ['javascript-typescript-stdio'],
       \'python': ['pyls'],
-      \ 'go': ['bingo', '--enable-global-cache', 'true', '--mode', 'stdio', '--logfile', '/tmp/lspserver.log','--trace', '--pprof', ':6060'],
+      \ 'go': ['bingo', '--cache-style', 'always', '--logfile', '/tmp/lspserver.log','--trace'],
       \ 'html': ['html-languageserver', '--stdio']
       \}
 
