@@ -26,9 +26,11 @@ Plugin 'w0rp/ale'
 Plugin 'sebdah/vim-delve'
 Plugin 'chr4/nginx.vim'
 Plugin 'ncm2/ncm2'
+Plugin 'ncm2/ncm2-path'
 Plugin 'roxma/nvim-yarp'
 Plugin 'ncm2/ncm2-ultisnips'
 Plugin 'SirVer/ultisnips'
+Plugin 'mileszs/ack.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
