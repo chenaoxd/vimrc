@@ -105,7 +105,7 @@ let g:LanguageClient_serverCommands = {
       \'javascript.jsx': ['javascript-typescript-stdio'],
       \'typescript': ['javascript-typescript-stdio'],
       \'python': ['pyls'],
-      \ 'go': ['bingo', '--cache-style', 'always', '--logfile', '/tmp/lspserver.log','--trace'],
+      \ 'go': ['gopls'],
       \ 'html': ['html-languageserver', '--stdio']
       \}
 
