@@ -167,7 +167,7 @@ nmap <leader>l <C-W>l
 nmap <leader>i <C-W>k<C-W>q
 nmap <leader>v <C-W>v
 nmap <leader>s :noh<cr>
-nmap <leader>y "+y
+nmap <leader>y V"+y
 nmap <leader>p "+p
 nmap <leader>r :e!<cr>
 nmap <leader>c cT(
