@@ -212,6 +212,11 @@ highlight clear ALEWarningSign
 let b:ale_linters = ['pylint']
 let b:ale_fixers = ['yapf']
 
+" use virtualenv pylint if is in virtualenv
+if !empty($VIRTUAL_ENV)
+  let b:ale_linters = [$VIRTUAL_ENV.'/bin/pylint']
+endif
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gitgutter
