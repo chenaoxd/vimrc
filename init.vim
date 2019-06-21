@@ -210,8 +210,9 @@ highlight ALEWarning ctermbg=DarkGreen
 highlight ALEError ctermbg=Yellow
 highlight clear ALEErrorSign
 highlight clear ALEWarningSign
-let b:ale_linters = ['pylint']
-let b:ale_fixers = ['yapf']
+let g:ale_linters = {'python': ['flake8']}
+let g:ale_fixers = {'python': ['autopep8']}
+let g:ale_fix_on_save = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
