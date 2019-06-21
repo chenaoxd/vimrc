@@ -172,7 +172,7 @@ nmap <leader>p "+p
 nmap <leader>r :e!<cr>
 nmap <leader>c cT(
 nmap <leader>!w :w !sudo tee %
-nmap <leader>a :Ack --ignore-dir={.git,.venv} 
+nmap <leader>a :Ag 
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -226,3 +226,14 @@ endif
 nmap <leader>gp <Plug>GitGutterPreviewHunk
 nmap <leader>gu <Plug>GitGutterUndoHunk
 nmap <leader>gs <Plug>GitGutterStageHunk
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" fzf
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" :Ag  - Start fzf with hidden preview window that can be enabled with "?" key
+" :Ag! - Start fzf in fullscreen and display the preview window above
+command! -bang -nargs=* Ag
+  \ call fzf#vim#ag(<q-args>,
+  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \                 <bang>0)
