@@ -173,6 +173,7 @@ nmap <leader>p "+p
 nmap <leader>r :e!<cr>
 nmap <leader>c cT(
 nmap <leader>!w :w !sudo tee %
+nmap <leader>a :Ack --ignore-dir={.git,.venv} 
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
