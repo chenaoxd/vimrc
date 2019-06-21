@@ -1,5 +1,4 @@
-source ~/.config/nvim/vundle_init.vim
-
+source ~/.config/nvim/vim_plug_init.vim
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Basic
