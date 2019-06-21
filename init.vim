@@ -216,7 +216,7 @@ let g:ale_fix_on_save = 1
 
 " use virtualenv pylint if is in virtualenv
 if !empty($VIRTUAL_ENV)
-  let b:ale_linters = [$VIRTUAL_ENV.'/bin/pylint']
+  let g:ale_linters = {'python': [$VIRTUAL_ENV.'/bin/pylint']}
 endif
 
 
