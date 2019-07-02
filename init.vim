@@ -214,12 +214,6 @@ let g:ale_linters = {'python': ['flake8']}
 let g:ale_fixers = {'python': ['autopep8']}
 let g:ale_fix_on_save = 1
 
-" use virtualenv pylint if is in virtualenv
-if !empty($VIRTUAL_ENV)
-  let g:ale_linters = {'python': [$VIRTUAL_ENV.'/bin/flake8']}
-  let g:ale_fixers = {'python': [$VIRTUAL_ENV.'/bin/autopep8']}
-endif
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gitgutter
