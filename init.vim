@@ -207,7 +207,7 @@ nnoremap <silent> <F10> :DlvClearAll<CR>
 " let g:ale_sign_error = 'x'
 " let g:ale_sign_warning = '?'
 highlight ALEWarning ctermbg=DarkGreen
-highlight ALEError ctermbg=Yellow
+highlight ALEError ctermbg=DarkRed
 highlight clear ALEErrorSign
 highlight clear ALEWarningSign
 let g:ale_linters = {'python': ['flake8']}
