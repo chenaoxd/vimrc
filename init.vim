@@ -96,6 +96,8 @@ let g:UltiSnipsRemoveSelectModeMappings = 0
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Language Server
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd BufReadPost *.kt setlocal filetype=kotlin
+
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
       \'java': ['/home/dreamszl/softwares/jdt-language-server-0.12.1/java-lang-server.sh'],
@@ -105,7 +107,8 @@ let g:LanguageClient_serverCommands = {
       \'typescript': ['javascript-typescript-stdio'],
       \'python': ['pyls'],
       \ 'go': ['bingo', '--cache-style', 'always', '--logfile', '/tmp/lspserver.log','--trace'],
-      \ 'html': ['html-languageserver', '--stdio']
+      \ 'html': ['html-languageserver', '--stdio'],
+      \ 'kotlin': ['kotlin-language-server'],
       \}
 
 " use virtualenv pyls if is in virtualenv

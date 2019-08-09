@@ -30,5 +30,6 @@ Plug 'junegunn/fzf', {
   \ 'do': './install --all'
   \ }
 Plug 'junegunn/fzf.vim'
+Plug 'udalov/kotlin-vim'
 
 call plug#end()
