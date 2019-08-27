@@ -107,9 +107,9 @@ let g:LanguageClient_serverCommands = {
       \'javascript.jsx': ['javascript-typescript-stdio'],
       \'typescript': ['javascript-typescript-stdio'],
       \'python': ['pyls'],
-      \ 'go': ['bingo', '--cache-style', 'always', '--logfile', '/tmp/lspserver.log','--trace'],
-      \ 'html': ['html-languageserver', '--stdio'],
-      \ 'kotlin': ['kotlin-language-server'],
+      \'go': ['gopls', '-rpc.trace', '-logfile', '/tmp/gopls.log'],
+      \'html': ['html-languageserver', '--stdio'],
+      \'kotlin': ['kotlin-language-server'],
       \}
 
 " use virtualenv pyls if is in virtualenv
@@ -195,6 +195,8 @@ let g:go_highlight_extra_types = 1
 let g:go_gocode_propose_source=0
 " let g:go_auto_type_info = 1
 let g:go_addtags_transform = "snakecase"
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
