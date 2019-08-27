@@ -97,6 +97,7 @@ let g:UltiSnipsRemoveSelectModeMappings = 0
 " Language Server
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd BufReadPost *.kt setlocal filetype=kotlin
+autocmd BufReadPost *.gradle setlocal filetype=groovy
 
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
