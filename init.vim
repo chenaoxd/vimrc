@@ -222,7 +222,7 @@ highlight ALEWarning ctermbg=DarkGreen
 highlight ALEError ctermbg=DarkRed
 highlight clear ALEErrorSign
 highlight clear ALEWarningSign
-let g:ale_linters = {'python': ['flake8']}
+let g:ale_linters = {'python': ['flake8'], 'proto': []}
 let g:ale_fixers = {'python': ['autopep8']}
 let g:ale_fix_on_save = 1
 
