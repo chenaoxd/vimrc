@@ -9,20 +9,12 @@ Plug 'mxw/vim-jsx'
 Plug 'scrooloose/nerdtree'
 Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-speeddating'
-Plug 'autozimu/LanguageClient-neovim', {
-  \ 'branch': 'next',
-  \ 'do': 'bash install.sh',
-  \ }
-Plug 'fatih/vim-go'
+Plug 'w0rp/ale'
 Plug 'airblade/vim-gitgutter'
 Plug 'martinda/Jenkinsfile-vim-syntax'
-Plug 'w0rp/ale'
 Plug 'sebdah/vim-delve'
 Plug 'chr4/nginx.vim'
-Plug 'ncm2/ncm2'
-Plug 'ncm2/ncm2-path'
 Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2-ultisnips'
 Plug 'SirVer/ultisnips'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', {
@@ -31,5 +23,6 @@ Plug 'junegunn/fzf', {
   \ }
 Plug 'junegunn/fzf.vim'
 Plug 'udalov/kotlin-vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()

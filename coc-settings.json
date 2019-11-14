@@ -1,0 +1,30 @@
+{
+  "languageserver": {
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"],
+      "initializationOptions": {
+        "usePlaceholders": true,
+        "completeUnimported": true
+      }
+    },
+    "python": {
+      "command": "pyls",
+      "filetypes": ["python"],
+      "settings": {
+        "pyls": {
+          "enable": false,
+          "plugins": {
+            "pyflakes": {
+              "enabled": true
+            },
+            "pylint": {
+              "enabled": true
+            }
+          }
+        }
+      }
+    }
+  }
+}
