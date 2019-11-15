@@ -15,7 +15,6 @@ Plug 'martinda/Jenkinsfile-vim-syntax'
 Plug 'sebdah/vim-delve'
 Plug 'chr4/nginx.vim'
 Plug 'roxma/nvim-yarp'
-Plug 'SirVer/ultisnips'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', {
   \ 'dir': '~/.fzf',
