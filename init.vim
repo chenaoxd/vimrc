@@ -32,6 +32,8 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 
 autocmd BufReadPost *.kt setlocal filetype=kotlin
 autocmd BufReadPost *.gradle setlocal filetype=groovy
+autocmd BufReadPost *.tsx setlocal filetype=typescript.tsx
+autocmd BufReadPost *.jsx setlocal filetype=typescript.jsx
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Color theme
@@ -183,7 +185,7 @@ highlight ALEWarning ctermbg=DarkGreen
 highlight ALEError ctermbg=DarkRed
 highlight clear ALEErrorSign
 highlight clear ALEWarningSign
-let g:ale_linters = {'python': ['flake8'], 'proto': []}
+let g:ale_linters = {'python': ['flake8'], 'proto': [], 'javascript':[]}
 let g:ale_fixers = {'python': ['autopep8'], 'go': ['gofmt']}
 let g:ale_fix_on_save = 1
 
