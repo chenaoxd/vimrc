@@ -2,10 +2,7 @@ call plug#begin('~/.config/nvim/bundle')
 
 Plug 'elzr/vim-json'
 Plug 'kien/ctrlp.vim'
-Plug 'leafgarland/typescript-vim'
 Plug 'groenewege/vim-less'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
 Plug 'scrooloose/nerdtree'
 Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-speeddating'
@@ -23,5 +20,8 @@ Plug 'junegunn/fzf', {
 Plug 'junegunn/fzf.vim'
 Plug 'udalov/kotlin-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'yuezk/vim-js'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'maxmellon/vim-jsx-pretty'
 
 call plug#end()
