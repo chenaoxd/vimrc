@@ -20,7 +20,7 @@
               "enabled": true
             },
             "pylint": {
-              "enabled": true
+              "enabled": false
             }
           }
         }
