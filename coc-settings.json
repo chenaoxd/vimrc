@@ -17,7 +17,7 @@
           "enable": false,
           "plugins": {
             "pyflakes": {
-              "enabled": true
+              "enabled": false
             },
             "pylint": {
               "enabled": false
