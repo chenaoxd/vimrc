@@ -19,10 +19,16 @@ Plug 'junegunn/fzf', {
   \ }
 Plug 'junegunn/fzf.vim'
 Plug 'udalov/kotlin-vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'yuezk/vim-js'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'towolf/vim-helm'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+Plug 'ncm2/ncm2'	
+Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-ultisnips'
 
 call plug#end()
