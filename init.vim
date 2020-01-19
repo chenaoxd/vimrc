@@ -33,7 +33,7 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 autocmd BufReadPost *.kt setlocal filetype=kotlin
 autocmd BufReadPost *.gradle setlocal filetype=groovy
 autocmd BufReadPost *.tsx setlocal filetype=typescript.tsx
-autocmd BufReadPost *.jsx setlocal filetype=typescript.jsx
+autocmd BufReadPost *.jsx setlocal filetype=javascript.jsx
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Color theme
@@ -159,15 +159,16 @@ autocmd BufReadPost *.gradle setlocal filetype=groovy
 
 let g:LanguageClient_autoStart = 1	
 let g:LanguageClient_serverCommands = {	
-      \'java': ['/home/dreamszl/softwares/jdt-language-server-0.12.1/java-lang-server.sh'],	
-      \'css': ['css-languageserver', '--stdio'],	
-      \'javascript': ['javascript-typescript-stdio'],	
-      \'javascript.jsx': ['javascript-typescript-stdio'],	
-      \'typescript': ['javascript-typescript-stdio'],	
-      \'python': ['pyls'],	
+      \'java': ['/home/dreamszl/softwares/jdt-language-server-0.12.1/java-lang-server.sh'],
+      \'css': ['css-languageserver', '--stdio'],
+      \'javascript': ['javascript-typescript-stdio', '-l', '/tmp/jsserver.log'],
+      \'javascript.jsx': ['javascript-typescript-stdio', '-l', '/tmp/jsserver.log'],
+      \'typescript.tsx': ['javascript-typescript-stdio', '-l', '/tmp/jsserver.log'],
+      \'typescript': ['javascript-typescript-stdio'],
+      \'python': ['pyls'],
       \'go': ['gopls', '-rpc.trace', '-logfile', '/tmp/gopls.log'],	
       \'html': ['html-languageserver', '--stdio'],	
-      \'kotlin': ['kotlin-language-server'],	
+      \'kotlin': ['kotlin-language-server'],
       \}	
 
 " use virtualenv pyls if is in virtualenv	
