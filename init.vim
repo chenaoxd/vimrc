@@ -157,14 +157,17 @@ let g:ale_fix_on_save = 1
 autocmd BufReadPost *.kt setlocal filetype=kotlin	
 autocmd BufReadPost *.gradle setlocal filetype=groovy	
 
+let jsserver = ['typescript-language-server', '--stdio']
+
 let g:LanguageClient_autoStart = 1	
 let g:LanguageClient_serverCommands = {	
       \'java': ['/home/dreamszl/softwares/jdt-language-server-0.12.1/java-lang-server.sh'],
       \'css': ['css-languageserver', '--stdio'],
-      \'javascript': ['javascript-typescript-stdio', '-l', '/tmp/jsserver.log'],
-      \'javascript.jsx': ['javascript-typescript-stdio', '-l', '/tmp/jsserver.log'],
-      \'typescript.tsx': ['javascript-typescript-stdio', '-l', '/tmp/jsserver.log'],
-      \'typescript': ['javascript-typescript-stdio'],
+      \'javascript': jsserver,
+      \'javascript.jsx': jsserver,
+      \'typescript.tsx': jsserver,
+      \'typescriptreact': jsserver,
+      \'typescript': jsserver,
       \'python': ['pyls'],
       \'go': ['gopls', '-rpc.trace', '-logfile', '/tmp/gopls.log'],	
       \'html': ['html-languageserver', '--stdio'],	
