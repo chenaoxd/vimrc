@@ -146,7 +146,7 @@ highlight ALEWarning ctermbg=DarkGreen
 highlight ALEError ctermbg=DarkRed
 highlight clear ALEErrorSign
 highlight clear ALEWarningSign
-let g:ale_linters = {'python': ['flake8'], 'proto': [], 'javascript':[]}
+let g:ale_linters = {'python': ['flake8'], 'proto': [], 'javascript':[], 'go': ['gopls']}
 let g:ale_fixers = {'python': ['autopep8'], 'go': ['gofmt']}
 let g:ale_fix_on_save = 1
 
