@@ -147,7 +147,7 @@ highlight ALEError ctermbg=DarkRed
 highlight clear ALEErrorSign
 highlight clear ALEWarningSign
 let g:ale_linters = {'python': ['flake8'], 'proto': [], 'javascript':[], 'go': ['gopls', 'golint']}
-let g:ale_fixers = {'python': ['autopep8'], 'go': ['gofmt']}
+let g:ale_fixers = {'python': ['autopep8'], 'go': ['gofmt'], 'rust': ['rustfmt']}
 let g:ale_fix_on_save = 1
 
 
@@ -172,6 +172,7 @@ let g:LanguageClient_serverCommands = {
       \'go': ['gopls', '-rpc.trace', '-logfile', '/tmp/gopls.log'],	
       \'html': ['html-languageserver', '--stdio'],	
       \'kotlin': ['kotlin-language-server'],
+      \'rust': ['rls'],
       \}	
 
 " use virtualenv pyls if is in virtualenv	

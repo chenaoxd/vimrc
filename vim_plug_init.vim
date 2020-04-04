@@ -29,5 +29,6 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ }
 Plug 'ncm2/ncm2'	
 Plug 'ncm2/ncm2-path'
+Plug 'rust-lang/rust.vim'
 
 call plug#end()
