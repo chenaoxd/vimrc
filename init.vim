@@ -172,7 +172,7 @@ let g:LanguageClient_serverCommands = {
       \'go': ['gopls', '-rpc.trace', '-logfile', '/tmp/gopls.log'],	
       \'html': ['html-languageserver', '--stdio'],	
       \'kotlin': ['kotlin-language-server'],
-      \'rust': ['rls'],
+      \'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
       \}	
 
 " use virtualenv pyls if is in virtualenv	
