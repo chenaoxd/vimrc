@@ -196,6 +196,7 @@ let g:LanguageClient_rootMarkers = {
       \ }	
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>	
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>	
+nnoremap <silent> gi :call LanguageClient_textDocument_implementation()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>	
 let g:LanguageClient_diagnosticsEnable = 0	
 
