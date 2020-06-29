@@ -6,7 +6,6 @@ source ~/.config/nvim/vim_plug_init.vim
 set expandtab
 set shiftwidth=2
 set softtabstop=2
-set smarttab
 set autoindent
 set autoread
 set number
