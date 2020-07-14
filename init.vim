@@ -149,7 +149,7 @@ let g:ale_linters = {
       \ 'python': ['flake8'], 
       \ 'proto': [],
       \ 'javascript':[],
-      \ 'go': ['gopls', 'golint'],
+      \ 'go': ['gopls', 'golangci-lint'],
       \ 'kotlin':['ktlint'],
       \ }
 let g:ale_fixers = {
