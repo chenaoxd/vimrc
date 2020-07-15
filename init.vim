@@ -159,7 +159,8 @@ let g:ale_fixers = {
       \ 'kotlin': ['ktlint'],
       \ }
 let g:ale_fix_on_save = 1
-let g:ale_go_golangci_lint_options = '--fast --disable deadcode'
+let g:ale_go_golangci_lint_options = '--fast'
+let g:ale_go_golangci_lint_package = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""	
