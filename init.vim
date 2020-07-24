@@ -185,7 +185,10 @@ let g:LanguageClient_serverCommands = {
       \'html': ['html-languageserver', '--stdio'],	
       \'kotlin': ['kotlin-language-server'],
       \'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+      \'proto': ['protocol-buffers-language-server'],
       \}	
+
+" protobuf lsp: https://github.com/micnncim/protocol-buffers-language-server
 
 " use virtualenv pyls if is in virtualenv	
 if !empty($VIRTUAL_ENV)	
