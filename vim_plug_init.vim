@@ -30,5 +30,6 @@ Plug 'autozimu/LanguageClient-neovim', {
 Plug 'ncm2/ncm2'	
 Plug 'ncm2/ncm2-path'
 Plug 'rust-lang/rust.vim'
+Plug 'pearofducks/ansible-vim'
 
 call plug#end()
