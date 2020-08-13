@@ -102,7 +102,7 @@ nmap <leader>j <C-W>j
 nmap <leader>l <C-W>l
 nmap <leader>i <C-W>k<C-W>q
 nmap <leader>v <C-W>v
-nmap <leader>s :noh<cr>
+nmap <leader>nh :noh<cr>
 nmap <leader>Y V"+y
 nmap <leader>y "+y
 nmap <leader>p "+p
@@ -111,6 +111,8 @@ nmap <leader>c cT(
 nmap <leader>!w :w !sudo tee %
 nmap <leader>a :Ag 
 nmap <leader>gg :LanguageClientStop<cr>:LanguageClientStart<cr>
+nmap <leader>ss :mksession ~/.vimsession<cr>
+nmap <leader>sl :source ~/.vimsession<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let g:go_auto_type_info = 1
