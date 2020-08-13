@@ -111,7 +111,7 @@ nmap <leader>c cT(
 nmap <leader>!w :w !sudo tee %
 nmap <leader>a :Ag 
 nmap <leader>gg :LanguageClientStop<cr>:LanguageClientStart<cr>
-nmap <leader>ss :mksession ~/.vimsession<cr>
+nmap <leader>ss :mksession! ~/.vimsession<cr>
 nmap <leader>sl :source ~/.vimsession<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
