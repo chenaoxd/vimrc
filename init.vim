@@ -4,8 +4,8 @@ source ~/.config/nvim/vim_plug_init.vim
 " Basic
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set expandtab
-set shiftwidth=2
-set softtabstop=2
+set shiftwidth=4
+set softtabstop=4
 set autoindent
 set autoread
 set number
@@ -14,7 +14,7 @@ set ignorecase
 set smartcase
 set hidden
 set incsearch
-set tabstop=2
+set tabstop=4
 
 " swap ^ & 0
 nnoremap 0 ^
