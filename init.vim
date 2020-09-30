@@ -4,17 +4,17 @@ source ~/.config/nvim/vim_plug_init.vim
 " Basic
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set expandtab
-set shiftwidth=4
-set softtabstop=4
+set sw=4
+set ts=4
+set sts=4
+
 set autoindent
 set autoread
 set number
-
 set ignorecase
 set smartcase
 set hidden
 set incsearch
-set tabstop=4
 
 " swap ^ & 0
 nnoremap 0 ^
@@ -35,10 +35,25 @@ autocmd BufReadPost *.tsx setlocal filetype=typescript.tsx
 autocmd BufReadPost *.jsx setlocal filetype=javascript.jsx
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Indentations
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd FileType python setlocal sw=4 ts=4 sts=4
+autocmd FileType html setlocal sw=2 ts=2 sts=2
+autocmd FileType javascript setlocal sw=4 ts=4 sts=4
+autocmd FileType typescript setlocal sw=4 ts=4 sts=4
+autocmd FileType go setlocal noexpandtab sw=4 ts=4 sts=4
+autocmd FileType kotlin setlocal sw=4 ts=4 sts=4
+autocmd FileType yaml setlocal expandtab ts=2 sts=2 sw=2
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Color theme
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 colorscheme molokai " hi MatchParen ctermfg=249 ctermbg=236 cterm=bold
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" IndentetLine
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:indentLine_char = '│'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NERDTree
@@ -51,34 +66,6 @@ map <C-n> :NERDTreeToggle<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 let g:ctrlp_custom_ignore = 'node_modules\|\.git\|vendor\|*.pyc\|__pycache__\|venv\|bin'
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" python-pep8-indentation
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" html&js indentation
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 softtabstop=4
-autocmd FileType typescript setlocal shiftwidth=4 tabstop=4 softtabstop=4
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" golang indentation
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-au FileType go set noexpandtab
-au FileType go set shiftwidth=4
-au FileType go set softtabstop=4
-au FileType go set tabstop=4
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" kotlin indentation
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-au FileType kotlin set shiftwidth=4 tabstop=4 softtabstop=4
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
