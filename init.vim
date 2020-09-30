@@ -153,6 +153,7 @@ let g:ale_linters = {
       \ 'go': ['gopls', 'golangci-lint'],
       \ 'kotlin': ['ktlint'],
       \ 'yaml': ['yamllint'],
+      \ 'sh': ['language_server'],
       \ }
 let g:ale_fixers = {
       \ 'python': ['autopep8'],
@@ -187,6 +188,7 @@ let g:LanguageClient_serverCommands = {
       \'html': ['html-languageserver', '--stdio'],	
       \'kotlin': ['kotlin-language-server'],
       \'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+      \'sh': ['bash-language-server', 'start'],
       \}	
 
 " use virtualenv pyls if is in virtualenv	
