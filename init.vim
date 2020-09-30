@@ -149,7 +149,8 @@ let g:ale_linters = {
       \ 'proto': [],
       \ 'javascript':[],
       \ 'go': ['gopls', 'golangci-lint'],
-      \ 'kotlin':['ktlint'],
+      \ 'kotlin': ['ktlint'],
+      \ 'yaml': ['yamllint'],
       \ }
 let g:ale_fixers = {
       \ 'python': ['autopep8'],
