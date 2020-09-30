@@ -78,7 +78,9 @@ let g:ctrlp_custom_ignore = 'node_modules\|\.git\|vendor\|*.pyc\|__pycache__\|ve
 " gitgutter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set updatetime=10
-
+highlight GitGutterAdd ctermfg = Green
+highlight GitGutterDelete ctermfg = Red
+highlight GitGutterChange ctermfg = 214
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " set leader
