@@ -16,6 +16,12 @@ set smartcase
 set hidden
 set incsearch
 
+" code folding
+set foldmethod=syntax
+set foldnestmax=10
+set nofoldenable
+set foldlevel=2
+
 " swap ^ & 0
 nnoremap 0 ^
 nnoremap ^ 0
