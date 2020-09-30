@@ -140,6 +140,8 @@ highlight ALEWarning ctermbg=DarkGreen
 highlight ALEError ctermbg=DarkRed
 highlight clear ALEErrorSign
 highlight clear ALEWarningSign
+highlight ALEWarningSign ctermfg=214
+highlight ALEErrorSign ctermfg=Red
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
 let g:ale_linters = {
