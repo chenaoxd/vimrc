@@ -33,5 +33,6 @@ Plug 'rust-lang/rust.vim'
 Plug 'pearofducks/ansible-vim'
 Plug 'Yggdroot/indentLine'
 Plug 'pedrohdz/vim-yaml-folds'
+Plug 'itchyny/lightline.vim'
 
 call plug#end()
