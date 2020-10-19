@@ -39,6 +39,7 @@ autocmd BufReadPost *.kt setlocal filetype=kotlin
 autocmd BufReadPost *.gradle setlocal filetype=groovy
 autocmd BufReadPost *.tsx setlocal filetype=typescript.tsx
 autocmd BufReadPost *.jsx setlocal filetype=javascript.jsx
+autocmd BufReadPost *.ympl setlocal filetype=yaml
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Indentations
