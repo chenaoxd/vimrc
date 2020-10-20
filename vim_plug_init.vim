@@ -34,5 +34,6 @@ Plug 'pearofducks/ansible-vim'
 Plug 'Yggdroot/indentLine'
 Plug 'pedrohdz/vim-yaml-folds'
 Plug 'itchyny/lightline.vim'
+Plug 'vmchale/dhall-vim'
 
 call plug#end()

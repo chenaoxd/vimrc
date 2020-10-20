@@ -190,7 +190,8 @@ let g:LanguageClient_serverCommands = {
       \'kotlin': ['kotlin-language-server'],
       \'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
       \'sh': ['bash-language-server', 'start'],
-      \}	
+      \'dhall': ['dhall-lsp-server'],
+      \}
 
 " use virtualenv pyls if is in virtualenv	
 if !empty($VIRTUAL_ENV)	
