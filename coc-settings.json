@@ -78,6 +78,12 @@
                 }
             }
         },
+        "bash": {
+            "command": "bash-language-server",
+            "args": ["start"],
+            "filetypes": ["sh"],
+            "ignoredRootPaths": ["~"]
+        },
         "kotlin": {
             "command": "/home/dreamszl/softwares/jdt-language-server-0.12.1/java-lang-server.sh",
             "filetypes": ["kotlin"]
