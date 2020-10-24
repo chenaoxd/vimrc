@@ -61,6 +61,7 @@ colorscheme molokai " hi MatchParen ctermfg=249 ctermbg=236 cterm=bold
 " IndentetLine
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:indentLine_char = '│'
+let g:indentLine_fileTypeExclude = ['markdown', 'json']
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NERDTree
@@ -135,27 +136,10 @@ command! -bang -nargs=* Ag
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ale
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-highlight ALEWarning ctermbg=DarkGreen
-highlight ALEError ctermbg=DarkRed
-highlight clear ALEErrorSign
-highlight clear ALEWarningSign
-highlight ALEWarningSign ctermfg=214
-highlight ALEErrorSign ctermfg=Red
-let g:ale_sign_error = '✘'
-let g:ale_sign_warning = '⚠'
-let g:ale_linters = {
-      \ 'python': ['flake8'], 
-      \ 'proto': [],
-      \ 'javascript':[],
-      \ 'go': ['gopls', 'golangci-lint'],
-      \ 'kotlin': ['ktlint'],
-      \ 'yaml': ['yamllint'],
-      \ 'sh': ['language_server'],
-      \ }
+let g:ale_linters_explicit = 1
 let g:ale_fixers = {
       \ 'python': ['autopep8'],
       \ 'go': ['gofmt'],
@@ -163,56 +147,8 @@ let g:ale_fixers = {
       \ 'kotlin': ['ktlint'],
       \ }
 let g:ale_fix_on_save = 1
-let g:ale_go_golangci_lint_options = '--fast'
-let g:ale_go_golangci_lint_package = 1
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""	
-" Language Server	
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""	
-autocmd BufReadPost *.kt setlocal filetype=kotlin	
-autocmd BufReadPost *.gradle setlocal filetype=groovy	
-
-let jsserver = ['typescript-language-server', '--stdio']
-
-let g:LanguageClient_autoStart = 1	
-let g:LanguageClient_serverCommands = {	
-      \'java': ['/home/dreamszl/softwares/jdt-language-server-0.12.1/java-lang-server.sh'],
-      \'css': ['css-languageserver', '--stdio'],
-      \'javascript': jsserver,
-      \'javascript.jsx': jsserver,
-      \'typescript.tsx': jsserver,
-      \'typescriptreact': jsserver,
-      \'typescript': jsserver,
-      \'python': ['pyls'],
-      \'go': ['gopls', '-rpc.trace', '-logfile', '/tmp/gopls.log'],	
-      \'html': ['html-languageserver', '--stdio'],	
-      \'kotlin': ['kotlin-language-server'],
-      \'rust': ['rustup', 'run', 'stable', 'rls'],
-      \'sh': ['bash-language-server', 'start'],
-      \'dhall': ['dhall-lsp-server'],
-      \}
-
-" use virtualenv pyls if is in virtualenv	
-if !empty($VIRTUAL_ENV)	
-  let g:LanguageClient_serverCommands['python'] = [$VIRTUAL_ENV.'/bin/pyls']	
-endif	
-
-let g:LanguageClient_rootMarkers = {	
-      \ 'go': ['go.mod'],	
-      \ }	
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>	
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>	
-nnoremap <silent> gi :call LanguageClient_textDocument_implementation()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>	
-let g:LanguageClient_diagnosticsEnable = 0	
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""	
-" ncm2	
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""	
-autocmd BufEnter * call ncm2#enable_for_buffer()	
-set completeopt=noinsert,menuone,noselect	
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"	
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"	
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" coc.nvim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+source ~/.config/nvim/coc.vim

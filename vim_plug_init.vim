@@ -1,6 +1,5 @@
 call plug#begin('~/.config/nvim/bundle')
 
-Plug 'elzr/vim-json'
 Plug 'kien/ctrlp.vim'
 Plug 'groenewege/vim-less'
 Plug 'scrooloose/nerdtree'
@@ -23,17 +22,12 @@ Plug 'yuezk/vim-js'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'towolf/vim-helm'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-Plug 'ncm2/ncm2'	
-Plug 'ncm2/ncm2-path'
 Plug 'rust-lang/rust.vim'
 Plug 'pearofducks/ansible-vim'
 Plug 'Yggdroot/indentLine'
 Plug 'pedrohdz/vim-yaml-folds'
 Plug 'itchyny/lightline.vim'
 Plug 'vmchale/dhall-vim'
+Plug 'neoclide/coc.nvim', {'branch':'release'}
 
 call plug#end()
