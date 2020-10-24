@@ -188,7 +188,7 @@ let g:LanguageClient_serverCommands = {
       \'go': ['gopls', '-rpc.trace', '-logfile', '/tmp/gopls.log'],	
       \'html': ['html-languageserver', '--stdio'],	
       \'kotlin': ['kotlin-language-server'],
-      \'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+      \'rust': ['rustup', 'run', 'stable', 'rls'],
       \'sh': ['bash-language-server', 'start'],
       \'dhall': ['dhall-lsp-server'],
       \}
