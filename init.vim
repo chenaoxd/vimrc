@@ -101,7 +101,7 @@ nmap <leader>i <C-W>k<C-W>q
 nmap <leader>v <C-W>v
 nmap <leader>nh :noh<cr>
 nmap <leader>Y V"+y
-nmap <leader>y "+y
+nmap <leader>yy "+y
 nmap <leader>p "+p
 nmap <leader>r :e!<cr>
 nmap <leader>c cT(
@@ -110,6 +110,8 @@ nmap <leader>a :Ag
 nmap <leader>gg :LanguageClientStop<cr>:LanguageClientStart<cr>
 nmap <leader>ss :mksession! ~/.vimsession<cr>
 nmap <leader>sl :source ~/.vimsession<cr>
+nmap <leader>ya :set syntax=yaml.ansible<cr>
+nmap <leader>yh :set syntax=helm<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let g:go_auto_type_info = 1
