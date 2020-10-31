@@ -123,9 +123,9 @@ nnoremap <silent> <F10> :DlvClearAll<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gitgutter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <leader>gp <Plug>GitGutterPreviewHunk
-nmap <leader>gu <Plug>GitGutterUndoHunk
-nmap <leader>gs <Plug>GitGutterStageHunk
+nmap <leader>gp <Plug>(GitGutterPreviewHunk)
+nmap <leader>gu <Plug>(GitGutterUndoHunk)
+nmap <leader>gs <Plug>(GitGutterStageHunk)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fzf
