@@ -100,6 +100,7 @@ nmap <leader>l <C-W>l
 nmap <leader>i <C-W>k<C-W>q
 nmap <leader>v <C-W>v
 nmap <leader>nh :noh<cr>
+nmap <leader>nf :e %:h/
 nmap <leader>Y V"+y
 nmap <leader>y "+y
 nmap <leader>p "+p
