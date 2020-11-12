@@ -51,6 +51,7 @@ autocmd FileType typescript setlocal sw=4 ts=4 sts=4
 autocmd FileType go setlocal noexpandtab sw=4 ts=4 sts=4
 autocmd FileType kotlin setlocal sw=4 ts=4 sts=4
 autocmd FileType yaml setlocal expandtab ts=2 sts=2 sw=2
+autocmd FileType Jenkinsfile setlocal ts=2 sts=2 sw=2
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Color theme
