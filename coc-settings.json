@@ -14,9 +14,8 @@
             "rootPatterns": ["Cargo.toml"]
         },
         "python": {
-            "command": "python3.7",
+            "command": "pyls",
             "args": [
-                "-mpyls",
                 "-vv",
                 "--log-file",
                 "/tmp/lsp_python.log"
@@ -31,7 +30,7 @@
                     },
                     "commandPath": "",
                     "configurationSources": [
-                        "pycodestyle"
+                        "flake8"
                     ],
                     "plugins": {
                         "jedi_completion": {
@@ -51,7 +50,7 @@
                             "all_scopes": true
                         },
                         "mccabe": {
-                            "enabled": true,
+                            "enabled": false,
                             "threshold": 15
                         },
                         "preload": {
