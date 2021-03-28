@@ -116,6 +116,7 @@ nmap <leader>ss :mksession! ~/.vimsession<cr>
 nmap <leader>sl :source ~/.vimsession<cr>
 nmap <leader>sa :set syntax=yaml.ansible<cr>
 nmap <leader>sh :set syntax=helm<cr>
+nmap <leader>st :set syntax=
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let g:go_auto_type_info = 1
