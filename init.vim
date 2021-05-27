@@ -150,7 +150,7 @@ command! -bang -nargs=* Ag
 let g:ale_linters_explicit = 1
 let g:ale_linters = {
             \ 'go': ['golangci-lint'],
-}
+            \ }
 let g:ale_fixers = {
       \ 'python': ['autopep8'],
       \ 'go': ['gofmt'],
