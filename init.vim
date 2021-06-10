@@ -37,7 +37,7 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 
 autocmd BufReadPost *.kt setlocal filetype=kotlin
 autocmd BufReadPost *.gradle setlocal filetype=groovy
-autocmd BufReadPost *.tsx setlocal filetype=typescript.tsx
+autocmd BufReadPost *.tsx setlocal filetype=typescriptreact
 autocmd BufReadPost *.jsx setlocal filetype=javascript.jsx
 autocmd BufReadPost *.ympl setlocal filetype=yaml
 autocmd BufReadPost Dockerfile.* setlocal filetype=dockerfile
@@ -161,6 +161,9 @@ let g:ale_fixers = {
       \ 'go': ['gofmt'],
       \ 'rust': ['rustfmt'],
       \ 'kotlin': ['ktlint'],
+      \ 'javascript': ['eslint'],
+      \ 'typescript': ['tslint'],
+      \ 'typescriptreact': ['prettier'],
       \ }
 let g:ale_fix_on_save = 1
 
