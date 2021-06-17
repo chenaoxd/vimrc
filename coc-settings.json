@@ -14,7 +14,7 @@
             "rootPatterns": ["Cargo.toml"]
         },
         "python": {
-            "command": "pyls",
+            "command": "pylsp",
             "args": [
                 "-vv",
                 "--log-file",
@@ -23,7 +23,7 @@
             "trace.server": "verbose",
             "filetypes": ["python"],
             "settings": {
-                "pyls": {
+                "pylsp": {
                     "enabled": true,
                     "trace": {
                         "server": "verbose"
