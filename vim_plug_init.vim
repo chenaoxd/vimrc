@@ -29,7 +29,7 @@ Plug 'pedrohdz/vim-yaml-folds'
 Plug 'itchyny/lightline.vim'
 Plug 'vmchale/dhall-vim'
 Plug 'neoclide/coc.nvim', {'branch':'release'}
-let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-css']
+let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-css', 'coc-rust-analyzer']
 Plug 'cespare/vim-toml'
 
 call plug#end()
