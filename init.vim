@@ -35,12 +35,12 @@ nnoremap k gk
 " jsonc
 autocmd FileType json syntax match Comment +\/\/.\+$+
 
-autocmd BufReadPost *.kt setlocal filetype=kotlin
-autocmd BufReadPost *.gradle setlocal filetype=groovy
-autocmd BufReadPost *.tsx setlocal filetype=typescriptreact
-autocmd BufReadPost *.jsx setlocal filetype=javascript.jsx
-autocmd BufReadPost *.ympl setlocal filetype=yaml
-autocmd BufReadPost Dockerfile.* setlocal filetype=dockerfile
+autocmd BufReadPost,BufNewFile *.kt setlocal filetype=kotlin
+autocmd BufReadPost,BufNewFile *.gradle setlocal filetype=groovy
+autocmd BufReadPost,BufNewFile *.tsx setlocal filetype=typescriptreact
+autocmd BufReadPost,BufNewFile *.jsx setlocal filetype=javascript.jsx
+autocmd BufReadPost,BufNewFile *.ympl setlocal filetype=yaml
+autocmd BufReadPost,BufNewFile Dockerfile.* setlocal filetype=dockerfile
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Indentations
