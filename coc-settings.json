@@ -1,6 +1,7 @@
 {
     "diagnostic.errorSign": "✘",
     "diagnostic.warningSign": "⚠",
+    "rust-analyzer.inlayHints.enable": false,
     "languageserver": {
         "go": {
             "command": "gopls",
