@@ -56,6 +56,7 @@ autocmd FileType yaml setlocal expandtab ts=2 sts=2 sw=2
 autocmd FileType Jenkinsfile setlocal ts=2 sts=2 sw=2
 autocmd FileType sh setlocal ts=2 sts=2 sw=2
 autocmd FileType scss setlocal ts=2 sts=2 sw=2
+autocmd FileType proto setlocal ts=2 sts=2 sw=2
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Color theme
