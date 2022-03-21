@@ -16,6 +16,8 @@ set smartcase
 set hidden
 set incsearch
 
+set cursorline
+
 " code folding
 set foldmethod=syntax
 set foldnestmax=10
