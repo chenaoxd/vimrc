@@ -112,6 +112,7 @@ nmap <leader>nh :noh<cr>
 nmap <leader>nf :e %:h/
 nmap <leader>Y V"+y
 nmap <leader>y "+y
+nmap <leader>u "up
 nmap <leader>p "+p
 nmap <leader>r :e!<cr>
 nmap <leader>c cT(
