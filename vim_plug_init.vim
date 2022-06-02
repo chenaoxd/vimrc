@@ -31,5 +31,6 @@ Plug 'neoclide/coc.nvim', {'branch':'release'}
 let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-css', 'coc-rust-analyzer', 'coc-java', 'coc-pyright']
 Plug 'cespare/vim-toml'
 Plug 'tpope/vim-fugitive'
+Plug 'editorconfig/editorconfig-vim'
 
 call plug#end()
