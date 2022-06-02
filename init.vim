@@ -68,6 +68,7 @@ colorscheme molokai " hi MatchParen ctermfg=249 ctermbg=236 cterm=bold
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " IndentetLine
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set list lcs=tab:│\ 
 let g:indentLine_char = '│'
 let g:indentLine_fileTypeExclude = ['markdown', 'json']
 
