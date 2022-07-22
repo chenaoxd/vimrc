@@ -2,12 +2,6 @@
     "diagnostic.errorSign": "✘",
     "diagnostic.warningSign": "⚠",
     "languageserver": {
-        "go": {
-            "command": "gopls",
-            "rootPatterns": ["go.mod"],
-            "trace.server": "verbose",
-            "filetypes": ["go"]
-        },
         "bash": {
             "command": "bash-language-server",
             "args": ["start"],
@@ -22,5 +16,8 @@
     "rust-analyzer": {
         "inlayHints.enable": false,
         "server.path": "rust-analyzer"
+    },
+    "go": {
+        "goplsPath": "gopls"
     }
 }
