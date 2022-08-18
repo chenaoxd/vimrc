@@ -126,6 +126,10 @@ nmap <leader>sa :set syntax=yaml.ansible<cr>
 nmap <leader>sh :set syntax=helm<cr>
 nmap <leader>st :set syntax=
 nmap <leader>Q :q!<cr>
+map <leader>tn :tabnew<cr>
+map <leader>tm :tabmove
+map <leader>tc :tabclose<cr>
+map <leader>to :tabonly<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let g:go_auto_type_info = 1
