@@ -118,7 +118,7 @@ nmap <leader>p "+p
 nmap <leader>r :e!<cr>
 nmap <leader>c cT(
 nmap <leader>!w :w !sudo tee %
-nmap <leader>a :Ag 
+nmap <leader>ag :Ag 
 nmap <leader>gg :LanguageClientStop<cr>:LanguageClientStart<cr>
 nmap <leader>ss :mksession! ~/.vimsession<cr>
 nmap <leader>sl :source ~/.vimsession<cr>
@@ -126,10 +126,21 @@ nmap <leader>sa :set syntax=yaml.ansible<cr>
 nmap <leader>sh :set syntax=helm<cr>
 nmap <leader>st :set syntax=
 nmap <leader>Q :q!<cr>
-map <leader>tn :tabnew<cr>
-map <leader>tm :tabmove
-map <leader>tc :tabclose<cr>
-map <leader>to :tabonly<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" tab related mapping
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap <leader>tn :tabnew<cr>
+nmap <leader>tm :tabmove
+nmap <leader>tc :tabclose<cr>
+nmap <leader>to :tabonly<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ale related mapping
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap <leader>ay :let g:ale_fix_on_save=1<cr>
+nmap <leader>an :let g:ale_fix_on_save=0<cr>
+nmap <leader>af :ALEFix<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let g:go_auto_type_info = 1
