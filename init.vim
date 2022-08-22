@@ -126,8 +126,8 @@ nmap <leader>sa :set syntax=yaml.ansible<cr>
 nmap <leader>sh :set syntax=helm<cr>
 nmap <leader>st :set syntax=
 nmap <leader>Q :q!<cr>
-nmap <leader>cnd :CocDisable<cr>
-nmap <leader>cne :CocEnable<cr>
+nmap <leader>cnn :CocDisable<cr>
+nmap <leader>cny :CocEnable<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tab related mapping
