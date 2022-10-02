@@ -1,3 +1,5 @@
+let g:vimspector_enable_mappings = 'HUMAN'
+
 source ~/.config/nvim/vim_plug_init.vim
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -234,5 +236,3 @@ nmap <Leader>dj <Plug>VimspectorStepOver
 nmap <Leader>di <Plug>VimspectorBalloonEval
 " for visual mode, the visually selected text
 xmap <Leader>di <Plug>VimspectorBalloonEval
-
-let g:vimspector_enable_mappings = 'HUMAN'
