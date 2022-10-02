@@ -35,5 +35,6 @@ let g:coc_global_extensions = [
 Plug 'cespare/vim-toml'
 Plug 'tpope/vim-fugitive'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'puremourning/vimspector'
 
 call plug#end()
