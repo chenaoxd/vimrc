@@ -191,6 +191,7 @@ let g:ale_fixers = {
       \ 'javascript': ['eslint'],
       \ 'typescript': ['tslint'],
       \ 'typescriptreact': ['prettier'],
+      \ 'sh': ['shfmt'],
       \ }
 let g:ale_fix_on_save = 1
 
