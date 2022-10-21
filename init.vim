@@ -100,7 +100,7 @@ highlight GitGutterChange ctermfg = 214
 " set Leader
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <SPACE> <Nop>
-let mapLeader=" "
+let mapleader=" "
 
 nmap <Leader>w :w!<cr>
 nmap <Leader>oo <C-W>o
