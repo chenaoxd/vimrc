@@ -117,7 +117,7 @@ nmap <leader>Y V"+y
 nmap <leader>y "+y
 nmap <leader>u "up
 nmap <leader>p "+p
-nmap <leader>r :e!<cr>
+nmap <leader>rr :e!<cr>
 nmap <leader>c cT(
 nmap <leader>!w :w !sudo tee %
 nmap <leader>rg :Rg 
