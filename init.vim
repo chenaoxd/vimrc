@@ -188,8 +188,8 @@ let g:ale_fixers = {
       \ 'go': ['gofmt'],
       \ 'rust': ['rustfmt'],
       \ 'kotlin': ['ktlint'],
-      \ 'javascript': ['eslint'],
-      \ 'typescript': ['tslint'],
+      \ 'javascript': ['prettier'],
+      \ 'typescript': ['prettier'],
       \ 'typescriptreact': ['prettier'],
       \ 'sh': ['shfmt'],
       \ }
