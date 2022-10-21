@@ -120,7 +120,7 @@ nmap <leader>p "+p
 nmap <leader>r :e!<cr>
 nmap <leader>c cT(
 nmap <leader>!w :w !sudo tee %
-nmap <leader>ag :Ag 
+nmap <leader>rg :Rg 
 nmap <leader>gg :LanguageClientStop<cr>:LanguageClientStart<cr>
 nmap <leader>ss :mksession! ~/.vimsession<cr>
 nmap <leader>sl :source ~/.vimsession<cr>
@@ -163,13 +163,10 @@ nmap <leader>gs <Plug>(GitGutterStageHunk)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fzf
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" :Ag  - Start fzf with hidden preview window that can be enabled with "?" key
-" :Ag! - Start fzf in fullscreen and display the preview window above
-command! -bang -nargs=* Ag
-  \ call fzf#vim#ag(<q-args>,
-  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \                 <bang>0)
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case '.<q-args>, 1,
+  \   fzf#vim#with_preview(), <bang>0)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ale

@@ -11,10 +11,7 @@ Plug 'martinda/Jenkinsfile-vim-syntax'
 Plug 'sebdah/vim-delve'
 Plug 'chr4/nginx.vim'
 Plug 'roxma/nvim-yarp'
-Plug 'junegunn/fzf', {
-  \ 'dir': '~/.fzf',
-  \ 'do': './install --all'
-  \ }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'udalov/kotlin-vim'
 Plug 'yuezk/vim-js'
