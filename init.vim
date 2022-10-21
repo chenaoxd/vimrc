@@ -97,54 +97,54 @@ highlight GitGutterDelete ctermfg = Red
 highlight GitGutterChange ctermfg = 214
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" set leader
+" set Leader
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <SPACE> <Nop>
-let mapleader=" "
+let mapLeader=" "
 
-nmap <leader>w :w!<cr>
-nmap <leader>oo <C-W>o
-nmap <leader>q <C-W>q
-nmap <leader>h <C-W>h
-nmap <leader>k <C-W>k
-nmap <leader>j <C-W>j
-nmap <leader>l <C-W>l
-nmap <leader>i <C-W>k<C-W>q
-nmap <leader>v <C-W>v
-nmap <leader>nh :noh<cr>
-nmap <leader>nf :e %:h/
-nmap <leader>Y V"+y
-nmap <leader>y "+y
-nmap <leader>u "up
-nmap <leader>p "+p
-nmap <leader>rr :e!<cr>
-nmap <leader>c cT(
-nmap <leader>!w :w !sudo tee %
-nmap <leader>rg :Rg 
-nmap <leader>gg :LanguageClientStop<cr>:LanguageClientStart<cr>
-nmap <leader>ss :mksession! ~/.vimsession<cr>
-nmap <leader>sl :source ~/.vimsession<cr>
-nmap <leader>sa :set syntax=yaml.ansible<cr>
-nmap <leader>sh :set syntax=helm<cr>
-nmap <leader>st :set syntax=
-nmap <leader>Q :q!<cr>
-nmap <leader>cnn :CocDisable<cr>
-nmap <leader>cny :CocEnable<cr>
+nmap <Leader>w :w!<cr>
+nmap <Leader>oo <C-W>o
+nmap <Leader>q <C-W>q
+nmap <Leader>h <C-W>h
+nmap <Leader>k <C-W>k
+nmap <Leader>j <C-W>j
+nmap <Leader>l <C-W>l
+nmap <Leader>i <C-W>k<C-W>q
+nmap <Leader>v <C-W>v
+nmap <Leader>nh :noh<cr>
+nmap <Leader>nf :e %:h/
+nmap <Leader>Y V"+y
+nmap <Leader>y "+y
+nmap <Leader>u "up
+nmap <Leader>p "+p
+nmap <Leader>rr :e!<cr>
+nmap <Leader>c cT(
+nmap <Leader>!w :w !sudo tee %
+nmap <Leader>rg :Rg 
+nmap <Leader>gg :LanguageClientStop<cr>:LanguageClientStart<cr>
+nmap <Leader>ss :mksession! ~/.vimsession<cr>
+nmap <Leader>sl :source ~/.vimsession<cr>
+nmap <Leader>sa :set syntax=yaml.ansible<cr>
+nmap <Leader>sh :set syntax=helm<cr>
+nmap <Leader>st :set syntax=
+nmap <Leader>Q :q!<cr>
+nmap <Leader>cnn :CocDisable<cr>
+nmap <Leader>cny :CocEnable<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tab related mapping
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <leader>tn :tabnew<cr>
-nmap <leader>tm :tabmove
-nmap <leader>tc :tabclose<cr>
-nmap <leader>to :tabonly<cr>
+nmap <Leader>tn :tabnew<cr>
+nmap <Leader>tm :tabmove
+nmap <Leader>tc :tabclose<cr>
+nmap <Leader>to :tabonly<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ale related mapping
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <leader>ay :let g:ale_fix_on_save=1<cr>
-nmap <leader>an :let g:ale_fix_on_save=0<cr>
-nmap <leader>af :ALEFix<cr>
+nmap <Leader>ay :let g:ale_fix_on_save=1<cr>
+nmap <Leader>an :let g:ale_fix_on_save=0<cr>
+nmap <Leader>af :ALEFix<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let g:go_auto_type_info = 1
@@ -156,9 +156,9 @@ nnoremap <silent> <F10> :DlvClearAll<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gitgutter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <leader>gp <Plug>(GitGutterPreviewHunk)
-nmap <leader>gu <Plug>(GitGutterUndoHunk)
-nmap <leader>gs <Plug>(GitGutterStageHunk)
+nmap <Leader>gp <Plug>(GitGutterPreviewHunk)
+nmap <Leader>gu <Plug>(GitGutterUndoHunk)
+nmap <Leader>gs <Plug>(GitGutterStageHunk)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fzf
