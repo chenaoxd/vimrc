@@ -234,3 +234,10 @@ nmap <Leader>dj <Plug>VimspectorStepOver
 nmap <Leader>di <Plug>VimspectorBalloonEval
 " for visual mode, the visually selected text
 xmap <Leader>di <Plug>VimspectorBalloonEval
+
+let g:vimspector_sign_priority = {
+      \    'vimspectorBP':         100,
+      \    'vimspectorBPCond':     100,
+      \    'vimspectorBPLog':      100,
+      \    'vimspectorBPDisabled': 100,
+      \ }
