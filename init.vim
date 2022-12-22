@@ -1,5 +1,3 @@
-let g:vimspector_enable_mappings = 'HUMAN'
-
 source ~/.config/nvim/vim_plug_init.vim
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -66,6 +64,7 @@ autocmd FileType proto setlocal ts=2 sts=2 sw=2
 " Color theme
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 colorscheme molokai " hi MatchParen ctermfg=249 ctermbg=236 cterm=bold
+hi CursorLine ctermbg=236
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " IndentetLine
@@ -241,3 +240,5 @@ let g:vimspector_sign_priority = {
       \    'vimspectorBPLog':      100,
       \    'vimspectorBPDisabled': 100,
       \ }
+let g:vimspector_enable_mappings = 'HUMAN'
+
