@@ -151,3 +151,6 @@ nnoremap <silent><nowait> <space>cp  :<C-u>CocListResume<CR>
 autocmd FileType go nmap tj :CocCommand go.tags.add json<cr>
 autocmd FileType go nmap ty :CocCommand go.tags.add yaml<cr>
 autocmd FileType go nmap tx :CocCommand go.tags.clear<cr>
+
+" Set CocMenuSel bg color
+highlight CocMenuSel ctermbg=239
