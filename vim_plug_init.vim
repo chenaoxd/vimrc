@@ -32,5 +32,6 @@ Plug 'cespare/vim-toml'
 Plug 'tpope/vim-fugitive'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'puremourning/vimspector'
+Plug 'github/copilot.vim'
 
 call plug#end()
