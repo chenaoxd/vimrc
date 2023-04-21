@@ -27,11 +27,13 @@ Plug 'neoclide/coc.nvim', {'branch':'release'}
 let g:coc_global_extensions = [
             \ 'coc-json', 'coc-tsserver', 'coc-css', 'coc-rust-analyzer', 
             \ 'coc-java', 'coc-pyright', 'coc-go', '@yaegassy/coc-tailwindcss3',
+            \ '@yaegassy/coc-volar',
             \ ]
 Plug 'cespare/vim-toml'
 Plug 'tpope/vim-fugitive'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'puremourning/vimspector'
 Plug 'github/copilot.vim'
+Plug 'leafOfTree/vim-vue-plugin'
 
 call plug#end()

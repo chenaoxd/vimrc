@@ -59,6 +59,7 @@ autocmd FileType Jenkinsfile setlocal ts=2 sts=2 sw=2
 autocmd FileType sh setlocal noexpandtab ts=2 sts=2 sw=2
 autocmd FileType scss setlocal ts=2 sts=2 sw=2
 autocmd FileType proto setlocal ts=2 sts=2 sw=2
+autocmd FileType vue setlocal ts=2 sts=2 sw=2
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Color theme
