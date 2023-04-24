@@ -188,6 +188,7 @@ let g:ale_fixers = {
       \ 'javascript': ['prettier'],
       \ 'typescript': ['prettier'],
       \ 'typescriptreact': ['prettier'],
+      \ 'vue': ['prettier'],
       \ 'sh': ['shfmt'],
       \ }
 let g:ale_fix_on_save = 1
@@ -242,4 +243,3 @@ let g:vimspector_sign_priority = {
       \    'vimspectorBPDisabled': 100,
       \ }
 let g:vimspector_enable_mappings = 'HUMAN'
-
