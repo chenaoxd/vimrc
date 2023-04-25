@@ -243,3 +243,8 @@ let g:vimspector_sign_priority = {
       \    'vimspectorBPDisabled': 100,
       \ }
 let g:vimspector_enable_mappings = 'HUMAN'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" editorconfig
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:EditorConfig_disable_rules = ['max_line_length']
