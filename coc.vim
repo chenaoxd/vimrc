@@ -153,4 +153,4 @@ autocmd FileType go nmap ty :CocCommand go.tags.add yaml<cr>
 autocmd FileType go nmap tx :CocCommand go.tags.clear<cr>
 
 " Set CocMenuSel bg color
-highlight CocMenuSel ctermbg=239
+highlight CocMenuSel ctermbg=239 guibg=#13354A
