@@ -185,24 +185,6 @@ let g:ale_fix_on_save = 1
 source ~/.config/nvim/coc.vim
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" lightline
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:lightline = {
-      \ 'component_function': {
-      \   'filename': 'LightlineFilename',
-      \ }
-      \ }
-
-function! LightlineFilename()
-  let root = fnamemodify(get(b:, 'git_dir'), ':h')
-  let path = expand('%:p')
-  if path[:len(root)-1] ==# root
-    return path[len(root)+1:]
-  endif
-  return expand('%')
-endfunction
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vimspector
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <Leader>dd :call vimspector#Launch()<CR>

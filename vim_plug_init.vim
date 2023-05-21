@@ -22,7 +22,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'pearofducks/ansible-vim'
 Plug 'Yggdroot/indentLine'
 Plug 'pedrohdz/vim-yaml-folds'
-Plug 'itchyny/lightline.vim'
+Plug 'nvim-lualine/lualine.nvim'
 Plug 'vmchale/dhall-vim'
 Plug 'neoclide/coc.nvim', {'branch':'release'}
 let g:coc_global_extensions = [
