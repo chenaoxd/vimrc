@@ -1,6 +1,7 @@
 call plug#begin('~/.config/nvim/bundle')
 
-Plug 'kien/ctrlp.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
 Plug 'groenewege/vim-less'
 Plug 'scrooloose/nerdtree'
 Plug 'jceb/vim-orgmode'

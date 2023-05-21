@@ -79,15 +79,6 @@ let g:indentLine_fileTypeExclude = ['markdown', 'json']
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <C-y> :NERDTreeToggle<CR>
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Ctrl-p ignore
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:ctrlp_map = '<c-h>'
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-" let g:ctrlp_custom_ignore = 'node_modules\|\.git\|vendor\|*.pyc\|__pycache__\|venv\|bin\|bundle\|target'
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gitgutter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -248,3 +239,11 @@ let g:vimspector_enable_mappings = 'HUMAN'
 " editorconfig
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:EditorConfig_disable_rules = ['max_line_length']
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" telescope
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
