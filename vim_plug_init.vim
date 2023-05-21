@@ -2,6 +2,7 @@ call plug#begin('~/.config/nvim/bundle')
 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'groenewege/vim-less'
 Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-speeddating'
