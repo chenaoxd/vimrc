@@ -3,7 +3,6 @@ call plug#begin('~/.config/nvim/bundle')
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
 Plug 'groenewege/vim-less'
-Plug 'scrooloose/nerdtree'
 Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-speeddating'
 Plug 'w0rp/ale'
@@ -36,5 +35,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'puremourning/vimspector'
 Plug 'github/copilot.vim'
 Plug 'leafOfTree/vim-vue-plugin'
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'nvim-tree/nvim-tree.lua'
 
 call plug#end()

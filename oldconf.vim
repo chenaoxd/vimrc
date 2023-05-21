@@ -75,11 +75,6 @@ let g:indentLine_char = '│'
 let g:indentLine_fileTypeExclude = ['markdown', 'json']
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" NERDTree
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <C-y> :NERDTreeToggle<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gitgutter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set updatetime=10
@@ -239,11 +234,3 @@ let g:vimspector_enable_mappings = 'HUMAN'
 " editorconfig
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:EditorConfig_disable_rules = ['max_line_length']
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" telescope
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
