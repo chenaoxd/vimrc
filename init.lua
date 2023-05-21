@@ -1,6 +1,8 @@
 local vimrc = vim.fn.stdpath("config") .. "/oldconf.vim"
 vim.cmd.source(vimrc)
 
+local map = vim.api.nvim_set_keymap
+
 -----------------------------------------------------------------------------
 -- nvim-tree configs 
 -----------------------------------------------------------------------------
@@ -27,7 +29,7 @@ require("nvim-tree").setup({
     dotfiles = true,
   },
 })
-vim.keymap.set('n', '<C-y>', ":NvimTreeToggle<cr>", {silent = true})
+map('n', '<C-y>', ":NvimTreeToggle<cr>", {silent = true})
 
 -----------------------------------------------------------------------------
 -- telescope configs 
