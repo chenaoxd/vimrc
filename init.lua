@@ -28,6 +28,13 @@ require("nvim-tree").setup({
   filters = {
     dotfiles = true,
   },
+  actions = {
+    open_file = {
+      window_picker = {
+        enable = false
+      }
+    }
+  }
 })
 map('n', '<C-y>', ":NvimTreeToggle<cr>", {silent = true})
 
