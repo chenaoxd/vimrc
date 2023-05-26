@@ -19,5 +19,6 @@
     },
     "go": {
         "goplsPath": "gopls"
-    }
+    },
+    "volar.disableDiagnostics": true
 }
