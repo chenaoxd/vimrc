@@ -129,8 +129,8 @@ nmap <Leader>to :tabonly<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ale related mapping
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <Leader>ay :let g:ale_fix_on_save=1<cr>
-nmap <Leader>an :let g:ale_fix_on_save=0<cr>
+nmap <Leader>ay :let b:ale_fix_on_save=1<cr>
+nmap <Leader>an :let b:ale_fix_on_save=0<cr>
 nmap <Leader>af :ALEFix<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
