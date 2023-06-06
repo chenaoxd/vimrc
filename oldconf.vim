@@ -127,13 +127,6 @@ nmap <Leader>tc :tabclose<cr>
 nmap <Leader>to :tabonly<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" ale related mapping
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <Leader>ay :let b:ale_fix_on_save=1<cr>
-nmap <Leader>an :let b:ale_fix_on_save=0<cr>
-nmap <Leader>af :ALEFix<cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let g:go_auto_type_info = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <silent> <F8> :DlvConnect localhost:33333<CR>
@@ -183,6 +176,12 @@ let g:ale_fixers = {
       \ 'sh': ['shfmt'],
       \ }
 let g:ale_fix_on_save = 1
+
+nmap <Leader>ay :let b:ale_fix_on_save=1<cr>
+nmap <Leader>an :let b:ale_fix_on_save=0<cr>
+nmap <Leader>af :ALEFix<cr>
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " coc.nvim
