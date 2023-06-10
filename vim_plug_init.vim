@@ -35,7 +35,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'puremourning/vimspector'
 Plug 'github/copilot.vim'
-Plug 'leafOfTree/vim-vue-plugin'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-tree/nvim-tree.lua'
 
