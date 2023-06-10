@@ -23,6 +23,7 @@ set foldmethod=syntax
 set foldnestmax=10
 set nofoldenable
 set foldlevel=2
+set fo-=tc
 
 " swap ^ & 0
 nnoremap 0 ^
