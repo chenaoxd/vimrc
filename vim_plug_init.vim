@@ -27,7 +27,7 @@ Plug 'vmchale/dhall-vim'
 Plug 'neoclide/coc.nvim', {'branch':'release'}
 let g:coc_global_extensions = [
             \ 'coc-json', 'coc-tsserver', 'coc-css', 'coc-rust-analyzer', 
-            \ 'coc-java', 'coc-pyright', 'coc-go', '@yaegassy/coc-tailwindcss3',
+            \ 'coc-pyright', 'coc-go', '@yaegassy/coc-tailwindcss3',
             \ '@yaegassy/coc-volar',
             \ ]
 Plug 'cespare/vim-toml'

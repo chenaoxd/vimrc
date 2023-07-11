@@ -20,5 +20,5 @@
     "go": {
         "goplsPath": "gopls"
     },
-    "volar.disableDiagnostics": true
+    "volar.disableDiagnostics": false
 }
