@@ -38,6 +38,7 @@ require("nvim-tree").setup({
   }
 })
 map('n', '<C-y>', ":NvimTreeToggle<cr>", {silent = true})
+map('n', '<leader>tt', ":NvimTreeFindFile<cr>", {silent = true})
 
 -----------------------------------------------------------------------------
 -- telescope configs 
