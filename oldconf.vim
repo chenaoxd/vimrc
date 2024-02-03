@@ -66,7 +66,7 @@ autocmd FileType lua setlocal ts=2 sts=2 sw=2
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Color theme
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-colorscheme molokai " hi MatchParen ctermfg=249 ctermbg=236 cterm=bold
+colorscheme molokai
 hi CursorLine ctermbg=236
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
