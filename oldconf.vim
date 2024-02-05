@@ -62,6 +62,7 @@ autocmd FileType scss setlocal ts=2 sts=2 sw=2
 autocmd FileType proto setlocal ts=2 sts=2 sw=2
 autocmd FileType vue setlocal ts=2 sts=2 sw=2
 autocmd FileType lua setlocal ts=2 sts=2 sw=2
+autocmd FileType css setlocal ts=2 sts=2 sw=2
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Color theme
@@ -160,6 +161,7 @@ let g:ale_linters = {
             \ 'typescriptreact': ['eslint'],
             \ 'vue': ['eslint'],
             \ 'python': ['ruff'],
+            \ 'css': ['stylelint']
             \ }
 let g:ale_go_golangci_lint_options = ''
 let g:ale_go_golangci_lint_package = 1
@@ -174,6 +176,7 @@ let g:ale_fixers = {
       \ 'javascript': ['prettier'],
       \ 'typescript': ['prettier'],
       \ 'typescriptreact': ['prettier'],
+      \ 'css': ['prettier'],
       \ 'vue': ['prettier'],
       \ 'sh': ['shfmt'],
       \ }
