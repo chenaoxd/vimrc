@@ -20,5 +20,6 @@
     "go": {
         "goplsPath": "gopls"
     },
-    "volar.disableDiagnostics": false
+    "volar.disableDiagnostics": false,
+    "tsserver.useLocalTsdk": true
 }
