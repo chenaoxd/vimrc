@@ -22,9 +22,5 @@
     },
     "volar.disableDiagnostics": false,
     "tsserver.useLocalTsdk": true,
-    "javascript.validate.enable": false,
-    "javascript.suggest.enabled": false,
-    "typescript.validate.enable": false,
-    "typescript.suggest.enabled": false,
     "css.validate": false
 }

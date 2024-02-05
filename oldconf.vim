@@ -156,10 +156,6 @@ command! -bang -nargs=* Rg
 let g:ale_linters_explicit = 1
 let g:ale_linters = {
             \ 'go': ['golangci-lint'],
-            \ 'javascript': ['eslint'],
-            \ 'typescript': ['eslint'],
-            \ 'typescriptreact': ['eslint'],
-            \ 'vue': ['eslint'],
             \ 'python': ['ruff'],
             \ 'css': ['stylelint']
             \ }
