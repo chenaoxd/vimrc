@@ -18,7 +18,10 @@
         "server.path": "rust-analyzer"
     },
     "go": {
-        "goplsPath": "gopls"
+        "goplsPath": "gopls",
+        "disable": {
+            "diagnostics": true
+        }
     },
     "volar.disableDiagnostics": false,
     "tsserver.useLocalTsdk": true,
