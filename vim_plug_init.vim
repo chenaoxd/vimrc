@@ -22,7 +22,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'pearofducks/ansible-vim'
 Plug 'Yggdroot/indentLine'
 Plug 'pedrohdz/vim-yaml-folds'
-Plug 'nvim-lualine/lualine.nvim'
+Plug 'vim-airline/vim-airline'
 Plug 'vmchale/dhall-vim'
 Plug 'neoclide/coc.nvim', {'branch':'release'}
 let g:coc_global_extensions = [
@@ -37,5 +37,6 @@ Plug 'puremourning/vimspector'
 Plug 'github/copilot.vim'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-tree/nvim-tree.lua'
+Plug 'f-person/git-blame.nvim'
 
 call plug#end()
