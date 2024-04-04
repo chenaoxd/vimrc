@@ -15,7 +15,7 @@
     },
     "rust-analyzer": {
         "inlayHints.enable": false,
-        "server.path": "rust-analyzer"
+        "server.path": "/home/chenao/Softwares/bin/rust-analyzer"
     },
     "go": {
         "goplsPath": "gopls",
