@@ -75,6 +75,13 @@ require("CopilotChat").setup {
     vim.notify("Please update the remote plugins by running".. 
       " ':UpdateRemotePlugins', then restart Neovim.")
   end,
+  window = {
+    layout = 'float',
+    relative = 'cursor',
+    width = 1,
+    height = 0.4,
+    row = 1
+  },
   event = "VeryLazy",
 }
 map('n', '<leader>cce', "<cmd>CopilotChatExplain<cr>", {silent = true})
