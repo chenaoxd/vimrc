@@ -47,13 +47,13 @@ map('n', '<leader>tt', ":NvimTreeFindFile<cr>", {silent = true})
 -- telescope configs 
 -----------------------------------------------------------------------------
 local telescope = require('telescope.builtin')
-map('n', '<M-p>', ":Telescope find_files<cr>", {silent = true})
+map('n', '<C-h>', ":Telescope find_files<cr>", {silent = true})
 map('n', '<leader>fg', ":Telescope live_grep<cr>", {silent = true})
 map('n', '<leader>fb', ":Telescope buffers<cr>", {silent = true})
 map('n', '<leader>fh', ":Telescope help_tags<cr>", {silent = true})
 
 -----------------------------------------------------------------------------
--- github copilot settings
+-- zbirenbaum/copilot settings
 -----------------------------------------------------------------------------
 require("copilot").setup({
   panel = {
@@ -61,9 +61,21 @@ require("copilot").setup({
   },
   suggestion = {
     auto_trigger = true,
+    keymap = {
+      accept = "<C-l>",
+      next = "<C-j>",
+      prev = "<C-k>",
+    }
   },
 })
-require("CopilotChat").setup {
+
+local chat = require("CopilotChat")
+local select = require("CopilotChat.select")
+
+-----------------------------------------------------------------------------
+-- CopilotC-Nvim/CopilotChat settings
+-----------------------------------------------------------------------------
+chat.setup {
   debug = true, -- Enable debugging
   show_help = "yes",
   prompts = {
@@ -84,12 +96,33 @@ require("CopilotChat").setup {
   },
   event = "VeryLazy",
 }
-map('n', '<leader>cce', "<cmd>CopilotChatExplain<cr>", {silent = true})
-map('n', '<leader>cct', "<cmd>CopilotChatTests<cr>", {silent = true})
-map('n', '<leader>ccx', ":CopilotChatFix<cr>", {silent = true})
-map('n', '<leader>ccb', function()
+
+vim.api.nvim_create_user_command('CopilotChatBuffer', function(args)
+    chat.ask(args.args, { selection = select.buffer })
+end, { nargs = '*', range = true })
+vim.api.nvim_create_user_command('CopilotChatVisual', function(args)
+    chat.ask(args.args, { selection = select.visual })
+end, { nargs = '*', range = true })
+
+map('v', '<leader>cce', "<cmd>CopilotChatExplain<cr>", {silent = true})
+map('v', '<leader>cct', "<cmd>CopilotChatTests<cr>", {silent = true})
+map('v', '<leader>ccx', ":CopilotChatFix<cr>", {silent = true})
+map('v', '<leader>ccv', function()
   local input = vim.fn.input("Quick Chat: ")
   if input ~= "" then
-    require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
+    vim.cmd("CopilotChatVisual " .. input)
   end
 end, {silent = true})
+map('v', '<leader>ccq', function()
+  local input = vim.fn.input("Quick Chat: ")
+  if input ~= "" then
+    vim.cmd("CopilotChatBuffer " .. input)
+  end
+end, {silent = true})
+map("n", '<leader>cca', function()
+  local input = vim.fn.input("Ask Copilot: ")
+  if input ~= "" then
+    vim.cmd("CopilotChat " .. input)
+  end
+end, {silent = true, desc = "CopilotChatVisual - Ask input"})
+
