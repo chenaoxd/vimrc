@@ -96,10 +96,9 @@ chat.setup {
   end,
   window = {
     layout = 'float',
-    relative = 'cursor',
-    width = 1,
-    height = 0.4,
-    row = 1
+    relative = 'editor',
+    width = 0.8,
+    height = 0.8,
   },
   event = "VeryLazy",
 }
