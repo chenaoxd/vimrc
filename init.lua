@@ -46,7 +46,14 @@ map('n', '<leader>tt', ":NvimTreeFindFile<cr>", {silent = true})
 -----------------------------------------------------------------------------
 -- telescope configs 
 -----------------------------------------------------------------------------
-local telescope = require('telescope.builtin')
+require('telescope').setup{
+  defaults = {
+    file_ignore_patterns = {
+      "node_modules"
+    },
+  },
+}
+
 map('n', '<C-h>', ":Telescope find_files<cr>", {silent = true})
 map('n', '<leader>fg', ":Telescope live_grep<cr>", {silent = true})
 map('n', '<leader>fb', ":Telescope buffers<cr>", {silent = true})
