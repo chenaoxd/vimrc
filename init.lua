@@ -113,13 +113,13 @@ end, { nargs = '*', range = true })
 map('v', '<leader>cce', "<cmd>CopilotChatExplain<cr>", {silent = true})
 map('v', '<leader>cct', "<cmd>CopilotChatTests<cr>", {silent = true})
 map('v', '<leader>ccx', ":CopilotChatFix<cr>", {silent = true})
-map('v', '<leader>ccv', function()
+map('v', '<leader>ccq', function()
   local input = vim.fn.input("Quick Chat: ")
   if input ~= "" then
     vim.cmd("CopilotChatVisual " .. input)
   end
 end, {silent = true})
-map('v', '<leader>ccq', function()
+map('v', '<leader>ccb', function()
   local input = vim.fn.input("Quick Chat: ")
   if input ~= "" then
     vim.cmd("CopilotChatBuffer " .. input)
@@ -131,4 +131,4 @@ map("n", '<leader>cca', function()
     vim.cmd("CopilotChat " .. input)
   end
 end, {silent = true, desc = "CopilotChatVisual - Ask input"})
-
+map('n', '<leader>cct', ":CopilotChatToggle<cr>", {silent = true})
