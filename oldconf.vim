@@ -168,7 +168,7 @@ let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
 
 let g:ale_fixers = {
-      \ 'python': ['ruff', 'autopep8'],
+      \ 'python': ['ruff', 'ruff_format'],
       \ 'go': ['gofmt'],
       \ 'rust': ['rustfmt'],
       \ 'kotlin': ['ktlint'],
