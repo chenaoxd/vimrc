@@ -7,6 +7,43 @@ local map = vim.keymap.set
 map('n', '<leader>sv', ":source $MYVIMRC<cr>", {silent = true})
 
 -----------------------------------------------------------------------------
+-- filetype configs
+-----------------------------------------------------------------------------
+local tab_width = {
+  python = 4,
+  markdown = 2,
+  html = 2,
+  javascript = 2,
+  typescript = 2,
+  typescriptreact = 2,
+  go = 4,
+  kotlin = 4,
+  yaml = 2,
+  Jenkinsfile = 2,
+  sh = 2,
+  scss = 2,
+  proto = 2,
+  vue = 2,
+  lua = 2,
+  css = 2,
+}
+
+for filetype, width in pairs(tab_width) do
+local function set_tab_width(filetype, tab_width)
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = filetype,
+    callback = function()
+      vim.bo.tabstop = tab_width
+      vim.bo.shiftwidth = tab_width
+      vim.bo.expandtab = true
+    end,
+  })
+end
+
+  set_tab_width(filetype, width)
+end
+
+-----------------------------------------------------------------------------
 -- nvim-tree configs 
 -----------------------------------------------------------------------------
 -- disable netrw at the very start of your init.lua (strongly advised)
