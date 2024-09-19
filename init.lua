@@ -74,6 +74,10 @@ require("copilot").setup({
       prev = "<C-k>",
     }
   },
+  filetypes = {
+    yaml = true,
+    markdown = true,
+  }
 })
 
 local chat = require("CopilotChat")
