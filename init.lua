@@ -132,3 +132,13 @@ map("n", '<leader>cca', function()
   end
 end, {silent = true, desc = "CopilotChatVisual - Ask input"})
 map('n', '<leader>cct', ":CopilotChatToggle<cr>", {silent = true})
+
+-----------------------------------------------------------------------------
+-- iamcco/markdown-preview.nvim settings
+-----------------------------------------------------------------------------
+map('n', '<leader>mp', ":MarkdownPreview<cr>", {silent = true})
+map('n', '<leader>ms', ":MarkdownPreviewStop<cr>", {silent = true})
+map('n', '<leader>mt', ":MarkdownPreviewToggle<cr>", {silent = true})
+map('i', '<C-e>', function()
+  return '```\n```<Esc>O'
+end, { expr = true, noremap = true, silent = true })
