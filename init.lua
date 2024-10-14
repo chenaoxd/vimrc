@@ -4,7 +4,7 @@ vim.cmd.source(vimrc)
 local map = vim.keymap.set
 
 -- keymap for source init.lua
-map('n', '<leader>sv', ":source $MYVIMRC<cr>", {silent = true})
+map('n', '<leader>sv', ":source $MYVIMRC<cr>", { silent = true })
 
 -----------------------------------------------------------------------------
 -- filetype configs
@@ -29,22 +29,22 @@ local tab_width = {
 }
 
 for filetype, width in pairs(tab_width) do
-local function set_tab_width(ft, tw)
-  vim.api.nvim_create_autocmd('FileType', {
-    pattern = ft,
-    callback = function()
-      vim.bo.tabstop = tw
-      vim.bo.shiftwidth = tw
-      vim.bo.expandtab = true
-    end,
-  })
-end
+  local function set_tab_width(ft, tw)
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = ft,
+      callback = function()
+        vim.bo.tabstop = tw
+        vim.bo.shiftwidth = tw
+        vim.bo.expandtab = true
+      end,
+    })
+  end
 
   set_tab_width(filetype, width)
 end
 
 -----------------------------------------------------------------------------
--- nvim-tree configs 
+-- nvim-tree configs
 -----------------------------------------------------------------------------
 -- disable netrw at the very start of your init.lua (strongly advised)
 vim.g.loaded_netrw = 1
@@ -77,13 +77,13 @@ require("nvim-tree").setup({
     }
   }
 })
-map('n', '<C-y>', ":NvimTreeToggle<cr>", {silent = true})
-map('n', '<leader>tt', ":NvimTreeFindFile<cr>", {silent = true})
+map('n', '<C-y>', ":NvimTreeToggle<cr>", { silent = true })
+map('n', '<leader>tt', ":NvimTreeFindFile<cr>", { silent = true })
 
 -----------------------------------------------------------------------------
--- telescope configs 
+-- telescope configs
 -----------------------------------------------------------------------------
-require('telescope').setup{
+require('telescope').setup {
   defaults = {
     file_ignore_patterns = {
       "node_modules",
@@ -92,10 +92,10 @@ require('telescope').setup{
   },
 }
 
-map('n', '<C-h>', ":Telescope find_files<cr>", {silent = true})
-map('n', '<leader>fg', ":Telescope live_grep<cr>", {silent = true})
-map('n', '<leader>fb', ":Telescope buffers<cr>", {silent = true})
-map('n', '<leader>fh', ":Telescope help_tags<cr>", {silent = true})
+map('n', '<C-h>', ":Telescope find_files<cr>", { silent = true })
+map('n', '<leader>fg', ":Telescope live_grep<cr>", { silent = true })
+map('n', '<leader>fb', ":Telescope buffers<cr>", { silent = true })
+map('n', '<leader>fh', ":Telescope help_tags<cr>", { silent = true })
 
 -----------------------------------------------------------------------------
 -- zbirenbaum/copilot settings
@@ -133,7 +133,7 @@ chat.setup {
     Refactor = "Refactor the code to improve clarity and readability.",
   },
   build = function()
-    vim.notify("Please update the remote plugins by running"..
+    vim.notify("Please update the remote plugins by running" ..
       " ':UpdateRemotePlugins', then restart Neovim.")
   end,
   window = {
@@ -146,44 +146,52 @@ chat.setup {
 }
 
 vim.api.nvim_create_user_command('CopilotChatBuffer', function(args)
-    chat.ask(args.args, { selection = select.buffer })
+  chat.ask(args.args, { selection = select.buffer })
 end, { nargs = '*', range = true })
 vim.api.nvim_create_user_command('CopilotChatVisual', function(args)
-    chat.ask(args.args, { selection = select.visual })
+  chat.ask(args.args, { selection = select.visual })
 end, { nargs = '*', range = true })
 
-map('v', '<leader>cce', "<cmd>CopilotChatExplain<cr>", {silent = true})
-map('v', '<leader>cct', "<cmd>CopilotChatTests<cr>", {silent = true})
-map('v', '<leader>ccx', ":CopilotChatFix<cr>", {silent = true})
+map('v', '<leader>cce', "<cmd>CopilotChatExplain<cr>", { silent = true })
+map('v', '<leader>cct', "<cmd>CopilotChatTests<cr>", { silent = true })
+map('v', '<leader>ccx', ":CopilotChatFix<cr>", { silent = true })
 map('v', '<leader>ccq', function()
   local input = vim.fn.input("Quick Chat: ")
   if input ~= "" then
     vim.cmd("CopilotChatVisual " .. input)
   end
-end, {silent = true})
+end, { silent = true })
 map('v', '<leader>ccb', function()
   local input = vim.fn.input("Quick Chat: ")
   if input ~= "" then
     vim.cmd("CopilotChatBuffer " .. input)
   end
-end, {silent = true})
+end, { silent = true })
 map("n", '<leader>cca', function()
   local input = vim.fn.input("Ask Copilot: ")
   if input ~= "" then
     vim.cmd("CopilotChat " .. input)
   end
-end, {silent = true, desc = "CopilotChatVisual - Ask input"})
-map('n', '<leader>cct', ":CopilotChatToggle<cr>", {silent = true})
+end, { silent = true, desc = "CopilotChatVisual - Ask input" })
+map('n', '<leader>cct', ":CopilotChatToggle<cr>", { silent = true })
 
 -----------------------------------------------------------------------------
 -- iamcco/markdown-preview.nvim settings
 -----------------------------------------------------------------------------
-map('n', '<leader>mp', ":MarkdownPreview<cr>", {silent = true})
-map('n', '<leader>ms', ":MarkdownPreviewStop<cr>", {silent = true})
-map('n', '<leader>mt', ":MarkdownPreviewToggle<cr>", {silent = true})
+map('n', '<leader>mp', ":MarkdownPreview<cr>", { silent = true })
+map('n', '<leader>ms', ":MarkdownPreviewStop<cr>", { silent = true })
+map('n', '<leader>mt', ":MarkdownPreviewToggle<cr>", { silent = true })
 map('i', '<C-e>', function()
   return '```\n```<Esc>O'
 end, { expr = true, noremap = true, silent = true })
+
+-----------------------------------------------------------------------------
+-- neovim/nvim-lspconfig settings
+-----------------------------------------------------------------------------
+require("mason").setup()
+require("mason-lspconfig").setup {
+  ensure_installed = { 'lua_ls', 'pyright', 'ts_ls', 'gopls' },
+}
 
 -----------------------------------------------------------------------------
 -- neovim/nvim-lspconfig settings
@@ -238,7 +246,8 @@ lsp_config.lua_ls.setup {
 }
 local default_servers = {
   "ts_ls",
-  "pyright"
+  "pyright",
+  "gopls"
 }
 for _, lsp in ipairs(default_servers) do
   lsp_config[lsp].setup {
@@ -256,7 +265,8 @@ cmp.setup { ---@diagnostic disable-line: redundant-parameter
   sources = {
     { name = 'nvim_lsp' },
     { name = 'buffer' },
-  }, mapping = cmp.mapping.preset.insert({
+  },
+  mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-n>'] = cmp.mapping.select_next_item(),
@@ -269,11 +279,3 @@ cmp.setup { ---@diagnostic disable-line: redundant-parameter
     }),
   })
 }
-
-vim.api.nvim_create_autocmd('BufWritePre', {
-  callback = function()
-    vim.lsp.buf.format {
-      async = true,
-    }
-  end,
-})
