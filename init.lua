@@ -29,12 +29,12 @@ local tab_width = {
 }
 
 for filetype, width in pairs(tab_width) do
-local function set_tab_width(filetype, tab_width)
+local function set_tab_width(ft, tw)
   vim.api.nvim_create_autocmd('FileType', {
-    pattern = filetype,
+    pattern = ft,
     callback = function()
-      vim.bo.tabstop = tab_width
-      vim.bo.shiftwidth = tab_width
+      vim.bo.tabstop = tw
+      vim.bo.shiftwidth = tw
       vim.bo.expandtab = true
     end,
   })
@@ -86,7 +86,8 @@ map('n', '<leader>tt', ":NvimTreeFindFile<cr>", {silent = true})
 require('telescope').setup{
   defaults = {
     file_ignore_patterns = {
-      "node_modules"
+      "node_modules",
+      "bundle"
     },
   },
 }
@@ -125,14 +126,14 @@ local select = require("CopilotChat.select")
 -----------------------------------------------------------------------------
 chat.setup {
   debug = true, -- Enable debugging
-  show_help = "yes",
+  show_help = true,
   prompts = {
     Review = "Review the following code and provide concise suggestions.",
     Tests = "Briefly explain how the selected code works, then generate unit tests.",
     Refactor = "Refactor the code to improve clarity and readability.",
   },
   build = function()
-    vim.notify("Please update the remote plugins by running".. 
+    vim.notify("Please update the remote plugins by running"..
       " ':UpdateRemotePlugins', then restart Neovim.")
   end,
   window = {
@@ -183,3 +184,96 @@ map('n', '<leader>mt', ":MarkdownPreviewToggle<cr>", {silent = true})
 map('i', '<C-e>', function()
   return '```\n```<Esc>O'
 end, { expr = true, noremap = true, silent = true })
+
+-----------------------------------------------------------------------------
+-- neovim/nvim-lspconfig settings
+-----------------------------------------------------------------------------
+local lsp_config = require('lspconfig')
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+    -- Buffer local mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local opts = { buffer = ev.buf }
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
+    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+    vim.keymap.set('n', '<space>wl', function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, opts)
+    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', '<space>f', function()
+      vim.lsp.buf.format { async = true }
+    end, opts)
+  end,
+})
+
+-----------------------------------------------------------------------------
+-- hrsh7th/nvim-cmp settings
+-----------------------------------------------------------------------------
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local luasnip = require 'luasnip'
+
+lsp_config.lua_ls.setup {
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { "vim" },
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+    },
+  },
+}
+local default_servers = {
+  "ts_ls",
+  "pyright"
+}
+for _, lsp in ipairs(default_servers) do
+  lsp_config[lsp].setup {
+    capabilities = capabilities,
+  }
+end
+
+local cmp = require('cmp')
+cmp.setup { ---@diagnostic disable-line: redundant-parameter
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'buffer' },
+  }, mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Insert,
+      select = true,
+    }),
+  })
+}
+
+vim.api.nvim_create_autocmd('BufWritePre', {
+  callback = function()
+    vim.lsp.buf.format {
+      async = true,
+    }
+  end,
+})

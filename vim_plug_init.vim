@@ -5,7 +5,6 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'groenewege/vim-less'
 Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-speeddating'
-Plug 'w0rp/ale'
 Plug 'airblade/vim-gitgutter'
 " Plug 'martinda/Jenkinsfile-vim-syntax'
 Plug 'sebdah/vim-delve'
@@ -23,12 +22,6 @@ Plug 'Yggdroot/indentLine'
 Plug 'pedrohdz/vim-yaml-folds'
 Plug 'vim-airline/vim-airline'
 Plug 'vmchale/dhall-vim'
-Plug 'neoclide/coc.nvim', {'branch':'release'}
-let g:coc_global_extensions = [
-            \ 'coc-json', 'coc-tsserver', 'coc-css', 'coc-rust-analyzer', 
-            \ 'coc-pyright', 'coc-go', '@yaegassy/coc-tailwindcss3',
-            \ '@yaegassy/coc-volar',
-            \ ]
 Plug 'cespare/vim-toml'
 Plug 'tpope/vim-fugitive'
 Plug 'editorconfig/editorconfig-vim'
@@ -41,5 +34,10 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
 Plug 'craigmac/vim-mermaid'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp',
+Plug 'saadparwaiz1/cmp_luasnip',
+Plug 'L3MON4D3/LuaSnip',
 
 call plug#end()
