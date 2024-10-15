@@ -186,11 +186,11 @@ map('i', '<C-e>', function()
 end, { expr = true, noremap = true, silent = true })
 
 -----------------------------------------------------------------------------
--- neovim/nvim-lspconfig settings
+-- williamboman/mason.nvim settings
 -----------------------------------------------------------------------------
 require("mason").setup()
 require("mason-lspconfig").setup {
-  ensure_installed = { 'lua_ls', 'pyright', 'ts_ls', 'gopls' },
+  ensure_installed = { 'lua_ls', 'pyright', 'ts_ls', 'gopls', 'volar' },
 }
 
 -----------------------------------------------------------------------------
@@ -229,7 +229,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- hrsh7th/nvim-cmp settings
 -----------------------------------------------------------------------------
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
-local luasnip = require 'luasnip'
+local luasnip = require('luasnip')
 
 lsp_config.lua_ls.setup {
   capabilities = capabilities,
@@ -244,8 +244,28 @@ lsp_config.lua_ls.setup {
     },
   },
 }
+local vue_language_server_path = require('mason-registry').get_package('vue-language-server'):
+  get_install_path() .. '/node_modules/@vue/language-server'
+lsp_config.ts_ls.setup {
+  init_options = {
+    plugins = {
+      {
+        name = '@vue/typescript-plugin',
+        location = vue_language_server_path,
+        languages = { 'vue' },
+      },
+    },
+  },
+}
+lsp_config.volar.setup {
+  init_options = {
+    vue = {
+      hybridMode = false,
+    },
+  },
+}
+
 local default_servers = {
-  "ts_ls",
   "pyright",
   "gopls"
 }
