@@ -5,7 +5,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'groenewege/vim-less'
 Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-speeddating'
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 Plug 'airblade/vim-gitgutter'
 " Plug 'martinda/Jenkinsfile-vim-syntax'
 Plug 'sebdah/vim-delve'
