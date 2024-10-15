@@ -1,6 +1,9 @@
 {
     "diagnostic.errorSign": "✘",
     "diagnostic.warningSign": "⚠",
+    "suggest.floatConfig": {
+        "border": true,
+    },
     "languageserver": {
         "bash": {
             "command": "bash-language-server",
