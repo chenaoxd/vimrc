@@ -4,6 +4,15 @@
     "suggest.floatConfig": {
         "border": true,
     },
+    "diagnostic.floatConfig": {
+        "border": true,
+    },
+    "signature.floatConfig": {
+        "border": true,
+    },
+    "hover.floatConfig": {
+        "border": true,
+    },
     "languageserver": {
         "bash": {
             "command": "bash-language-server",
@@ -27,6 +36,9 @@
         }
     },
     "volar.disableDiagnostics": false,
-    "tsserver.useLocalTsdk": true,
+    "tsserver": {
+        "useLocalTsdk": false,
+        "log": "verbose"
+    },
     "css.validate": false
 }
