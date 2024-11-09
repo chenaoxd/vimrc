@@ -1,30 +1,4 @@
 {
-    "diagnostic.errorSign": "✘",
-    "diagnostic.warningSign": "⚠",
-    "suggest.floatConfig": {
-        "border": true,
-    },
-    "diagnostic.floatConfig": {
-        "border": true,
-    },
-    "signature.floatConfig": {
-        "border": true,
-    },
-    "hover.floatConfig": {
-        "border": true,
-    },
-    "languageserver": {
-        "bash": {
-            "command": "bash-language-server",
-            "args": ["start"],
-            "filetypes": ["sh"],
-            "ignoredRootPaths": ["~"]
-        },
-        "dhall": {
-            "command": "dhall-lsp-server",
-            "filetypes": ["dhall"]
-        }
-    },
     "rust-analyzer": {
         "inlayHints.enable": false,
         "server.path": "/home/chenao/Softwares/bin/rust-analyzer"
@@ -40,5 +14,33 @@
         "useLocalTsdk": false,
         "log": "verbose"
     },
-    "css.validate": false
+    "css.validate": false,
+    "sumneko-lua.enableNvimLuaDev": true,
+
+    "diagnostic.floatConfig": {
+        "border": true,
+    },
+    "signature.floatConfig": {
+        "border": true,
+    },
+    "hover.floatConfig": {
+        "border": true,
+    },
+    "diagnostic.errorSign": "✘",
+    "diagnostic.warningSign": "⚠",
+    "suggest.floatConfig": {
+        "border": true,
+    },
+    "languageserver": {
+        "bash": {
+            "command": "bash-language-server",
+            "args": ["start"],
+            "filetypes": ["sh"],
+            "ignoredRootPaths": ["~"]
+        },
+        "dhall": {
+            "command": "dhall-lsp-server",
+            "filetypes": ["dhall"]
+        }
+    }
 }
