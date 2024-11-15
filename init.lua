@@ -28,18 +28,15 @@ local tab_width = {
   css = 2,
 }
 
-for filetype, width in pairs(tab_width) do
-  local function set_tab_width(filetype, tab_width)
-    vim.api.nvim_create_autocmd('FileType', {
-      pattern = filetype,
-      callback = function()
-        vim.bo.tabstop = tab_width
-        vim.bo.shiftwidth = tab_width
-        vim.bo.expandtab = true
-      end,
-    })
-  end
-  set_tab_width(filetype, width)
+for ft, tw in pairs(tab_width) do
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = ft,
+    callback = function()
+      vim.bo.tabstop = tw
+      vim.bo.shiftwidth = tw
+      vim.bo.expandtab = true
+    end,
+  })
 end
 
 -----------------------------------------------------------------------------
