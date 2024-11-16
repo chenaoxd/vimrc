@@ -32,7 +32,6 @@ let g:coc_global_extensions = [
 Plug 'cespare/vim-toml'
 Plug 'tpope/vim-fugitive'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'puremourning/vimspector'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-tree/nvim-tree.lua'
 Plug 'f-person/git-blame.nvim'
