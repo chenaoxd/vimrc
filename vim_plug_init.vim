@@ -37,6 +37,7 @@ Plug 'craigmac/vim-mermaid'
 Plug 'leafOfTree/vim-vue-plugin'
 Plug 'echasnovski/mini.nvim'
 Plug 'MeanderingProgrammer/render-markdown.nvim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 
 " copilot related
 Plug 'zbirenbaum/copilot.lua'
