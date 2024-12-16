@@ -40,12 +40,12 @@ Plug 'MeanderingProgrammer/render-markdown.nvim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 
 " copilot related
-Plug 'zbirenbaum/copilot.lua'
-Plug 'stevearc/dressing.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'MunifTanjim/nui.nvim'
-Plug 'nvim-tree/nvim-web-devicons' "or Plug 'echasnovski/mini.icons'
-Plug 'HakonHarnes/img-clip.nvim'
-Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
+" Plug 'zbirenbaum/copilot.lua'
+" Plug 'stevearc/dressing.nvim'
+" Plug 'nvim-lua/plenary.nvim'
+" Plug 'MunifTanjim/nui.nvim'
+" Plug 'nvim-tree/nvim-web-devicons' "or Plug 'echasnovski/mini.icons'
+" Plug 'HakonHarnes/img-clip.nvim'
+" Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
 
 call plug#end()

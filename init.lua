@@ -95,23 +95,23 @@ map('n', '<leader>fh', ":Telescope help_tags<cr>", {silent = true})
 -----------------------------------------------------------------------------
 -- zbirenbaum/copilot settings
 -----------------------------------------------------------------------------
-require("copilot").setup {
-  panel = {
-    auto_refresh = true,
-  },
-  suggestion = {
-    auto_trigger = true,
-    keymap = {
-      accept = "<C-l>",
-      next = "<C-j>",
-      prev = "<C-k>",
-    }
-  },
-  filetypes = {
-    yaml = true,
-    markdown = true,
-  }
-}
+-- require("copilot").setup {
+--   panel = {
+--     auto_refresh = true,
+--   },
+--   suggestion = {
+--     auto_trigger = true,
+--     keymap = {
+--       accept = "<C-l>",
+--       next = "<C-j>",
+--       prev = "<C-k>",
+--     }
+--   },
+--   filetypes = {
+--     yaml = true,
+--     markdown = true,
+--   }
+-- }
 
 -----------------------------------------------------------------------------
 -- iamcco/markdown-preview.nvim settings
@@ -126,14 +126,14 @@ end, { expr = true, noremap = true, silent = true })
 -----------------------------------------------------------------------------
 -- yetone/avante.nvim settings
 -----------------------------------------------------------------------------
-require("avante_lib").load()
-require("avante").setup {
-  provider = "copilot",
-  auto_suggestions_provider = "copilot",
-  copilot = {
-    model = "claude-3.5-sonnet",
-  },
-}
+-- require("avante_lib").load()
+-- require("avante").setup {
+--   provider = "copilot",
+--   auto_suggestions_provider = "copilot",
+--   copilot = {
+--     model = "claude-3.5-sonnet",
+--   },
+-- }
 
 -----------------------------------------------------------------------------
 -- MeanderingProgrammer/render-markdown.nvim
