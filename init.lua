@@ -26,6 +26,7 @@ local tab_width = {
   vue = 2,
   lua = 2,
   css = 2,
+  json = 2,
 }
 
 for ft, tw in pairs(tab_width) do
