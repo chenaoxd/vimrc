@@ -139,6 +139,15 @@ local function create_markdown_hover_window(content)
     end)
   end
   
+  -- Helper function to close window and clean up
+  local function close_hover_window()
+    if vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_win_close(win, true)
+    end
+    -- Clean up global focus keymap
+    pcall(vim.keymap.del, 'n', '<Tab>')
+  end
+  
   -- Auto-close on cursor movement or other events (but not when focus is on hover window)
   vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI', 'InsertEnter' }, {
     once = true,
@@ -149,15 +158,6 @@ local function create_markdown_hover_window(content)
       end
     end,
   })
-  
-  -- Helper function to close window and clean up
-  local function close_hover_window()
-    if vim.api.nvim_win_is_valid(win) then
-      vim.api.nvim_win_close(win, true)
-    end
-    -- Clean up global focus keymap
-    pcall(vim.keymap.del, 'n', '<Tab>')
-  end
   
   -- Add scrolling and navigation keymaps
   local scroll_keymaps = {
