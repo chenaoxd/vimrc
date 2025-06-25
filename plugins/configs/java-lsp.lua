@@ -3,7 +3,6 @@ local M = {}
 
 function M.setup(on_attach, capabilities)
   require('lspconfig').jdtls.setup({
-    cmd = { vim.fn.expand('~/.local/share/nvim/mason/bin/jdtls') },
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
