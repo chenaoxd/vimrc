@@ -146,12 +146,18 @@ local function create_markdown_hover_window(content)
     end
     -- Clean up global focus keymap
     pcall(vim.keymap.del, 'n', '<Tab>')
-    -- Clean up autocmd group
-    pcall(vim.api.nvim_del_augroup_by_name, 'hover_window_' .. win)
   end
   
   -- Auto-close on cursor movement or other events (but not when focus is on hover window)
   local autocmd_group = vim.api.nvim_create_augroup('hover_window_' .. win, { clear = true })
+  local group_deleted = false
+  
+  local function cleanup_group()
+    if not group_deleted then
+      pcall(vim.api.nvim_del_augroup_by_id, autocmd_group)
+      group_deleted = true
+    end
+  end
   
   vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI', 'InsertEnter' }, {
     group = autocmd_group,
@@ -159,7 +165,7 @@ local function create_markdown_hover_window(content)
       -- Only close if current window is not the hover window and window is still valid
       if vim.api.nvim_win_is_valid(win) and vim.api.nvim_get_current_win() ~= win then
         close_hover_window()
-        vim.api.nvim_del_augroup_by_id(autocmd_group)
+        cleanup_group()
       end
     end,
   })
@@ -173,7 +179,7 @@ local function create_markdown_hover_window(content)
       vim.defer_fn(function()
         if vim.api.nvim_win_is_valid(win) and vim.api.nvim_get_current_win() ~= win then
           close_hover_window()
-          vim.api.nvim_del_augroup_by_id(autocmd_group)
+          cleanup_group()
         end
       end, 100)
     end,
@@ -181,8 +187,14 @@ local function create_markdown_hover_window(content)
   
   -- Add scrolling and navigation keymaps
   local scroll_keymaps = {
-    ['<Esc>'] = close_hover_window,
-    ['q'] = close_hover_window,
+    ['<Esc>'] = function()
+      close_hover_window()
+      cleanup_group()
+    end,
+    ['q'] = function()
+      close_hover_window()
+      cleanup_group()
+    end,
     ['<C-f>'] = function()
       vim.api.nvim_win_call(win, function()
         vim.cmd('normal! ' .. math.floor(vim.api.nvim_win_get_height(win) * 0.75) .. 'j')
