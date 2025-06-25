@@ -16,7 +16,6 @@ require("mason").setup({
 require("mason-lspconfig").setup({
   ensure_installed = {
     "lua_ls",
-    "ts_ls",
     "rust_analyzer",
     "pyright",
     "gopls",
@@ -24,7 +23,6 @@ require("mason-lspconfig").setup({
     "cssls",
     "jsonls",
     "tailwindcss",
-    "volar",
   },
   automatic_installation = true,
 })
@@ -140,11 +138,6 @@ vim.lsp.config('tailwindcss', {
   capabilities = capabilities,
 })
 
--- Vue
-vim.lsp.config('volar', {
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
 
 -- Completion setup
 local cmp = require('cmp')
