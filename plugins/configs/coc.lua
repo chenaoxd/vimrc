@@ -14,6 +14,7 @@ vim.g.coc_global_extensions = {
   '@yaegassy/coc-tailwindcss3',
   '@yaegassy/coc-volar',
   'coc-sumneko-lua',
+  'coc-java',
 }
 
 -- Some servers have issues with backup files, see #649.
