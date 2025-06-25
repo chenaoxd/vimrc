@@ -55,7 +55,7 @@ local function create_markdown_hover_window(content)
   local max_width = math.min(80, vim.o.columns - 4)
   local max_height = math.min(#lines + 2, vim.o.lines - 4)
   
-  -- Create floating window
+  -- Create floating window (focusable for scrolling)
   local win = vim.api.nvim_open_win(buf, false, {
     relative = 'cursor',
     width = max_width,
@@ -65,6 +65,7 @@ local function create_markdown_hover_window(content)
     border = 'rounded',
     style = 'minimal',
     zindex = 1000,
+    focusable = true,
   })
   
   -- Set window-specific highlighting to avoid white backgrounds
@@ -138,22 +139,82 @@ local function create_markdown_hover_window(content)
     end)
   end
   
-  -- Auto-close on cursor movement or other events
-  vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI', 'InsertEnter', 'WinLeave' }, {
+  -- Auto-close on cursor movement or other events (but not when focus is on hover window)
+  vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI', 'InsertEnter' }, {
     once = true,
     callback = function()
-      if vim.api.nvim_win_is_valid(win) then
-        vim.api.nvim_win_close(win, true)
+      -- Only close if current window is not the hover window
+      if vim.api.nvim_win_is_valid(win) and vim.api.nvim_get_current_win() ~= win then
+        close_hover_window()
       end
     end,
   })
   
-  -- Close on escape key
-  vim.keymap.set('n', '<Esc>', function()
+  -- Helper function to close window and clean up
+  local function close_hover_window()
     if vim.api.nvim_win_is_valid(win) then
       vim.api.nvim_win_close(win, true)
     end
-  end, { buffer = buf, nowait = true })
+    -- Clean up global focus keymap
+    pcall(vim.keymap.del, 'n', '<Tab>')
+  end
+  
+  -- Add scrolling and navigation keymaps
+  local scroll_keymaps = {
+    ['<Esc>'] = close_hover_window,
+    ['q'] = close_hover_window,
+    ['<C-f>'] = function()
+      vim.api.nvim_win_call(win, function()
+        vim.cmd('normal! ' .. math.floor(vim.api.nvim_win_get_height(win) * 0.75) .. 'j')
+      end)
+    end,
+    ['<C-b>'] = function()
+      vim.api.nvim_win_call(win, function()
+        vim.cmd('normal! ' .. math.floor(vim.api.nvim_win_get_height(win) * 0.75) .. 'k')
+      end)
+    end,
+    ['<C-d>'] = function()
+      vim.api.nvim_win_call(win, function()
+        vim.cmd('normal! ' .. math.floor(vim.api.nvim_win_get_height(win) * 0.5) .. 'j')
+      end)
+    end,
+    ['<C-u>'] = function()
+      vim.api.nvim_win_call(win, function()
+        vim.cmd('normal! ' .. math.floor(vim.api.nvim_win_get_height(win) * 0.5) .. 'k')
+      end)
+    end,
+    ['j'] = function()
+      vim.api.nvim_win_call(win, function()
+        vim.cmd('normal! j')
+      end)
+    end,
+    ['k'] = function()
+      vim.api.nvim_win_call(win, function()
+        vim.cmd('normal! k')
+      end)
+    end,
+    ['gg'] = function()
+      vim.api.nvim_win_call(win, function()
+        vim.cmd('normal! gg')
+      end)
+    end,
+    ['G'] = function()
+      vim.api.nvim_win_call(win, function()
+        vim.cmd('normal! G')
+      end)
+    end,
+  }
+  
+  for key, func in pairs(scroll_keymaps) do
+    vim.keymap.set('n', key, func, { buffer = buf, nowait = true })
+  end
+  
+  -- Global keymap to focus the hover window for scrolling
+  local focus_keymap_id = vim.keymap.set('n', '<Tab>', function()
+    if vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_set_current_win(win)
+    end
+  end, { desc = 'Focus hover window for scrolling' })
 end
 
 -- Convert LSP hover content to better markdown format
