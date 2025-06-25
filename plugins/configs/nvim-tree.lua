@@ -3,8 +3,25 @@ local M = {}
 
 local map = vim.keymap.set
 
+-- 自定义键位映射函数
+local function my_on_attach(bufnr)
+  local api = require "nvim-tree.api"
+
+  local function opts(desc)
+    return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+  end
+
+  -- 默认映射
+  api.config.mappings.default_on_attach(bufnr)
+
+  -- 自定义映射
+  vim.keymap.set('n', 'l', api.node.open.edit, opts('Open'))                        -- l: 展开目录或打开文件
+  vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts('Close Directory')) -- h: 收起目录
+end
+
 require("nvim-tree").setup {
   sort_by = "case_sensitive",
+  on_attach = my_on_attach,
   view = {
     width = 60,
   },
