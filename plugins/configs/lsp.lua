@@ -35,7 +35,16 @@ local function on_attach(client, bufnr)
   
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+  vim.keymap.set('n', 'K', function()
+    -- 首先显示 LSP hover 信息
+    vim.lsp.buf.hover()
+    -- 然后显示当前行的诊断信息
+    vim.diagnostic.open_float(nil, { 
+      focus = false,
+      scope = "cursor",
+      header = "Diagnostics:",
+    })
+  end, opts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
   vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
@@ -196,14 +205,19 @@ vim.lsp.config('eslint', {
     experimental = {
       useFlatConfig = false
     },
-    format = true,
+    format = false,  -- 让 TypeScript 服务器处理格式化
     nodePath = "",
     onIgnoredFiles = "off",
     problems = {
       shortenToSingleLine = false
     },
     quiet = false,
-    rulesCustomizations = {},
+    rulesCustomizations = {
+      -- 避免与 TypeScript 服务器重复的规则
+      ["@typescript-eslint/no-explicit-any"] = "off",
+      ["@typescript-eslint/no-unused-vars"] = "off",
+      ["@typescript-eslint/explicit-function-return-type"] = "off",
+    },
     run = "onType",
     useESLintClass = false,
     validate = "on",
@@ -306,8 +320,45 @@ vim.diagnostic.config({
   },
   underline = true,
   update_in_insert = false,
-  severity_sort = false,
+  severity_sort = true,
+  float = {
+    border = "rounded",
+    source = "always",
+    header = "",
+    prefix = "",
+    format = function(diagnostic)
+      local code = diagnostic.code or diagnostic.user_data and diagnostic.user_data.lsp and diagnostic.user_data.lsp.code
+      if code then
+        return string.format("%s [%s]", diagnostic.message, code)
+      end
+      return diagnostic.message
+    end,
+  },
 })
+
+-- 自定义 on_publish_diagnostics 来过滤重复诊断
+local original_handler = vim.lsp.handlers["textDocument/publishDiagnostics"]
+vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, result, ctx, config)
+  local diagnostics = result.diagnostics or {}
+  local filtered = {}
+  local seen = {}
+  
+  for _, diagnostic in ipairs(diagnostics) do
+    local key = string.format("%d:%d:%s:%s", 
+      diagnostic.range.start.line, 
+      diagnostic.range.start.character, 
+      diagnostic.message,
+      diagnostic.source or ""
+    )
+    if not seen[key] then
+      seen[key] = true
+      table.insert(filtered, diagnostic)
+    end
+  end
+  
+  result.diagnostics = filtered
+  original_handler(_, result, ctx, config)
+end
 
 
 return M
