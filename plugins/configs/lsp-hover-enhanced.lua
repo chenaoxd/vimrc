@@ -146,16 +146,36 @@ local function create_markdown_hover_window(content)
     end
     -- Clean up global focus keymap
     pcall(vim.keymap.del, 'n', '<Tab>')
+    -- Clean up autocmd group
+    pcall(vim.api.nvim_del_augroup_by_name, 'hover_window_' .. win)
   end
   
   -- Auto-close on cursor movement or other events (but not when focus is on hover window)
+  local autocmd_group = vim.api.nvim_create_augroup('hover_window_' .. win, { clear = true })
+  
   vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI', 'InsertEnter' }, {
-    once = true,
+    group = autocmd_group,
     callback = function()
-      -- Only close if current window is not the hover window
+      -- Only close if current window is not the hover window and window is still valid
       if vim.api.nvim_win_is_valid(win) and vim.api.nvim_get_current_win() ~= win then
         close_hover_window()
+        vim.api.nvim_del_augroup_by_id(autocmd_group)
       end
+    end,
+  })
+  
+  -- Auto-close when leaving the hover window
+  vim.api.nvim_create_autocmd('WinLeave', {
+    group = autocmd_group,
+    buffer = buf,
+    callback = function()
+      -- Delay closing to allow for window switching
+      vim.defer_fn(function()
+        if vim.api.nvim_win_is_valid(win) and vim.api.nvim_get_current_win() ~= win then
+          close_hover_window()
+          vim.api.nvim_del_augroup_by_id(autocmd_group)
+        end
+      end, 100)
     end,
   })
   
@@ -213,6 +233,8 @@ local function create_markdown_hover_window(content)
   local focus_keymap_id = vim.keymap.set('n', '<Tab>', function()
     if vim.api.nvim_win_is_valid(win) then
       vim.api.nvim_set_current_win(win)
+      -- Show a message to indicate window focus
+      vim.notify("Hover window focused - use j/k to scroll, q/Esc to close", vim.log.levels.INFO, { timeout = 1000 })
     end
   end, { desc = 'Focus hover window for scrolling' })
 end
