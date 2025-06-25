@@ -110,7 +110,8 @@ local function create_markdown_hover_window(content)
           min_width = 60,
         },
         bullet = {
-          enabled = false, -- Disable render-markdown bullet rendering
+          enabled = true,
+          icons = { '•', '◦', '▸', '▹' },
         },
         checkbox = {
           enabled = true,
@@ -140,6 +141,16 @@ local function create_markdown_hover_window(content)
         },
         sign = {
           enabled = false, -- Disable signs in floating windows
+        },
+        inline_code = {
+          enabled = true,
+          icon = '󰌗 ',
+          highlight = 'RenderMarkdownCode',
+        },
+        emphasis = {
+          enabled = true,
+          strong = true,
+          italic = true,
         },
       }
     end)
@@ -266,9 +277,25 @@ local function process_hover_content(contents)
   if content ~= "" then
     -- Split into lines for better processing
     local lines = vim.split(content, '\n')
+    
+    -- First pass: find minimum list indentation level
+    local min_list_indent = nil
+    for _, line in ipairs(lines) do
+      local is_list = line:match("^%s*[%*%-]%s+")
+      if is_list then
+        local indent_level = #line:match("^(%s*)")
+        if min_list_indent == nil then
+          min_list_indent = indent_level
+        else
+          min_list_indent = math.min(min_list_indent, indent_level)
+        end
+      end
+    end
+    
+    -- Second pass: process lines with proper spacing
     local processed_lines = {}
     local prev_was_list = false
-    local prev_indent_level = 0
+    local prev_relative_indent = 0
     
     for i, line in ipairs(lines) do
       local indent = line:match("^(%s*)")
@@ -278,19 +305,32 @@ local function process_hover_content(contents)
         local current_indent_level = #indent
         local list_content = line:match("^%s*[%*%-]%s+(.*)")
         
-        -- Add spacing before first-level list items (except the very first one)
-        if current_indent_level == 0 and prev_was_list and prev_indent_level > 0 then
-          table.insert(processed_lines, "")
+        -- Calculate relative indent level (0 = top level)
+        local relative_indent = current_indent_level - (min_list_indent or 0)
+        
+        -- Add spacing before top-level list items (relative level 0)
+        if relative_indent == 0 and #processed_lines > 0 then
+          -- Add space if coming from non-list content or from deeper level
+          if not prev_was_list or prev_relative_indent > 0 then
+            table.insert(processed_lines, "")
+          end
         end
         
-        table.insert(processed_lines, indent .. "▸ " .. list_content)
+        -- Use proper markdown list formatting and preserve the original content
+        table.insert(processed_lines, indent .. "- " .. list_content)
         prev_was_list = true
-        prev_indent_level = current_indent_level
+        prev_relative_indent = relative_indent
       else
         -- Not a list item
         if trim(line) == "" then
-          -- Keep empty lines but avoid duplicates
-          if #processed_lines > 0 and processed_lines[#processed_lines] ~= "" then
+          -- Skip empty lines if they come after a list item or before a list item
+          local next_line_is_list = false
+          if i < #lines then
+            next_line_is_list = lines[i + 1]:match("^%s*[%*%-]%s+") ~= nil
+          end
+          
+          -- Only keep empty lines if not between list items or after list items
+          if not prev_was_list and not next_line_is_list and #processed_lines > 0 and processed_lines[#processed_lines] ~= "" then
             table.insert(processed_lines, "")
           end
         else
