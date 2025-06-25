@@ -18,4 +18,4 @@ require("plugins.init")
 -- Load remaining core configurations
 require("core.keymaps")      -- Global key mappings
 require("core.autocmds")     -- Auto commands
-require("core.highlights")   -- Colors and highlights
+require("core.theme")        -- Theme and UI highlights
