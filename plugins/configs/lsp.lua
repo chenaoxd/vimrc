@@ -36,14 +36,7 @@ local function on_attach(client, bufnr)
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
   vim.keymap.set('n', 'K', function()
-    -- 首先显示 LSP hover 信息
-    vim.lsp.buf.hover()
-    -- 然后显示当前行的诊断信息
-    vim.diagnostic.open_float(nil, { 
-      focus = false,
-      scope = "cursor",
-      header = "Diagnostics:",
-    })
+    require('plugins.configs.lsp-hover-enhanced').show_enhanced_hover()
   end, opts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
