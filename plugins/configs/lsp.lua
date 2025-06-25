@@ -16,6 +16,7 @@ require("mason").setup({
 require("mason-lspconfig").setup({
   ensure_installed = {
     "lua_ls",
+    "ts_ls",
     "rust_analyzer",
     "pyright",
     "gopls",
@@ -23,6 +24,7 @@ require("mason-lspconfig").setup({
     "cssls",
     "jsonls",
     "tailwindcss",
+    "eslint",
   },
   automatic_installation = true,
 })
@@ -86,10 +88,35 @@ vim.lsp.config('lua_ls', {
   },
 })
 
--- TypeScript/JavaScript
+-- TypeScript/JavaScript (with React support)
 vim.lsp.config('ts_ls', {
   on_attach = on_attach,
   capabilities = capabilities,
+  filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
+  settings = {
+    typescript = {
+      inlayHints = {
+        includeInlayParameterNameHints = "all",
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      },
+    },
+    javascript = {
+      inlayHints = {
+        includeInlayParameterNameHints = "all",
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      },
+    },
+  },
 })
 
 -- Rust
@@ -136,6 +163,55 @@ vim.lsp.config('jsonls', {
 vim.lsp.config('tailwindcss', {
   on_attach = on_attach,
   capabilities = capabilities,
+})
+
+-- ESLint (for React/JavaScript linting)
+vim.lsp.config('eslint', {
+  on_attach = function(client, bufnr)
+    -- Call the default on_attach first
+    on_attach(client, bufnr)
+    
+    -- ESLint specific keymaps
+    vim.keymap.set('n', '<leader>ef', function()
+      vim.lsp.buf.execute_command({
+        command = 'eslint.executeAutofix',
+      })
+    end, { buffer = bufnr, desc = 'ESLint: Fix all auto-fixable problems' })
+  end,
+  capabilities = capabilities,
+  settings = {
+    codeAction = {
+      disableRuleComment = {
+        enable = true,
+        location = "separateLine"
+      },
+      showDocumentation = {
+        enable = true
+      }
+    },
+    codeActionOnSave = {
+      enable = false,
+      mode = "all"
+    },
+    experimental = {
+      useFlatConfig = false
+    },
+    format = true,
+    nodePath = "",
+    onIgnoredFiles = "off",
+    problems = {
+      shortenToSingleLine = false
+    },
+    quiet = false,
+    rulesCustomizations = {},
+    run = "onType",
+    useESLintClass = false,
+    validate = "on",
+    workingDirectory = {
+      mode = "location"
+    }
+  },
+  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
 })
 
 
