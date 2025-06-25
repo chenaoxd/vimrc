@@ -1,180 +1,145 @@
--- Enhanced LSP hover with beautiful styling and diagnostics integration
+-- Enhanced LSP hover using render-markdown.nvim for beautiful markdown rendering
 local M = {}
 
--- Highlight group definitions
-local highlights = {
-  title = { fg = '#7aa2f7', bold = true },
-  error = { fg = '#f7768e' },
-  warn = { fg = '#e0af68' },
-  hint = { fg = '#0db9d7' },
-  info = { fg = '#9ece6a' },
-  code_bg = { bg = '#2a2a2a', fg = '#c0caf5' },
-  code_lang = { fg = '#f7768e', italic = true, bold = true },
-  inline_code = { bg = '#1f2335', fg = '#bb9af7' },
-}
-
--- Setup highlight groups
-local function setup_highlights()
-  for name, config in pairs(highlights) do
-    vim.api.nvim_set_hl(0, 'LspHover' .. name:gsub('_', ''):gsub('^%l', string.upper), config)
-  end
+-- Helper function to trim whitespace
+local function trim(s)
+  return s:match("^%s*(.-)%s*$")
 end
 
 -- Diagnostic severity mapping
 local severity_map = {
-  [vim.diagnostic.severity.ERROR] = { icon = '❌', name = 'ERROR', hl = 'LspHoverError' },
-  [vim.diagnostic.severity.WARN] = { icon = '⚠️', name = 'WARN', hl = 'LspHoverWarn' },
-  [vim.diagnostic.severity.HINT] = { icon = '💡', name = 'HINT', hl = 'LspHoverHint' },
-  [vim.diagnostic.severity.INFO] = { icon = 'ℹ️', name = 'INFO', hl = 'LspHoverInfo' },
+  [vim.diagnostic.severity.ERROR] = { icon = '❌', name = 'ERROR', hl = 'DiagnosticError' },
+  [vim.diagnostic.severity.WARN] = { icon = '⚠️', name = 'WARN', hl = 'DiagnosticWarn' },
+  [vim.diagnostic.severity.HINT] = { icon = '💡', name = 'HINT', hl = 'DiagnosticHint' },
+  [vim.diagnostic.severity.INFO] = { icon = 'ℹ️', name = 'INFO', hl = 'DiagnosticInfo' },
 }
 
--- Process inline code patterns
-local function process_inline_code(text, highlights_list, line_idx)
-  local processed = text
-  local inline_codes = {}
+-- Add diagnostic information as markdown
+local function add_diagnostics_markdown(diagnostics)
+  if #diagnostics == 0 then return "" end
   
-  -- Find all inline code patterns
-  for code_match in text:gmatch("`([^`]+)`") do
-    local start_pos, end_pos = text:find("`" .. code_match:gsub("([%(%)%.%+%-%*%?%[%]%^%$%%])", "%%%1") .. "`")
-    if start_pos then
-      table.insert(inline_codes, { 
-        start_pos = start_pos - 1, 
-        end_pos = end_pos, 
-        text = code_match 
-      })
-    end
-  end
-  
-  -- Replace inline code display and add highlights
-  for i = #inline_codes, 1, -1 do
-    local code = inline_codes[i]
-    processed = processed:sub(1, code.start_pos) .. "⟨" .. code.text .. "⟩" .. processed:sub(code.end_pos + 1)
-    local new_start = code.start_pos
-    local new_end = new_start + 1 + #code.text + 1  -- ⟨text⟩
-    table.insert(highlights_list, { 
-      line = line_idx, 
-      col_start = new_start, 
-      col_end = new_end, 
-      hl_group = 'LspHoverInlineCode' 
-    })
-  end
-  
-  return processed
-end
-
--- Process code blocks from hover content
-local function process_code_blocks(hover_lines, lines, highlights_list)
-  local in_code_block = false
-  local code_width = 70  -- Minimum width for background consistency
-  
-  for _, line in ipairs(hover_lines) do
-    if line:match("^```") then
-      if not in_code_block then
-        -- Start of code block
-        in_code_block = true
-        local code_lang = line:match("^```(%w+)") or "text"
-        local lang_text = "  " .. (code_lang ~= "text" and code_lang or "code") .. ":"
-        table.insert(lines, lang_text)
-        
-        -- Highlight only the language name and colon
-        local lang_start = 2
-        local lang_end = lang_start + #(code_lang ~= "text" and code_lang or "code") + 1
-        table.insert(highlights_list, { 
-          line = #lines - 1, 
-          col_start = lang_start, 
-          col_end = lang_end, 
-          hl_group = 'LspHoverCodeLang' 
-        })
-      else
-        -- End of code block
-        in_code_block = false
-        table.insert(lines, "")  -- Add spacing after code block
-      end
-    elseif in_code_block then
-      -- Code block content
-      local content = "    " .. line
-      if #content < code_width then
-        content = content .. string.rep(" ", code_width - #content)
-      end
-      table.insert(lines, content)
-      
-      -- Background highlight starting from position 2 (aligned with language label)
-      table.insert(highlights_list, { 
-        line = #lines - 1, 
-        col_start = 2, 
-        col_end = -1, 
-        hl_group = 'LspHoverCodeBg' 
-      })
-    else
-      -- Regular text with inline code processing
-      local processed_line = process_inline_code(line, highlights_list, #lines)
-      table.insert(lines, processed_line)
-    end
-  end
-end
-
--- Add diagnostic information to display
-local function add_diagnostics(diagnostics, lines, highlights_list)
-  if #diagnostics == 0 then return end
-  
-  table.insert(lines, "🔍 Diagnostics")
-  table.insert(highlights_list, { 
-    line = #lines - 1, 
-    col_start = 0, 
-    col_end = -1, 
-    hl_group = 'LspHoverTitle' 
-  })
-  table.insert(lines, "")
+  local lines = {"🔍 **Diagnostics**", ""}
   
   for _, diagnostic in ipairs(diagnostics) do
     local severity_info = severity_map[diagnostic.severity] or severity_map[vim.diagnostic.severity.INFO]
-    local code = diagnostic.code and string.format(" [%s]", diagnostic.code) or ""
-    local line_text = string.format("• %s %s: %s%s", 
+    local code = diagnostic.code and string.format(" `[%s]`", diagnostic.code) or ""
+    local line_text = string.format("- %s **%s**: %s%s", 
       severity_info.icon, severity_info.name, diagnostic.message, code)
-    
     table.insert(lines, line_text)
-    table.insert(highlights_list, { 
-      line = #lines - 1, 
-      col_start = 0, 
-      col_end = -1, 
-      hl_group = severity_info.hl 
-    })
   end
   
-  -- Add separator
   table.insert(lines, "")
-  table.insert(lines, "────────────────────")
+  table.insert(lines, "---")
   table.insert(lines, "")
+  
+  return table.concat(lines, "\n")
 end
 
--- Create and display the enhanced hover window
-local function create_hover_window(lines, highlights_list)
+-- Create and display the enhanced hover window with markdown rendering
+local function create_markdown_hover_window(content)
+  -- Create a temporary buffer for markdown content
   local buf = vim.api.nvim_create_buf(false, true)
+  
+  -- Set buffer options for markdown
+  vim.api.nvim_set_option_value('filetype', 'markdown', { buf = buf })
+  vim.api.nvim_set_option_value('modifiable', true, { buf = buf })
+  
+  -- Set the markdown content
+  local lines = vim.split(content, '\n')
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
   
+  -- Make buffer read-only after setting content
+  vim.api.nvim_set_option_value('modifiable', false, { buf = buf })
+  
+  -- Calculate window dimensions
+  local max_width = math.min(80, vim.o.columns - 4)
+  local max_height = math.min(#lines + 2, vim.o.lines - 4)
+  
+  -- Create floating window
   local win = vim.api.nvim_open_win(buf, false, {
     relative = 'cursor',
-    width = math.min(80, vim.o.columns - 4),
-    height = math.min(#lines + 2, vim.o.lines - 4),
+    width = max_width,
+    height = max_height,
     row = 1,
     col = 0,
     border = 'rounded',
     style = 'minimal',
-    title = ' 📖 LSP Info ',
-    title_pos = 'center',
+    zindex = 1000,
   })
   
-  -- Apply all highlights
-  local ns_id = vim.api.nvim_create_namespace('lsp_hover_enhanced')
-  for _, hl in ipairs(highlights_list) do
-    vim.api.nvim_buf_add_highlight(buf, ns_id, hl.hl_group, hl.line, hl.col_start, hl.col_end)
+  -- Set window-specific highlighting to avoid white backgrounds
+  vim.api.nvim_set_option_value('winhl', 'Normal:NormalFloat,FloatBorder:FloatBorder', { win = win })
+  
+  -- Enable render-markdown for this buffer if available
+  local ok, render_markdown = pcall(require, 'render-markdown')
+  if ok then
+    -- Enable render-markdown for this specific buffer
+    render_markdown.enable(buf)
+    
+    -- Set up specific render-markdown config for hover windows
+    vim.api.nvim_buf_call(buf, function()
+      vim.b.render_markdown = {
+        enabled = true,
+        max_file_size = 10.0, -- Allow larger content for documentation
+        render_modes = true,
+        anti_conceal = {
+          enabled = false, -- Keep concealing for cleaner display
+        },
+        heading = {
+          enabled = true,
+          sign = false, -- Disable signs in floating window
+          icons = { '📌 ', '▶ ', '▸ ', '• ', '◦ ', '▫ ' },
+          width = 'full',
+          min_width = 20,
+          backgrounds = { '', '', '', '', '', '' }, -- Remove heading backgrounds
+        },
+        code = {
+          enabled = true,
+          sign = false,
+          style = 'full',
+          position = 'left',
+          language_pad = 2,
+          width = 'block',
+          min_width = 60,
+        },
+        bullet = {
+          enabled = false, -- Disable render-markdown bullet rendering
+        },
+        checkbox = {
+          enabled = true,
+          unchecked = { icon = '󰄱 ' },
+          checked = { icon = '󰱒 ' },
+        },
+        quote = {
+          enabled = true,
+          icon = '▎',
+        },
+        pipe_table = {
+          enabled = true,
+          style = 'full',
+        },
+        callout = {
+          enabled = true,
+          note = { raw = '[!NOTE]', rendered = '󰋽 Note', highlight = 'RenderMarkdownInfo' },
+          tip = { raw = '[!TIP]', rendered = '󰌶 Tip', highlight = 'RenderMarkdownSuccess' },
+          important = { raw = '[!IMPORTANT]', rendered = '󰅾 Important', highlight = 'RenderMarkdownHint' },
+          warning = { raw = '[!WARNING]', rendered = '󰀪 Warning', highlight = 'RenderMarkdownWarn' },
+          caution = { raw = '[!CAUTION]', rendered = '󰳦 Caution', highlight = 'RenderMarkdownError' },
+        },
+        link = {
+          enabled = true,
+          image = '󰥶 ',
+          hyperlink = '󰌷 ',
+        },
+        sign = {
+          enabled = false, -- Disable signs in floating windows
+        },
+      }
+    end)
   end
   
-  -- Make buffer read-only
-  vim.api.nvim_set_option_value('modifiable', false, { buf = buf })
-  
-  -- Auto-close on cursor movement
-  vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI', 'InsertEnter' }, {
+  -- Auto-close on cursor movement or other events
+  vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI', 'InsertEnter', 'WinLeave' }, {
     once = true,
     callback = function()
       if vim.api.nvim_win_is_valid(win) then
@@ -182,16 +147,100 @@ local function create_hover_window(lines, highlights_list)
       end
     end,
   })
+  
+  -- Close on escape key
+  vim.keymap.set('n', '<Esc>', function()
+    if vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_win_close(win, true)
+    end
+  end, { buffer = buf, nowait = true })
 end
 
--- Main function to show enhanced hover
+-- Convert LSP hover content to better markdown format
+local function process_hover_content(contents)
+  local content = ""
+  
+  -- Handle different types of LSP content
+  if type(contents) == 'string' then
+    content = contents
+  elseif contents.kind == 'markdown' then
+    content = contents.value
+  elseif contents.kind == 'plaintext' then
+    -- Wrap plain text in code blocks for better formatting
+    content = "```\n" .. contents.value .. "\n```"
+  elseif type(contents) == 'table' then
+    local result = {}
+    for _, item in ipairs(contents) do
+      if type(item) == 'string' then
+        table.insert(result, item)
+      elseif item.kind == 'markdown' then
+        table.insert(result, item.value)
+      elseif item.kind == 'plaintext' then
+        table.insert(result, "```\n" .. item.value .. "\n```")
+      end
+    end
+    content = table.concat(result, "\n\n")
+  end
+  
+  -- Process and clean up the content
+  if content ~= "" then
+    -- Split into lines for better processing
+    local lines = vim.split(content, '\n')
+    local processed_lines = {}
+    local prev_was_list = false
+    local prev_indent_level = 0
+    
+    for i, line in ipairs(lines) do
+      local indent = line:match("^(%s*)")
+      local is_list = line:match("^%s*[%*%-]%s+")
+      
+      if is_list then
+        local current_indent_level = #indent
+        local list_content = line:match("^%s*[%*%-]%s+(.*)")
+        
+        -- Add spacing before first-level list items (except the very first one)
+        if current_indent_level == 0 and prev_was_list and prev_indent_level > 0 then
+          table.insert(processed_lines, "")
+        end
+        
+        table.insert(processed_lines, indent .. "▸ " .. list_content)
+        prev_was_list = true
+        prev_indent_level = current_indent_level
+      else
+        -- Not a list item
+        if trim(line) == "" then
+          -- Keep empty lines but avoid duplicates
+          if #processed_lines > 0 and processed_lines[#processed_lines] ~= "" then
+            table.insert(processed_lines, "")
+          end
+        else
+          table.insert(processed_lines, line)
+        end
+        prev_was_list = false
+        prev_indent_level = 0
+      end
+    end
+    
+    content = table.concat(processed_lines, '\n')
+    
+    -- Final cleanup: remove excessive empty lines
+    content = content:gsub("\n\n\n+", "\n\n")
+    content = content:gsub("^%s*\n", "") -- Remove leading empty lines
+    content = content:gsub("\n%s*$", "") -- Remove trailing empty lines
+  end
+  
+  return content
+end
+
+-- Main function to show enhanced hover with render-markdown
 function M.show_enhanced_hover()
+  -- Get diagnostics for current line
   local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line('.') - 1 })
   
   -- Request LSP hover information
   local params = vim.lsp.util.make_position_params(0, 'utf-16')
   vim.lsp.buf_request(0, 'textDocument/hover', params, function(err, result)
-    if err or not result or not result.contents then
+    if err then
       -- Fallback to diagnostics only if available
       if #diagnostics > 0 then
         vim.diagnostic.open_float()
@@ -199,33 +248,33 @@ function M.show_enhanced_hover()
       return
     end
     
-    local lines = {}
-    local highlights_list = {}
+    local markdown_content = ""
     
     -- Add diagnostics if present
-    add_diagnostics(diagnostics, lines, highlights_list)
-    
-    -- Process hover content
-    local hover_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
-    if #hover_lines > 0 then
-      table.insert(lines, "📖 Documentation")
-      table.insert(highlights_list, { 
-        line = #lines - 1, 
-        col_start = 0, 
-        col_end = -1, 
-        hl_group = 'LspHoverTitle' 
-      })
-      table.insert(lines, "")
-      
-      process_code_blocks(hover_lines, lines, highlights_list)
+    local diagnostic_markdown = add_diagnostics_markdown(diagnostics)
+    if diagnostic_markdown ~= "" then
+      markdown_content = diagnostic_markdown
     end
     
-    -- Display the enhanced hover window
-    create_hover_window(lines, highlights_list)
+    -- Process hover content if available
+    if result and result.contents then
+      local hover_markdown = process_hover_content(result.contents)
+      if hover_markdown and hover_markdown ~= "" then
+        if markdown_content ~= "" then
+          markdown_content = markdown_content .. "\n"
+        end
+        markdown_content = markdown_content .. "📖 **Documentation**\n\n" .. hover_markdown
+      end
+    end
+    
+    -- Show content if we have any
+    if markdown_content ~= "" then
+      create_markdown_hover_window(markdown_content)
+    elseif #diagnostics > 0 then
+      -- Fallback to standard diagnostic float
+      vim.diagnostic.open_float()
+    end
   end)
 end
-
--- Initialize highlights on module load
-setup_highlights()
 
 return M
