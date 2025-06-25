@@ -60,11 +60,10 @@ end
 -- Completion capabilities
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
--- Configure individual LSP servers
-local lspconfig = require('lspconfig')
+-- Configure individual LSP servers using vim.lsp.config (Neovim 0.11+)
 
 -- Lua
-lspconfig.lua_ls.setup({
+vim.lsp.config('lua_ls', {
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {
@@ -79,8 +78,7 @@ lspconfig.lua_ls.setup({
         library = {
           [vim.fn.expand("$VIMRUNTIME/lua")] = true,
           [vim.fn.expand("$VIMRUNTIME/lua/vim")] = true,
-          [vim.fn.expand("/usr/share/nvim/runtime/lua")] = true  -- Linux路径
-          -- Windows示例: [vim.fn.expand("C:/Neovim/share/nvim/runtime/lua")] = true
+          [vim.fn.expand("/usr/share/nvim/runtime/lua")] = true
         }
       },
       telemetry = {
@@ -91,13 +89,13 @@ lspconfig.lua_ls.setup({
 })
 
 -- TypeScript/JavaScript
-lspconfig.ts_ls.setup({
+vim.lsp.config('ts_ls', {
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
 -- Rust
-lspconfig.rust_analyzer.setup({
+vim.lsp.config('rust_analyzer', {
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {
@@ -110,13 +108,13 @@ lspconfig.rust_analyzer.setup({
 })
 
 -- Python
-lspconfig.pyright.setup({
+vim.lsp.config('pyright', {
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
 -- Go
-lspconfig.gopls.setup({
+vim.lsp.config('gopls', {
   on_attach = on_attach,
   capabilities = capabilities,
 })
@@ -125,25 +123,25 @@ lspconfig.gopls.setup({
 require('plugins.configs.java-lsp').setup(on_attach, capabilities)
 
 -- CSS
-lspconfig.cssls.setup({
+vim.lsp.config('cssls', {
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
 -- JSON
-lspconfig.jsonls.setup({
+vim.lsp.config('jsonls', {
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
 -- Tailwind CSS
-lspconfig.tailwindcss.setup({
+vim.lsp.config('tailwindcss', {
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
 -- Vue
-lspconfig.volar.setup({
+vim.lsp.config('volar', {
   on_attach = on_attach,
   capabilities = capabilities,
 })

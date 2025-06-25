@@ -2,9 +2,7 @@
 local M = {}
 
 function M.setup(on_attach, capabilities)
-  local lspconfig = require('lspconfig')
-  
-  lspconfig.jdtls.setup({
+  vim.lsp.config('jdtls', {
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
@@ -122,12 +120,12 @@ function M.setup(on_attach, capabilities)
     -- File type associations for Spring Boot
     filetypes = { "java" },
     root_dir = function(fname)
-      return lspconfig.util.root_pattern(
+      return vim.fs.root(fname, {
         'pom.xml',
         'build.gradle',
         'build.gradle.kts',
         '.git'
-      )(fname) or vim.fn.getcwd()
+      }) or vim.fn.getcwd()
     end,
   })
 end
