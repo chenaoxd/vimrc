@@ -101,6 +101,13 @@ require("lazy").setup({
   "nvim-tree/nvim-web-devicons",
   "echasnovski/mini.nvim",
 
+  -- Themes
+  {
+    "dracula/vim",
+    name = "dracula",
+    priority = 1000,
+  },
+
   -- Markdown support
   {
     "MeanderingProgrammer/render-markdown.nvim",
