@@ -76,7 +76,12 @@ lspconfig.lua_ls.setup({
         globals = {'vim'},
       },
       workspace = {
-        library = vim.api.nvim_get_runtime_file("", true),
+        library = {
+          [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+          [vim.fn.expand("$VIMRUNTIME/lua/vim")] = true,
+          [vim.fn.expand("/usr/share/nvim/runtime/lua")] = true  -- Linux路径
+          -- Windows示例: [vim.fn.expand("C:/Neovim/share/nvim/runtime/lua")] = true
+        }
       },
       telemetry = {
         enable = false,
@@ -116,11 +121,8 @@ lspconfig.gopls.setup({
   capabilities = capabilities,
 })
 
--- Java
-lspconfig.jdtls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
+-- Java (with Spring Boot and Lombok support)
+require('plugins.configs.java-lsp').setup(on_attach, capabilities)
 
 -- CSS
 lspconfig.cssls.setup({
