@@ -50,12 +50,11 @@ local function on_attach(client, bufnr)
   vim.keymap.set('n', '<leader>f', function()
     vim.lsp.buf.format { async = true }
   end, opts)
-  
   -- Diagnostic keymaps
   vim.keymap.set('n', '[g', vim.diagnostic.goto_prev, opts)
   vim.keymap.set('n', ']g', vim.diagnostic.goto_next, opts)
   vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
-  vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
+  vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist, opts)
 end
 
 -- Completion capabilities
@@ -217,21 +216,29 @@ cmp.setup.cmdline(':', {
   })
 })
 
+-- Auto-close quickfix when selecting an item
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "qf",
+  callback = function()
+    vim.keymap.set('n', '<CR>', '<CR>:cclose<CR>', { buffer = true, silent = true })
+  end,
+})
+
 -- Diagnostic configuration
 vim.diagnostic.config({
   virtual_text = true,
-  signs = true,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = " ",
+      [vim.diagnostic.severity.WARN] = " ",
+      [vim.diagnostic.severity.HINT] = " ",
+      [vim.diagnostic.severity.INFO] = " ",
+    },
+  },
   underline = true,
   update_in_insert = false,
   severity_sort = false,
 })
-
--- Diagnostic signs
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-end
 
 
 return M
