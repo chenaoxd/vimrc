@@ -2,7 +2,8 @@
 local M = {}
 
 function M.setup(on_attach, capabilities)
-  vim.lsp.config('jdtls', {
+  require('lspconfig').jdtls.setup({
+    cmd = { vim.fn.expand('~/.local/share/nvim/mason/bin/jdtls') },
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
@@ -10,17 +11,9 @@ function M.setup(on_attach, capabilities)
         configuration = {
           runtimes = {
             {
-              name = "JavaSE-11",
-              path = "/opt/homebrew/opt/openjdk@11",
-              default = true,
-            },
-            {
-              name = "JavaSE-17", 
-              path = "/opt/homebrew/opt/openjdk@17",
-            },
-            {
               name = "JavaSE-21",
-              path = "/opt/homebrew/opt/openjdk@21",
+              path = "/opt/homebrew/opt/java",
+              default = true,
             },
           }
         },
