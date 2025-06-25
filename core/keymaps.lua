@@ -42,7 +42,34 @@ map("n", "<Leader>nf", ":e %:h/", opts)
 map("n", "<Leader>Y", "V\"+y", opts)
 map("n", "<Leader>y", "\"+y", opts)
 map("n", "<Leader>u", "\"up", opts)
-map("n", "<Leader>p", "\"+p", opts)
+
+-- Smart paste function that checks if buffer is modifiable
+local function smart_paste()
+  if vim.bo.modifiable and not vim.bo.readonly then
+    vim.cmd('normal! "+p')
+  else
+    print("Buffer is not modifiable")
+  end
+end
+
+-- Override default paste keys to use smart paste
+map("n", "p", function()
+  if vim.bo.modifiable and not vim.bo.readonly then
+    vim.cmd('normal! p')
+  else
+    print("Buffer is not modifiable")
+  end
+end, opts)
+
+map("n", "P", function()
+  if vim.bo.modifiable and not vim.bo.readonly then
+    vim.cmd('normal! P')
+  else
+    print("Buffer is not modifiable")
+  end
+end, opts)
+
+map("n", "<Leader>p", smart_paste, opts)
 
 -- Tab management
 map("n", "<Leader>tn", ":tabnew<cr>", opts)
