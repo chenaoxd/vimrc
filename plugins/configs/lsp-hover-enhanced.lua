@@ -1,6 +1,9 @@
 -- Enhanced LSP hover using render-markdown.nvim for beautiful markdown rendering
 local M = {}
 
+-- Track if we have an active hover window
+local active_hover_win = nil
+
 -- Helper function to trim whitespace
 local function trim(s)
   return s:match("^%s*(.-)%s*$")
@@ -67,6 +70,9 @@ local function create_markdown_hover_window(content)
     zindex = 1000,
     focusable = true,
   })
+  
+  -- Track this as the active hover window
+  active_hover_win = win
   
   -- Set window-specific highlighting to avoid white backgrounds
   vim.api.nvim_set_option_value('winhl', 'Normal:NormalFloat,FloatBorder:FloatBorder', { win = win })
@@ -144,57 +150,27 @@ local function create_markdown_hover_window(content)
     if vim.api.nvim_win_is_valid(win) then
       vim.api.nvim_win_close(win, true)
     end
+    -- Clear the active window tracker
+    active_hover_win = nil
     -- Clean up global focus keymap
-    pcall(vim.keymap.del, 'n', '<Tab>')
+    pcall(vim.keymap.del, 'n', '<CR>')
   end
   
-  -- Auto-close on cursor movement or other events (but not when focus is on hover window)
-  local autocmd_group = vim.api.nvim_create_augroup('hover_window_' .. win, { clear = true })
-  local group_deleted = false
-  
-  local function cleanup_group()
-    if not group_deleted then
-      pcall(vim.api.nvim_del_augroup_by_id, autocmd_group)
-      group_deleted = true
-    end
-  end
-  
-  vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI', 'InsertEnter' }, {
-    group = autocmd_group,
+  -- Simple auto-close: only close on explicit cursor movement in source buffer
+  vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+    once = true,
     callback = function()
-      -- Only close if current window is not the hover window and window is still valid
-      if vim.api.nvim_win_is_valid(win) and vim.api.nvim_get_current_win() ~= win then
+      -- Only close if not currently in the hover window
+      if vim.api.nvim_get_current_win() ~= win then
         close_hover_window()
-        cleanup_group()
       end
-    end,
-  })
-  
-  -- Auto-close when leaving the hover window
-  vim.api.nvim_create_autocmd('WinLeave', {
-    group = autocmd_group,
-    buffer = buf,
-    callback = function()
-      -- Delay closing to allow for window switching
-      vim.defer_fn(function()
-        if vim.api.nvim_win_is_valid(win) and vim.api.nvim_get_current_win() ~= win then
-          close_hover_window()
-          cleanup_group()
-        end
-      end, 100)
     end,
   })
   
   -- Add scrolling and navigation keymaps
   local scroll_keymaps = {
-    ['<Esc>'] = function()
-      close_hover_window()
-      cleanup_group()
-    end,
-    ['q'] = function()
-      close_hover_window()
-      cleanup_group()
-    end,
+    ['<Esc>'] = close_hover_window,
+    ['q'] = close_hover_window,
     ['<C-f>'] = function()
       vim.api.nvim_win_call(win, function()
         vim.cmd('normal! ' .. math.floor(vim.api.nvim_win_get_height(win) * 0.75) .. 'j')
@@ -241,14 +217,23 @@ local function create_markdown_hover_window(content)
     vim.keymap.set('n', key, func, { buffer = buf, nowait = true })
   end
   
-  -- Global keymap to focus the hover window for scrolling
-  local focus_keymap_id = vim.keymap.set('n', '<Tab>', function()
+  -- Global keymap to focus the hover window for scrolling (using Enter instead of Tab)
+  vim.keymap.set('n', '<CR>', function()
     if vim.api.nvim_win_is_valid(win) then
       vim.api.nvim_set_current_win(win)
-      -- Show a message to indicate window focus
       vim.notify("Hover window focused - use j/k to scroll, q/Esc to close", vim.log.levels.INFO, { timeout = 1000 })
     end
   end, { desc = 'Focus hover window for scrolling' })
+  
+  -- Clean up the keymap when window closes
+  vim.api.nvim_create_autocmd('WinClosed', {
+    pattern = tostring(win),
+    once = true,
+    callback = function()
+      pcall(vim.keymap.del, 'n', '<CR>')
+      active_hover_win = nil
+    end,
+  })
 end
 
 -- Convert LSP hover content to better markdown format
@@ -329,6 +314,11 @@ end
 
 -- Main function to show enhanced hover with render-markdown
 function M.show_enhanced_hover()
+  -- If we already have an active hover window, don't create another one
+  if active_hover_win and vim.api.nvim_win_is_valid(active_hover_win) then
+    return
+  end
+  
   -- Get diagnostics for current line
   local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line('.') - 1 })
   
@@ -336,9 +326,14 @@ function M.show_enhanced_hover()
   local params = vim.lsp.util.make_position_params(0, 'utf-16')
   vim.lsp.buf_request(0, 'textDocument/hover', params, function(err, result)
     if err then
-      -- Fallback to diagnostics only if available
+      -- Fallback to diagnostics only if available and no hover window exists
       if #diagnostics > 0 then
-        vim.diagnostic.open_float()
+        local diagnostic_content = add_diagnostics_markdown(diagnostics)
+        if diagnostic_content ~= "" then
+          create_markdown_hover_window(diagnostic_content)
+        else
+          vim.diagnostic.open_float()
+        end
       end
       return
     end
@@ -366,8 +361,10 @@ function M.show_enhanced_hover()
     if markdown_content ~= "" then
       create_markdown_hover_window(markdown_content)
     elseif #diagnostics > 0 then
-      -- Fallback to standard diagnostic float
-      vim.diagnostic.open_float()
+      -- Fallback to standard diagnostic float (but only if no active hover window)
+      if not active_hover_win or not vim.api.nvim_win_is_valid(active_hover_win) then
+        vim.diagnostic.open_float()
+      end
     end
   end)
 end
