@@ -32,7 +32,7 @@ require("mason-lspconfig").setup({
 -- LSP keymaps
 local function on_attach(client, bufnr)
   local opts = { buffer = bufnr, silent = true }
-  
+
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
   vim.keymap.set('n', 'K', function()
@@ -172,7 +172,7 @@ vim.lsp.config('eslint', {
   on_attach = function(client, bufnr)
     -- Call the default on_attach first
     on_attach(client, bufnr)
-    
+
     -- ESLint specific keymaps
     vim.keymap.set('n', '<leader>ef', function()
       vim.lsp.buf.execute_command({
@@ -220,7 +220,6 @@ vim.lsp.config('eslint', {
   },
   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
 })
-
 
 -- Completion setup
 local cmp = require('cmp')
@@ -335,11 +334,11 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, result, ctx, c
   local diagnostics = result.diagnostics or {}
   local filtered = {}
   local seen = {}
-  
+
   for _, diagnostic in ipairs(diagnostics) do
-    local key = string.format("%d:%d:%s:%s", 
-      diagnostic.range.start.line, 
-      diagnostic.range.start.character, 
+    local key = string.format("%d:%d:%s:%s",
+      diagnostic.range.start.line,
+      diagnostic.range.start.character,
       diagnostic.message,
       diagnostic.source or ""
     )
@@ -348,10 +347,9 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, result, ctx, c
       table.insert(filtered, diagnostic)
     end
   end
-  
+
   result.diagnostics = filtered
   original_handler(_, result, ctx, config)
 end
-
 
 return M

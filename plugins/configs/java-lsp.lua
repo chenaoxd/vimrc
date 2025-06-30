@@ -77,7 +77,7 @@ function M.setup(on_attach, capabilities)
         },
         importOrder = {
           "java",
-          "javax", 
+          "javax",
           "org",
           "com",
         },

@@ -20,21 +20,21 @@ local severity_map = {
 -- Add diagnostic information as markdown
 local function add_diagnostics_markdown(diagnostics)
   if #diagnostics == 0 then return "" end
-  
+
   local lines = {"🔍 **Diagnostics**", ""}
-  
+
   for _, diagnostic in ipairs(diagnostics) do
     local severity_info = severity_map[diagnostic.severity] or severity_map[vim.diagnostic.severity.INFO]
     local code = diagnostic.code and string.format(" `[%s]`", diagnostic.code) or ""
-    local line_text = string.format("- %s **%s**: %s%s", 
+    local line_text = string.format("- %s **%s**: %s%s",
       severity_info.icon, severity_info.name, diagnostic.message, code)
     table.insert(lines, line_text)
   end
-  
+
   table.insert(lines, "")
   table.insert(lines, "---")
   table.insert(lines, "")
-  
+
   return table.concat(lines, "\n")
 end
 
@@ -42,22 +42,22 @@ end
 local function create_markdown_hover_window(content)
   -- Create a temporary buffer for markdown content
   local buf = vim.api.nvim_create_buf(false, true)
-  
+
   -- Set buffer options for markdown
   vim.api.nvim_set_option_value('filetype', 'markdown', { buf = buf })
   vim.api.nvim_set_option_value('modifiable', true, { buf = buf })
-  
+
   -- Set the markdown content
   local lines = vim.split(content, '\n')
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-  
+
   -- Make buffer read-only after setting content
   vim.api.nvim_set_option_value('modifiable', false, { buf = buf })
-  
+
   -- Calculate window dimensions
   local max_width = math.min(80, vim.o.columns - 4)
   local max_height = math.min(#lines + 2, vim.o.lines - 4)
-  
+
   -- Create floating window (focusable for scrolling)
   local win = vim.api.nvim_open_win(buf, false, {
     relative = 'cursor',
@@ -70,19 +70,19 @@ local function create_markdown_hover_window(content)
     zindex = 1000,
     focusable = true,
   })
-  
+
   -- Track this as the active hover window
   active_hover_win = win
-  
+
   -- Set window-specific highlighting to avoid white backgrounds
   vim.api.nvim_set_option_value('winhl', 'Normal:NormalFloat,FloatBorder:FloatBorder', { win = win })
-  
+
   -- Enable render-markdown for this buffer if available
   local ok, render_markdown = pcall(require, 'render-markdown')
   if ok then
     -- Enable render-markdown for this specific buffer
     render_markdown.enable(buf)
-    
+
     -- Set up specific render-markdown config for hover windows
     vim.api.nvim_buf_call(buf, function()
       vim.b.render_markdown = {
@@ -155,7 +155,7 @@ local function create_markdown_hover_window(content)
       }
     end)
   end
-  
+
   -- Helper function to close window and clean up
   local function close_hover_window()
     if vim.api.nvim_win_is_valid(win) then
@@ -166,7 +166,7 @@ local function create_markdown_hover_window(content)
     -- Clean up global focus keymap
     pcall(vim.keymap.del, 'n', '<CR>')
   end
-  
+
   -- Simple auto-close: only close on explicit cursor movement in source buffer
   vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
     once = true,
@@ -177,7 +177,7 @@ local function create_markdown_hover_window(content)
       end
     end,
   })
-  
+
   -- Add scrolling and navigation keymaps
   local scroll_keymaps = {
     ['<Esc>'] = close_hover_window,
@@ -223,11 +223,11 @@ local function create_markdown_hover_window(content)
       end)
     end,
   }
-  
+
   for key, func in pairs(scroll_keymaps) do
     vim.keymap.set('n', key, func, { buffer = buf, nowait = true })
   end
-  
+
   -- Global keymap to focus the hover window for scrolling (using Enter instead of Tab)
   vim.keymap.set('n', '<CR>', function()
     if vim.api.nvim_win_is_valid(win) then
@@ -235,7 +235,7 @@ local function create_markdown_hover_window(content)
       vim.notify("Hover window focused - use j/k to scroll, q/Esc to close", vim.log.levels.INFO, { timeout = 1000 })
     end
   end, { desc = 'Focus hover window for scrolling' })
-  
+
   -- Clean up the keymap when window closes
   vim.api.nvim_create_autocmd('WinClosed', {
     pattern = tostring(win),
@@ -250,7 +250,7 @@ end
 -- Convert LSP hover content to better markdown format
 local function process_hover_content(contents)
   local content = ""
-  
+
   -- Handle different types of LSP content
   if type(contents) == 'string' then
     content = contents
@@ -272,12 +272,12 @@ local function process_hover_content(contents)
     end
     content = table.concat(result, "\n\n")
   end
-  
+
   -- Process and clean up the content
   if content ~= "" then
     -- Split into lines for better processing
     local lines = vim.split(content, '\n')
-    
+
     -- First pass: find minimum list indentation level
     local min_list_indent = nil
     for _, line in ipairs(lines) do
@@ -291,23 +291,23 @@ local function process_hover_content(contents)
         end
       end
     end
-    
+
     -- Second pass: process lines with proper spacing
     local processed_lines = {}
     local prev_was_list = false
     local prev_relative_indent = 0
-    
+
     for i, line in ipairs(lines) do
       local indent = line:match("^(%s*)")
       local is_list = line:match("^%s*[%*%-]%s+")
-      
+
       if is_list then
         local current_indent_level = #indent
         local list_content = line:match("^%s*[%*%-]%s+(.*)")
-        
+
         -- Calculate relative indent level (0 = top level)
         local relative_indent = current_indent_level - (min_list_indent or 0)
-        
+
         -- Add spacing before top-level list items (relative level 0)
         if relative_indent == 0 and #processed_lines > 0 then
           -- Add space if coming from non-list content or from deeper level
@@ -315,7 +315,7 @@ local function process_hover_content(contents)
             table.insert(processed_lines, "")
           end
         end
-        
+
         -- Use proper markdown list formatting and preserve the original content
         table.insert(processed_lines, indent .. "- " .. list_content)
         prev_was_list = true
@@ -328,7 +328,7 @@ local function process_hover_content(contents)
           if i < #lines then
             next_line_is_list = lines[i + 1]:match("^%s*[%*%-]%s+") ~= nil
           end
-          
+
           -- Only keep empty lines if not between list items or after list items
           if not prev_was_list and not next_line_is_list and #processed_lines > 0 and processed_lines[#processed_lines] ~= "" then
             table.insert(processed_lines, "")
@@ -340,15 +340,15 @@ local function process_hover_content(contents)
         prev_indent_level = 0
       end
     end
-    
+
     content = table.concat(processed_lines, '\n')
-    
+
     -- Final cleanup: remove excessive empty lines
     content = content:gsub("\n\n\n+", "\n\n")
     content = content:gsub("^%s*\n", "") -- Remove leading empty lines
     content = content:gsub("\n%s*$", "") -- Remove trailing empty lines
   end
-  
+
   return content
 end
 
@@ -358,10 +358,10 @@ function M.show_enhanced_hover()
   if active_hover_win and vim.api.nvim_win_is_valid(active_hover_win) then
     return
   end
-  
+
   -- Get diagnostics for current line
   local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line('.') - 1 })
-  
+
   -- Request LSP hover information
   local params = vim.lsp.util.make_position_params(0, 'utf-16')
   vim.lsp.buf_request(0, 'textDocument/hover', params, function(err, result)
@@ -377,15 +377,15 @@ function M.show_enhanced_hover()
       end
       return
     end
-    
+
     local markdown_content = ""
-    
+
     -- Add diagnostics if present
     local diagnostic_markdown = add_diagnostics_markdown(diagnostics)
     if diagnostic_markdown ~= "" then
       markdown_content = diagnostic_markdown
     end
-    
+
     -- Process hover content if available
     if result and result.contents then
       local hover_markdown = process_hover_content(result.contents)
@@ -396,7 +396,7 @@ function M.show_enhanced_hover()
         markdown_content = markdown_content .. "📖 **Documentation**\n\n" .. hover_markdown
       end
     end
-    
+
     -- Show content if we have any
     if markdown_content ~= "" then
       create_markdown_hover_window(markdown_content)
