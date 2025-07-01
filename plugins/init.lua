@@ -94,9 +94,21 @@ require("lazy").setup({
 
   -- Themes
   {
-    "dracula/vim",
+    "Mofiqul/dracula.nvim",
     name = "dracula",
     priority = 1000,
+    lazy = false,
+    config = function()
+      require("dracula").setup({
+        -- show the '~' characters after the end of buffers
+        show_end_of_buffer = true,
+        -- use transparent background
+        transparent_bg = true,
+        -- set italic comment
+        italic_comment = true,
+      })
+      vim.cmd[[colorscheme dracula]]
+    end,
   },
 
   -- Markdown support
