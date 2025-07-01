@@ -7,6 +7,7 @@
   "cmp-nvim-lsp": { "branch": "main", "commit": "a8912b88ce488f411177fc8aed358b04dc246d7b" },
   "cmp-path": { "branch": "main", "commit": "c6635aae33a50d6010bf1aa756ac2398a2d54c32" },
   "cmp_luasnip": { "branch": "master", "commit": "98d9cb5c2c38532bd9bdb481067b20fea8f32e90" },
+  "copilot.lua": { "branch": "master", "commit": "46f4b7d026cba9497159dcd3e6aa61a185cb1c48" },
   "dhall-vim": { "branch": "master", "commit": "bd9fd99f21dbc7174fb728a21d04e073ef7dd930" },
   "dracula": { "branch": "master", "commit": "d4b0823100c702af127cba8dd5595a8f599041ec" },
   "editorconfig-vim": { "branch": "master", "commit": "6a58b7c11f79c0e1d0f20533b3f42f2a11490cf8" },
