@@ -46,8 +46,12 @@ require("lazy").setup({
   -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate"
+    build = ":TSUpdate",
+    config = function()
+      require("plugins.configs.treesitter")
+    end
   },
+  "nvim-treesitter/nvim-treesitter-textobjects",
 
   -- Linting and formatting
   {
