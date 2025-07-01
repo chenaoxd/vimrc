@@ -136,7 +136,6 @@ require("lazy").setup({
           yaml = true,
           markdown = true,
         },
-        copilot_node_command = '/Users/chenao/Library/pnpm/node',
       })
     end,
   },
