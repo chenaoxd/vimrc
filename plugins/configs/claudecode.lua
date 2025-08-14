@@ -28,10 +28,7 @@ claudecode.setup({
       height = 0.85,
       border = "rounded",
       backdrop = 80,
-      keys = {
-        claude_hide = { "<Esc>", function(self) self:hide() end, mode = "t", desc = "Hide Claude" },
-        claude_close = { "q", "close", mode = "n", desc = "Close Claude" },
-      },
+      -- Rely on plugin defaults to avoid duplicate keymaps
     },
 
     -- Provider-specific options
