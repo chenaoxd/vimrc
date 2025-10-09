@@ -1,6 +1,6 @@
 -- Avante AI Assistant configuration
 return {
-  provider = "copilot",
+  provider = "claude-code",
   acp_providers = {
     ["claude-code"] = {
       command = "npx",
@@ -11,7 +11,7 @@ return {
     },
   },
   behaviour = {
-    auto_suggestions = true,
+    auto_suggestions = false,
     auto_set_highlight_group = true,
     auto_set_keymaps = true,
     auto_apply_diff_after_generation = false,
