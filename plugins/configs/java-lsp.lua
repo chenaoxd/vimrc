@@ -2,7 +2,8 @@
 local M = {}
 
 function M.setup(on_attach, capabilities)
-  require('lspconfig').jdtls.setup({
+  -- Use new vim.lsp.config API (Neovim 0.11+)
+  vim.lsp.config('jdtls', {
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
