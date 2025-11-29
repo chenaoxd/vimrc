@@ -31,11 +31,6 @@ require("lazy").setup({
     end
   },
   {
-    "junegunn/fzf",
-    build = ":call fzf#install()"
-  },
-  "junegunn/fzf.vim",
-  {
     "nvim-tree/nvim-tree.lua",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
@@ -53,46 +48,36 @@ require("lazy").setup({
   },
   "nvim-treesitter/nvim-treesitter-textobjects",
 
-  -- Linting and formatting
-  {
-    "dense-analysis/ale",
-    config = function()
-      require("plugins.configs.ale")
-    end
-  },
-
   -- Git integration
   "airblade/vim-gitgutter",
   "tpope/vim-fugitive",
   "f-person/git-blame.nvim",
 
-  -- Language support
-  "groenewege/vim-less",
+  -- Language support (only those not fully covered by standard Treesitter/LSP or with unique features)
   "jceb/vim-orgmode",
   "tpope/vim-speeddating",
-  "chr4/nginx.vim",
-  "udalov/kotlin-vim",
-  "yuezk/vim-js",
-  "maxmellon/vim-jsx-pretty",
-  "rust-lang/rust.vim",
   "pearofducks/ansible-vim",
-  "cespare/vim-toml",
-  "vmchale/dhall-vim",
   "craigmac/vim-mermaid",
-  "leafOfTree/vim-vue-plugin",
 
   -- Debugging
   "sebdah/vim-delve",
 
   -- UI enhancements
   {
-    "Yggdroot/indentLine",
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
     config = function()
-      require("plugins.configs.ui")
+      require("plugins.configs.indent-blankline")
     end
   },
   "pedrohdz/vim-yaml-folds",
-  "vim-airline/vim-airline",
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("plugins.configs.lualine")
+    end
+  },
   "nvim-tree/nvim-web-devicons",
   "echasnovski/mini.nvim",
   "folke/snacks.nvim", -- Required for claudecode.nvim
@@ -127,9 +112,6 @@ require("lazy").setup({
     "iamcco/markdown-preview.nvim",
     build = "cd app && npx --yes yarn install"
   },
-
-  -- Editor config
-  "editorconfig/editorconfig-vim",
 
   -- AI Completion
   {

@@ -29,7 +29,7 @@ opt.formatoptions:remove({ "t", "c" })
 -- UI enhancements
 opt.list = true
 opt.listchars = { tab = "│ " }
-opt.updatetime = 10
+opt.updatetime = 300
 opt.termguicolors = true
 
 -- Disable netrw (we use nvim-tree)

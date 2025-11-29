@@ -341,28 +341,4 @@ vim.diagnostic.config({
   },
 })
 
--- 自定义 on_publish_diagnostics 来过滤重复诊断
-local original_handler = vim.lsp.handlers["textDocument/publishDiagnostics"]
-vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, result, ctx, config)
-  local diagnostics = result.diagnostics or {}
-  local filtered = {}
-  local seen = {}
-
-  for _, diagnostic in ipairs(diagnostics) do
-    local key = string.format("%d:%d:%s:%s",
-      diagnostic.range.start.line,
-      diagnostic.range.start.character,
-      diagnostic.message,
-      diagnostic.source or ""
-    )
-    if not seen[key] then
-      seen[key] = true
-      table.insert(filtered, diagnostic)
-    end
-  end
-
-  result.diagnostics = filtered
-  original_handler(_, result, ctx, config)
-end
-
 return M
