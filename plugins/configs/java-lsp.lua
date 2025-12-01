@@ -12,7 +12,7 @@ function M.setup(on_attach, capabilities)
           runtimes = {
             {
               name = "JavaSE-21",
-              path = "/opt/homebrew/opt/java",
+              path = "/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home",
               default = true,
             },
           }
