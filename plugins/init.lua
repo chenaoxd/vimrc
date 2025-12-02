@@ -101,16 +101,15 @@ require("lazy").setup({
     end,
   },
 
-  -- Markdown support
-  {
-    "MeanderingProgrammer/render-markdown.nvim",
-    config = function()
-      require("plugins.configs.markdown")
-    end
-  },
+  -- Markdown preview
   {
     "iamcco/markdown-preview.nvim",
-    build = "cd app && npx --yes yarn install"
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = "cd app && npx --yes yarn install",
+    init = function()
+      vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", { desc = "Toggle Markdown Preview" })
+    end,
   },
 
   -- AI Completion
@@ -183,13 +182,6 @@ require("lazy").setup({
             use_absolute_path = true,
           },
         },
-      },
-      {
-        "MeanderingProgrammer/render-markdown.nvim",
-        opts = {
-          file_types = { "markdown", "Avante" },
-        },
-        ft = { "markdown", "Avante" },
       },
     },
     config = function()
