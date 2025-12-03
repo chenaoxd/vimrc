@@ -120,6 +120,31 @@ require("lazy").setup({
   "echasnovski/mini.nvim",
   "folke/snacks.nvim", -- Required for claudecode.nvim
 
+  -- Terminal
+  {
+    "akinsho/toggleterm.nvim",
+    version = "*",
+    config = function()
+      require("toggleterm").setup({
+        size = function(term)
+          if term.direction == "vertical" then
+            return vim.o.columns * 0.4
+          end
+          return 20
+        end,
+        open_mapping = nil,
+        direction = "vertical",
+        shade_terminals = false,
+        persist_size = true,
+        close_on_exit = true,
+      })
+
+      vim.keymap.set("n", "<Leader>tt", "<cmd>ToggleTerm direction=vertical<cr>", { desc = "Toggle terminal (right)" })
+      vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
+      vim.keymap.set("t", "<C-q>", [[<C-\><C-n><C-W>h]], { desc = "Terminal: go left" })
+    end,
+  },
+
   -- Themes
   {
     "Mofiqul/dracula.nvim",

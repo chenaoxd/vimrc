@@ -48,7 +48,6 @@ require("nvim-tree").setup {
 
 -- NvimTree key mappings
 map('n', '<C-y>', ":NvimTreeToggle<cr>", {silent = true})
-map('n', '<leader>tt', ":NvimTreeFindFile<cr>", {silent = true})
 
 -- Auto open nvim-tree when starting with a directory
 vim.api.nvim_create_autocmd("VimEnter", {
