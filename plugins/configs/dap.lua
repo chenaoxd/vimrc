@@ -91,21 +91,14 @@ vim.keymap.set("n", "<leader>du", dapui.toggle, vim.tbl_extend("force", opts, { 
 vim.keymap.set("n", "<leader>de", dapui.eval, vim.tbl_extend("force", opts, { desc = "Evaluate expression" }))
 vim.keymap.set("v", "<leader>de", dapui.eval, vim.tbl_extend("force", opts, { desc = "Evaluate selection" }))
 
--- Java DAP configuration
--- The actual Java debug adapter is configured via jdtls bundles in lsp.lua
--- Here we just set up the launch configuration
-dap.configurations.java = {
-  {
-    type = "java",
-    request = "attach",
-    name = "Debug (Attach) - Remote",
-    hostName = "127.0.0.1",
-    port = 5005,
-  },
-  {
-    type = "java",
-    request = "launch",
-    name = "Debug (Launch) - Current File",
-    mainClass = "${file}",
-  },
-}
+-- Language-specific DAP configurations can be added here
+-- Example for Java (requires java-debug-adapter):
+-- dap.configurations.java = {
+--   {
+--     type = "java",
+--     request = "attach",
+--     name = "Attach to Remote (5005)",
+--     hostName = "127.0.0.1",
+--     port = 5005,
+--   },
+-- }

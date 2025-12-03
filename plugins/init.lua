@@ -95,7 +95,6 @@ require("lazy").setup({
       "nvim-neotest/nvim-nio",
       "theHamsta/nvim-dap-virtual-text",
     },
-    ft = { "java" },
     config = function()
       require("plugins.configs.dap")
     end,

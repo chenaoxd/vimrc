@@ -9,8 +9,36 @@ require("mason").setup({
       package_pending = "➜",
       package_uninstalled = "✗"
     }
-  }
+  },
+  -- Auto-install DAP adapters
+  ensure_installed = {
+    "java-debug-adapter",
+    "java-test",
+  },
 })
+
+-- Ensure DAP packages are installed
+vim.api.nvim_create_autocmd("User", {
+  pattern = "MasonToolsUpdateCompleted",
+  callback = function()
+    vim.schedule(function()
+      print("Mason tools installed")
+    end)
+  end,
+})
+
+local registry = require("mason-registry")
+local function ensure_installed(packages)
+  for _, name in ipairs(packages) do
+    local ok, pkg = pcall(registry.get_package, name)
+    if ok and not pkg:is_installed() then
+      pkg:install()
+    end
+  end
+end
+
+-- Install Java tools (jdtls + DAP adapters)
+ensure_installed({ "jdtls", "java-debug-adapter", "java-test" })
 
 -- Setup Mason LSPConfig
 require("mason-lspconfig").setup({
@@ -149,39 +177,8 @@ vim.lsp.config('gopls', {
 -- Java (jdtls)
 local lombok_jar = vim.fn.expand("~/.local/share/nvim/mason/packages/jdtls/lombok.jar")
 
--- Java debug bundles
-local function get_jdtls_bundles()
-  local bundles = {}
-  local mason_path = vim.fn.stdpath("data") .. "/mason/packages"
-
-  -- java-debug-adapter
-  local java_debug_path = mason_path .. "/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar"
-  local java_debug_bundle = vim.fn.glob(java_debug_path, true)
-  if java_debug_bundle ~= "" then
-    table.insert(bundles, java_debug_bundle)
-  end
-
-  -- java-test
-  local java_test_path = mason_path .. "/java-test/extension/server/*.jar"
-  local java_test_bundles = vim.split(vim.fn.glob(java_test_path, true), "\n")
-  for _, bundle in ipairs(java_test_bundles) do
-    if bundle ~= "" then
-      table.insert(bundles, bundle)
-    end
-  end
-
-  return bundles
-end
-
 vim.lsp.config('jdtls', {
-  on_attach = function(client, bufnr)
-    on_attach(client, bufnr)
-    -- Setup DAP after jdtls attaches
-    local ok, jdtls_dap = pcall(require, "jdtls.dap")
-    if ok then
-      jdtls_dap.setup_dap_main_class_configs()
-    end
-  end,
+  on_attach = on_attach,
   capabilities = capabilities,
   cmd = {
     "jdtls",
@@ -204,9 +201,6 @@ vim.lsp.config('jdtls', {
       referencesCodeLens = { enabled = true },
       format = { enabled = true },
     },
-  },
-  init_options = {
-    bundles = get_jdtls_bundles(),
   },
 })
 
