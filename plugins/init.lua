@@ -50,8 +50,34 @@ require("lazy").setup({
 
   -- Git integration
   "airblade/vim-gitgutter",
-  "tpope/vim-fugitive",
-  "f-person/git-blame.nvim",
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      require("neogit").setup({
+        integrations = {
+          diffview = true,
+          telescope = true,
+        },
+        mappings = {
+          status = {
+            ["q"] = "Close",
+          },
+        },
+      })
+      -- Keymaps
+      vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<cr>", { desc = "Neogit" })
+      vim.keymap.set("n", "<leader>gc", "<cmd>Neogit commit<cr>", { desc = "Git commit" })
+      vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<cr>", { desc = "Diffview open" })
+      vim.keymap.set("n", "<leader>gh", "<cmd>DiffviewFileHistory %<cr>", { desc = "File history" })
+      vim.keymap.set("n", "<leader>gH", "<cmd>DiffviewFileHistory<cr>", { desc = "Repo history" })
+      vim.keymap.set("n", "<leader>gq", "<cmd>DiffviewClose<cr>", { desc = "Close diffview" })
+    end,
+  },
 
   -- Language support (only those not fully covered by standard Treesitter/LSP or with unique features)
   "jceb/vim-orgmode",
