@@ -80,7 +80,7 @@ map("n", "<Leader>to", ":tabonly<cr>", opts)
 -- Misc operations
 map("n", "<Leader>ct", "cT(", opts)  -- 移动到 ct (change to), 给 Claude 让出 c
 map("n", "<Leader>!w", ":w !sudo tee %", opts)
-map("n", "<Leader>rg", ":Rg ", opts)
+map("n", "<Leader>rg", "<cmd>Telescope live_grep<cr>", opts)
 map("n", "<Leader>lr", ":LspRestart<cr>", opts)
 
 -- Session management

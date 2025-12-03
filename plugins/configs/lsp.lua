@@ -147,9 +147,14 @@ vim.lsp.config('gopls', {
 })
 
 -- Java (jdtls)
+local lombok_jar = vim.fn.expand("~/.local/share/nvim/mason/packages/jdtls/lombok.jar")
 vim.lsp.config('jdtls', {
   on_attach = on_attach,
   capabilities = capabilities,
+  cmd = {
+    "jdtls",
+    "--jvm-arg=-javaagent:" .. lombok_jar,
+  },
   settings = {
     java = {
       configuration = {
