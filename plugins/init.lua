@@ -50,6 +50,7 @@ require("lazy").setup({
 
   -- Git integration
   "airblade/vim-gitgutter",
+  "f-person/git-blame.nvim",
   {
     "NeogitOrg/neogit",
     dependencies = {
@@ -87,6 +88,18 @@ require("lazy").setup({
 
   -- Debugging
   "sebdah/vim-delve",
+  {
+    "mfussenegger/nvim-dap",
+    dependencies = {
+      "rcarriga/nvim-dap-ui",
+      "nvim-neotest/nvim-nio",
+      "theHamsta/nvim-dap-virtual-text",
+    },
+    ft = { "java" },
+    config = function()
+      require("plugins.configs.dap")
+    end,
+  },
 
   -- UI enhancements
   {

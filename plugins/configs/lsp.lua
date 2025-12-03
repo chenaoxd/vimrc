@@ -148,8 +148,40 @@ vim.lsp.config('gopls', {
 
 -- Java (jdtls)
 local lombok_jar = vim.fn.expand("~/.local/share/nvim/mason/packages/jdtls/lombok.jar")
+
+-- Java debug bundles
+local function get_jdtls_bundles()
+  local bundles = {}
+  local mason_path = vim.fn.stdpath("data") .. "/mason/packages"
+
+  -- java-debug-adapter
+  local java_debug_path = mason_path .. "/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar"
+  local java_debug_bundle = vim.fn.glob(java_debug_path, true)
+  if java_debug_bundle ~= "" then
+    table.insert(bundles, java_debug_bundle)
+  end
+
+  -- java-test
+  local java_test_path = mason_path .. "/java-test/extension/server/*.jar"
+  local java_test_bundles = vim.split(vim.fn.glob(java_test_path, true), "\n")
+  for _, bundle in ipairs(java_test_bundles) do
+    if bundle ~= "" then
+      table.insert(bundles, bundle)
+    end
+  end
+
+  return bundles
+end
+
 vim.lsp.config('jdtls', {
-  on_attach = on_attach,
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    -- Setup DAP after jdtls attaches
+    local ok, jdtls_dap = pcall(require, "jdtls.dap")
+    if ok then
+      jdtls_dap.setup_dap_main_class_configs()
+    end
+  end,
   capabilities = capabilities,
   cmd = {
     "jdtls",
@@ -172,6 +204,9 @@ vim.lsp.config('jdtls', {
       referencesCodeLens = { enabled = true },
       format = { enabled = true },
     },
+  },
+  init_options = {
+    bundles = get_jdtls_bundles(),
   },
 })
 

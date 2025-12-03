@@ -87,6 +87,11 @@ map("n", "<Leader>lr", ":LspRestart<cr>", opts)
 map("n", "<Leader>ss", ":mksession! ~/.vimsession<cr>", opts)
 map("n", "<Leader>sl", ":source ~/.vimsession<cr>", opts)
 
+-- GitGutter
+map("n", "<Leader>gp", "<Plug>(GitGutterPreviewHunk)", { silent = true })
+map("n", "<Leader>gu", "<Plug>(GitGutterUndoHunk)", { silent = true })
+map("n", "<Leader>gs", "<Plug>(GitGutterStageHunk)", { silent = true })
+
 -- Syntax settings
 map("n", "<Leader>sa", ":set syntax=yaml.ansible<cr>", opts)
 map("n", "<Leader>sh", ":set syntax=helm<cr>", opts)
