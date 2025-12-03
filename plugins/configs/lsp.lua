@@ -146,8 +146,29 @@ vim.lsp.config('gopls', {
   capabilities = capabilities,
 })
 
--- Java (with Spring Boot and Lombok support)
-require('plugins.configs.java-lsp').setup(on_attach, capabilities)
+-- Java (jdtls)
+vim.lsp.config('jdtls', {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    java = {
+      configuration = {
+        runtimes = {
+          {
+            name = "JavaSE-21",
+            path = "/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home",
+            default = true,
+          },
+        }
+      },
+      eclipse = { downloadSources = true },
+      maven = { downloadSources = true },
+      implementationsCodeLens = { enabled = true },
+      referencesCodeLens = { enabled = true },
+      format = { enabled = true },
+    },
+  },
+})
 
 -- CSS
 vim.lsp.config('cssls', {
@@ -310,6 +331,20 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function()
     vim.keymap.set('n', '<CR>', '<CR>:cclose<CR>', { buffer = true, silent = true })
   end,
+})
+
+-- Enable all configured LSP servers (Neovim 0.11+ requires explicit enable)
+vim.lsp.enable({
+  'lua_ls',
+  'ts_ls',
+  'rust_analyzer',
+  'pyright',
+  'gopls',
+  'jdtls',
+  'cssls',
+  'jsonls',
+  'tailwindcss',
+  'eslint',
 })
 
 -- Diagnostic configuration
