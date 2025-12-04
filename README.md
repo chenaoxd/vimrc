@@ -19,10 +19,7 @@
 - 🤖 **GitHub Copilot** - 智能代码补全建议
   - `Ctrl+L` 接受建议
   - `Ctrl+J/K` 切换建议
-- 🧠 **Avante AI** - 集成 Claude Code 的 AI 助手
-  - `<leader>aa` - 提问
-  - `<leader>ae` - 编辑
-  - `<leader>at` - 切换侧边栏
+- 🧠 **Claude Code CLI** - 在终端中使用 Claude Code 进行 AI 辅助编程
 
 ### 语言支持
 
@@ -46,11 +43,11 @@
 
 ### 开发工具
 
-- 📝 **代码检查** - ALE (Asynchronous Lint Engine)
-- 🔄 **Git 集成** - gitgutter + fugitive + git-blame
-- 🐛 **调试支持** - vim-delve (Go 语言调试器)
-- 📄 **Markdown** - 实时预览和渲染支持
+- 🔄 **Git 集成** - gitgutter + neogit + diffview + git-blame
+- 🐛 **调试支持** - nvim-dap + vim-delve (Go 语言调试器)
+- 📄 **Markdown** - 实时预览支持
 - 📐 **EditorConfig** - 自动应用项目代码风格规范
+- 🖥️ **终端** - toggleterm.nvim 集成终端，支持右侧垂直分屏
 
 ## 📋 系统要求
 
@@ -63,7 +60,6 @@
 
 ### 可选依赖
 
-- `make` - 构建 Avante 插件
 - `yarn` - Markdown 预览
 - `go` - 使用 Delve 调试器
 - Language servers 会通过 Mason 自动安装
@@ -127,9 +123,10 @@ nvim
 │       ├── lsp.lua          # LSP 配置
 │       ├── telescope.lua    # 模糊搜索配置
 │       ├── nvim-tree.lua    # 文件树配置
-│       ├── avante.lua       # AI 助手配置
-│       ├── ale.lua          # 代码检查配置
+│       ├── lualine.lua      # 状态栏配置
+│       ├── dap.lua          # 调试器配置
 │       └── ...
+├── ftplugin/                # 文件类型特定配置
 ├── indent/                  # 自定义缩进规则
 └── lazy-lock.json          # 插件版本锁定
 ```
@@ -164,6 +161,21 @@ Leader 键: `空格键`
 | `<leader>tc` | 关闭标签页 |
 | `<leader>to` | 仅保留当前标签页 |
 | `<leader>tm` | 移动标签页 |
+
+#### Buffer 管理 (bufferline)
+| 快捷键 | 功能 |
+|--------|------|
+| `<Tab>` | 下一个 buffer |
+| `<S-Tab>` | 上一个 buffer |
+| `<leader>bc` | 关闭当前 buffer |
+| `<leader>bo` | 关闭其他 buffers |
+
+#### 终端 (toggleterm)
+| 快捷键 | 功能 |
+|--------|------|
+| `<leader>tt` | 打开/关闭右侧终端 |
+| `<Esc>` | 退出终端模式 |
+| `<C-q>` | 从终端切换到左侧窗口 |
 
 #### 剪贴板操作
 | 快捷键 | 功能 |
@@ -212,11 +224,22 @@ Leader 键: `空格键`
 
 ### Git 操作
 
+#### Neogit & Diffview
 | 快捷键 | 功能 |
 |--------|------|
-| `<leader>gs` | Git status (fugitive) |
+| `<leader>gg` | 打开 Neogit (Git 状态) |
 | `<leader>gc` | Git commit |
-| `<leader>gb` | Git blame |
+| `<leader>gd` | 打开 Diffview |
+| `<leader>gh` | 当前文件历史 |
+| `<leader>gH` | 仓库提交历史 |
+| `<leader>gq` | 关闭 Diffview |
+
+#### GitGutter
+| 快捷键 | 功能 |
+|--------|------|
+| `<leader>gp` | 预览 hunk 变更 |
+| `<leader>gu` | 撤销 hunk 变更 |
+| `<leader>gs` | 暂存 hunk |
 | 行号旁显示 | Git diff 变更指示 |
 
 ### 调试 (Go)
@@ -267,10 +290,12 @@ Leader 键: `空格键`
 ### 界面增强
 
 - **dracula.nvim** - Dracula 主题
-- **vim-airline** - 状态栏
+- **lualine.nvim** - 状态栏（每个窗口独立显示）
+- **bufferline.nvim** - Buffer 标签栏
 - **nvim-web-devicons** - 文件图标
-- **indentLine** - 缩进参考线
+- **indent-blankline.nvim** - 缩进参考线
 - **mini.nvim** - 小型实用工具集合
+- **toggleterm.nvim** - 集成终端
 
 ### 文件管理
 
@@ -289,12 +314,12 @@ Leader 键: `空格键`
 ### AI 辅助
 
 - **copilot.lua** - GitHub Copilot
-- **avante.nvim** - Claude Code AI 助手
 
 ### Git 工具
 
 - **vim-gitgutter** - Git diff 标记
-- **vim-fugitive** - Git 命令集成
+- **neogit** - Git 命令集成 (Magit 风格)
+- **diffview.nvim** - Git diff 和文件历史查看
 - **git-blame.nvim** - Git blame 显示
 
 ### 语法和语言
@@ -310,10 +335,10 @@ Leader 键: `空格键`
 
 ### 开发工具
 
-- **ale** - 异步代码检查
+- **nvim-dap** - 调试适配器协议
+- **nvim-dap-ui** - 调试界面
 - **vim-delve** - Go 调试器
 - **markdown-preview.nvim** - Markdown 实时预览
-- **render-markdown.nvim** - Markdown 渲染
 
 ## 🛠️ 自定义配置
 
@@ -389,18 +414,17 @@ local tab_width = {
 ### 3. AI 辅助编程
 
 - 编写代码时，Copilot 会自动提供建议
-- 需要 AI 帮助时，使用 `<leader>aa` 启动 Avante
-- 选中代码后使用 `<leader>ae` 让 AI 编辑
+- 使用 `<leader>tt` 打开终端，运行 Claude Code CLI 进行 AI 辅助编程
 
 ### 4. Git 集成
 
-- 左侧行号旁会显示修改标记
-- 使用 `:Git` 命令执行 Git 操作
-- 使用 `:GitBlame` 查看代码作者
+- 左侧行号旁会显示修改标记 (GitGutter)
+- 使用 `<leader>gg` 打开 Neogit 进行 Git 操作
+- 使用 `<leader>gd` 打开 Diffview 查看差异
+- 使用 `<leader>gh` 查看当前文件历史
 
 ### 5. 代码检查和格式化
 
-- 保存文件时 ALE 自动检查代码
 - 使用 `<leader>f` 格式化当前文件
 - LSP 提供实时诊断信息
 
