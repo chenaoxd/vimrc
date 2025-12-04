@@ -5,7 +5,7 @@ require("lualine").setup({
     theme = "dracula",
     component_separators = "|",
     section_separators = "",
-    globalstatus = true,
+    globalstatus = false,
   },
   sections = {
     lualine_c = {
