@@ -81,7 +81,7 @@ map("n", "<Leader>to", ":tabonly<cr>", opts)
 map("n", "<Leader>ct", "cT(", opts)  -- 移动到 ct (change to), 给 Claude 让出 c
 map("n", "<Leader>!w", ":w !sudo tee %", opts)
 map("n", "<Leader>rg", "<cmd>Telescope live_grep<cr>", opts)
-map("n", "<Leader>lr", ":LspRestart<cr>", opts)
+map("n", "<Leader>Lr", ":LspRestart<cr>", opts)
 
 -- Session management
 map("n", "<Leader>ss", ":mksession! ~/.vimsession<cr>", opts)

@@ -116,6 +116,27 @@ require("lazy").setup({
       require("plugins.configs.lualine")
     end
   },
+  {
+    "akinsho/bufferline.nvim",
+    version = "*",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("bufferline").setup({
+        options = {
+          mode = "buffers",
+          diagnostics = "nvim_lsp",
+          show_buffer_close_icons = false,
+          show_close_icon = false,
+          separator_style = "thin",
+        },
+      })
+      -- 快捷键
+      vim.keymap.set("n", "<Tab>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
+      vim.keymap.set("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
+      vim.keymap.set("n", "<leader>bc", "<cmd>bdelete<cr>", { desc = "Close buffer" })
+      vim.keymap.set("n", "<leader>bo", "<cmd>BufferLineCloseOthers<cr>", { desc = "Close other buffers" })
+    end,
+  },
   "nvim-tree/nvim-web-devicons",
   "echasnovski/mini.nvim",
   "folke/snacks.nvim", -- Required for claudecode.nvim
