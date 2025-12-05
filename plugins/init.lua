@@ -155,7 +155,9 @@ require("lazy").setup({
 
           -- Runner
           vim.keymap.set("n", "<leader>jr", "<cmd>JavaRunnerRunMain<cr>", vim.tbl_extend("force", opts, { desc = "Java: Run main" }))
+          vim.keymap.set("n", "<F5>", "<cmd>JavaRunnerRunMain<cr>", vim.tbl_extend("force", opts, { desc = "Java: Run main" }))
           vim.keymap.set("n", "<leader>js", "<cmd>JavaRunnerStopMain<cr>", vim.tbl_extend("force", opts, { desc = "Java: Stop main" }))
+          vim.keymap.set("n", "<S-F5>", "<cmd>JavaRunnerStopMain<cr>", vim.tbl_extend("force", opts, { desc = "Java: Stop main" }))
           vim.keymap.set("n", "<leader>jl", "<cmd>JavaRunnerToggleLogs<cr>", vim.tbl_extend("force", opts, { desc = "Java: Toggle logs" }))
 
           -- DAP
