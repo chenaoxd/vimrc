@@ -75,7 +75,7 @@ local function on_attach(client, bufnr)
   end, opts)
   vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-  vim.keymap.set({ 'n', 'v' }, '<leader>la', vim.lsp.buf.code_action, opts)  -- 改成 la (LSP action), 给 Claude 让出 ca
+  vim.keymap.set({ 'n', 'v' }, '<leader>La', vim.lsp.buf.code_action, opts)  -- 改成 La (LSP action), 避免和 <leader>l 窗口导航冲突
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
   vim.keymap.set('n', '<leader>f', function()
     vim.lsp.buf.format { async = true }
