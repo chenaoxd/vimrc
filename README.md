@@ -242,13 +242,65 @@ Leader 键: `空格键`
 | `<leader>gs` | 暂存 hunk |
 | 行号旁显示 | Git diff 变更指示 |
 
-### 调试 (Go)
+### 调试 (DAP)
 
+#### 通用调试快捷键
 | 快捷键 | 功能 |
 |--------|------|
-| `F8` | 连接调试器 |
-| `F9` | 切换断点 |
-| `F10` | 清除所有断点 |
+| `<leader>db` | 切换断点 |
+| `<leader>dB` | 条件断点 |
+| `<leader>dc` | 继续执行 |
+| `<leader>dn` | 单步跳过 (Step over) |
+| `<leader>ds` | 单步进入 (Step into) |
+| `<leader>do` | 单步跳出 (Step out) |
+| `<leader>dr` | 重启调试 |
+| `<leader>dq` | 终止调试 |
+| `<leader>du` | 切换 DAP UI |
+| `<leader>de` | 计算表达式 |
+
+#### Java (nvim-java)
+
+**构建**
+| 快捷键 | 功能 |
+|--------|------|
+| `<leader>jbb` | 构建工作区 |
+| `<leader>jbc` | 清理工作区 |
+
+**运行**
+| 快捷键 | 功能 |
+|--------|------|
+| `<leader>jr` | 运行 main 方法 |
+| `<leader>js` | 停止运行 |
+| `<leader>jl` | 切换日志窗口 |
+
+**调试**
+| 快捷键 | 功能 |
+|--------|------|
+| `<leader>jdc` | 配置 DAP |
+
+**测试**
+| 快捷键 | 功能 |
+|--------|------|
+| `<leader>jtc` | 运行测试类 |
+| `<leader>jtC` | 调试测试类 |
+| `<leader>jtm` | 运行测试方法 |
+| `<leader>jtM` | 调试测试方法 |
+| `<leader>jtr` | 查看测试报告 |
+
+**配置**
+| 快捷键 | 功能 |
+|--------|------|
+| `<leader>jp` | 打开 Profiles UI |
+| `<leader>jsr` | 切换 JDK 版本 |
+
+**重构**
+| 快捷键 | 功能 |
+|--------|------|
+| `<leader>jrv` | 提取变量 |
+| `<leader>jrV` | 提取变量 (所有出现) |
+| `<leader>jrc` | 提取常量 |
+| `<leader>jrm` | 提取方法 |
+| `<leader>jrf` | 提取字段 |
 
 ### 会话管理
 
@@ -337,7 +389,9 @@ Leader 键: `空格键`
 
 - **nvim-dap** - 调试适配器协议
 - **nvim-dap-ui** - 调试界面
+- **nvim-dap-virtual-text** - 调试时显示变量值
 - **vim-delve** - Go 调试器
+- **nvim-java** - Java 开发支持 (LSP, DAP, 测试, 重构)
 - **markdown-preview.nvim** - Markdown 实时预览
 
 ## 🛠️ 自定义配置

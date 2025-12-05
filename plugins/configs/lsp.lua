@@ -10,11 +10,6 @@ require("mason").setup({
       package_uninstalled = "✗"
     }
   },
-  -- Auto-install DAP adapters
-  ensure_installed = {
-    "java-debug-adapter",
-    "java-test",
-  },
 })
 
 -- Ensure DAP packages are installed
@@ -37,8 +32,7 @@ local function ensure_installed(packages)
   end
 end
 
--- Install Java tools (jdtls + DAP adapters)
-ensure_installed({ "jdtls", "java-debug-adapter", "java-test" })
+-- Note: Java tools (jdtls, java-debug-adapter, java-test) are managed by nvim-java plugin
 
 -- Setup Mason LSPConfig
 require("mason-lspconfig").setup({
@@ -48,7 +42,7 @@ require("mason-lspconfig").setup({
     "rust_analyzer",
     "pyright",
     "gopls",
-    "jdtls",
+    -- jdtls is managed by nvim-java plugin
     "cssls",
     "jsonls",
     "tailwindcss",
@@ -174,35 +168,7 @@ vim.lsp.config('gopls', {
   capabilities = capabilities,
 })
 
--- Java (jdtls)
-local lombok_jar = vim.fn.expand("~/.local/share/nvim/mason/packages/jdtls/lombok.jar")
-
-vim.lsp.config('jdtls', {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  cmd = {
-    "jdtls",
-    "--jvm-arg=-javaagent:" .. lombok_jar,
-  },
-  settings = {
-    java = {
-      configuration = {
-        runtimes = {
-          {
-            name = "JavaSE-21",
-            path = "/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home",
-            default = true,
-          },
-        }
-      },
-      eclipse = { downloadSources = true },
-      maven = { downloadSources = true },
-      implementationsCodeLens = { enabled = true },
-      referencesCodeLens = { enabled = true },
-      format = { enabled = true },
-    },
-  },
-})
+-- Java (jdtls) is configured by nvim-java plugin
 
 -- CSS
 vim.lsp.config('cssls', {
@@ -368,13 +334,13 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Enable all configured LSP servers (Neovim 0.11+ requires explicit enable)
+-- Note: jdtls is enabled by nvim-java plugin
 vim.lsp.enable({
   'lua_ls',
   'ts_ls',
   'rust_analyzer',
   'pyright',
   'gopls',
-  'jdtls',
   'cssls',
   'jsonls',
   'tailwindcss',

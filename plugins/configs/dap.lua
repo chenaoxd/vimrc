@@ -91,7 +91,3 @@ vim.keymap.set("n", "<leader>du", dapui.toggle, vim.tbl_extend("force", opts, { 
 vim.keymap.set("n", "<leader>de", dapui.eval, vim.tbl_extend("force", opts, { desc = "Evaluate expression" }))
 vim.keymap.set("v", "<leader>de", dapui.eval, vim.tbl_extend("force", opts, { desc = "Evaluate selection" }))
 
--- Java DAP configuration
--- Note: Java debugging requires java-debug-adapter which needs to be loaded via jdtls.
--- For now, Java debugging is not supported in this config.
--- Consider using IDE or adding nvim-jdtls for full Java debug support.

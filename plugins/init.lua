@@ -100,6 +100,91 @@ require("lazy").setup({
     end,
   },
 
+  -- Java support (nvim-java 4.0.0+)
+  {
+    "nvim-java/nvim-java",
+    config = function()
+      require("java").setup({
+        checks = {
+          nvim_version = true,
+          nvim_jdtls_conflict = true,
+        },
+        jdtls = {
+          version = "1.43.0",
+        },
+        lombok = {
+          enable = true,
+          version = "1.18.40",
+        },
+        java_test = {
+          enable = true,
+          version = "0.40.1",
+        },
+        java_debug_adapter = {
+          enable = true,
+          version = "0.58.2",
+        },
+        spring_boot_tools = {
+          enable = true,
+          version = "1.55.1",
+        },
+        jdk = {
+          auto_install = true,
+          version = "17",
+        },
+        log = {
+          use_console = true,
+          use_file = true,
+          level = "info",
+          log_file = vim.fn.stdpath("state") .. "/nvim-java.log",
+          max_lines = 1000,
+          show_location = false,
+        },
+      })
+      vim.lsp.enable("jdtls")
+
+      -- Java keymaps
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "java",
+        callback = function()
+          local opts = { buffer = true, silent = true }
+
+          -- Build
+          vim.keymap.set("n", "<leader>jbb", "<cmd>JavaBuildBuildWorkspace<cr>", vim.tbl_extend("force", opts, { desc = "Java: Build workspace" }))
+          vim.keymap.set("n", "<leader>jbc", "<cmd>JavaBuildCleanWorkspace<cr>", vim.tbl_extend("force", opts, { desc = "Java: Clean workspace" }))
+
+          -- Runner
+          vim.keymap.set("n", "<leader>jr", "<cmd>JavaRunnerRunMain<cr>", vim.tbl_extend("force", opts, { desc = "Java: Run main" }))
+          vim.keymap.set("n", "<leader>js", "<cmd>JavaRunnerStopMain<cr>", vim.tbl_extend("force", opts, { desc = "Java: Stop main" }))
+          vim.keymap.set("n", "<leader>jl", "<cmd>JavaRunnerToggleLogs<cr>", vim.tbl_extend("force", opts, { desc = "Java: Toggle logs" }))
+
+          -- DAP
+          vim.keymap.set("n", "<leader>jdc", "<cmd>JavaDapConfig<cr>", vim.tbl_extend("force", opts, { desc = "Java: Configure DAP" }))
+
+          -- Test
+          vim.keymap.set("n", "<leader>jtc", "<cmd>JavaTestRunCurrentClass<cr>", vim.tbl_extend("force", opts, { desc = "Java: Test class" }))
+          vim.keymap.set("n", "<leader>jtC", "<cmd>JavaTestDebugCurrentClass<cr>", vim.tbl_extend("force", opts, { desc = "Java: Debug test class" }))
+          vim.keymap.set("n", "<leader>jtm", "<cmd>JavaTestRunCurrentMethod<cr>", vim.tbl_extend("force", opts, { desc = "Java: Test method" }))
+          vim.keymap.set("n", "<leader>jtM", "<cmd>JavaTestDebugCurrentMethod<cr>", vim.tbl_extend("force", opts, { desc = "Java: Debug test method" }))
+          vim.keymap.set("n", "<leader>jtr", "<cmd>JavaTestViewLastReport<cr>", vim.tbl_extend("force", opts, { desc = "Java: View test report" }))
+
+          -- Profile
+          vim.keymap.set("n", "<leader>jp", "<cmd>JavaProfile<cr>", vim.tbl_extend("force", opts, { desc = "Java: Profiles UI" }))
+
+          -- Refactor
+          vim.keymap.set({ "n", "v" }, "<leader>jrv", "<cmd>JavaRefactorExtractVariable<cr>", vim.tbl_extend("force", opts, { desc = "Java: Extract variable" }))
+          vim.keymap.set({ "n", "v" }, "<leader>jrV", "<cmd>JavaRefactorExtractVariableAllOccurrence<cr>", vim.tbl_extend("force", opts, { desc = "Java: Extract variable (all)" }))
+          vim.keymap.set({ "n", "v" }, "<leader>jrc", "<cmd>JavaRefactorExtractConstant<cr>", vim.tbl_extend("force", opts, { desc = "Java: Extract constant" }))
+          vim.keymap.set({ "n", "v" }, "<leader>jrm", "<cmd>JavaRefactorExtractMethod<cr>", vim.tbl_extend("force", opts, { desc = "Java: Extract method" }))
+          vim.keymap.set({ "n", "v" }, "<leader>jrf", "<cmd>JavaRefactorExtractField<cr>", vim.tbl_extend("force", opts, { desc = "Java: Extract field" }))
+
+          -- Settings
+          vim.keymap.set("n", "<leader>jsr", "<cmd>JavaSettingsChangeRuntime<cr>", vim.tbl_extend("force", opts, { desc = "Java: Change runtime" }))
+        end,
+      })
+    end,
+  },
+
   -- UI enhancements
   {
     "lukas-reineke/indent-blankline.nvim",
