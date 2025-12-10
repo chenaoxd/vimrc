@@ -41,6 +41,7 @@ require("mason-lspconfig").setup({
     "ts_ls",
     "rust_analyzer",
     "pyright",
+    "ruff",  -- Python linting/formatting (fast, written in Rust)
     "gopls",
     -- jdtls is managed by nvim-java plugin
     "cssls",
@@ -156,10 +157,64 @@ vim.lsp.config('rust_analyzer', {
   },
 })
 
--- Python
+-- Python (Pyright for type checking + hover docs)
 vim.lsp.config('pyright', {
   on_attach = on_attach,
   capabilities = capabilities,
+  before_init = function(_, config)
+    -- 自动检测项目中的 .venv 虚拟环境
+    local venv_path = vim.fn.getcwd() .. '/.venv'
+    if vim.fn.isdirectory(venv_path) == 1 then
+      config.settings = config.settings or {}
+      config.settings.python = config.settings.python or {}
+      config.settings.python.pythonPath = venv_path .. '/bin/python'
+      config.settings.python.venvPath = vim.fn.getcwd()
+      config.settings.python.venv = '.venv'
+    end
+  end,
+  settings = {
+    pyright = {
+      -- 禁用 pyright 的 organizing imports，让 ruff 来处理
+      disableOrganizeImports = true,
+    },
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        useLibraryCodeForTypes = true,
+        diagnosticMode = "workspace",
+        -- 忽略所有诊断，让 ruff 来处理 linting
+        ignore = { "*" },
+      },
+    },
+  },
+})
+
+-- Python (Ruff for linting + formatting，比 flake8/black 快 10-100 倍)
+vim.lsp.config('ruff', {
+  on_attach = function(client, bufnr)
+    -- 禁用 ruff 的 hover 功能，使用 pyright 的 hover（文档更详细）
+    client.server_capabilities.hoverProvider = false
+    on_attach(client, bufnr)
+  end,
+  capabilities = capabilities,
+  init_options = {
+    settings = {
+      -- Ruff 配置
+      lineLength = 88,
+      -- 选择启用的规则集
+      lint = {
+        select = {
+          "E",   -- pycodestyle errors
+          "F",   -- Pyflakes
+          "I",   -- isort
+          "UP",  -- pyupgrade
+          "B",   -- flake8-bugbear
+          "SIM", -- flake8-simplify
+          "RUF", -- Ruff-specific rules
+        },
+      },
+    },
+  },
 })
 
 -- Go
@@ -340,6 +395,7 @@ vim.lsp.enable({
   'ts_ls',
   'rust_analyzer',
   'pyright',
+  'ruff',
   'gopls',
   'cssls',
   'jsonls',
