@@ -111,6 +111,34 @@ require("lazy").setup({
         },
         jdtls = {
           version = "1.43.0",
+          -- jdtls settings for better Gradle support
+          settings = {
+            java = {
+              -- Gradle import settings
+              import = {
+                gradle = {
+                  enabled = true,
+                  wrapper = {
+                    enabled = true,
+                  },
+                  -- Use Gradle for building instead of Eclipse internal builder
+                  buildServer = {
+                    enabled = true,
+                  },
+                },
+              },
+              -- Enable annotation processing for Lombok etc.
+              eclipse = {
+                downloadSources = true,
+              },
+              maven = {
+                downloadSources = true,
+              },
+              autobuild = {
+                enabled = true,
+              },
+            },
+          },
         },
         lombok = {
           enable = true,
@@ -130,6 +158,8 @@ require("lazy").setup({
         },
         jdk = {
           auto_install = true,
+          -- nvim-java only supports JDK 17 for auto_install
+          -- jdtls will use system Java 21 if available via JAVA_HOME
           version = "17",
         },
         log = {
