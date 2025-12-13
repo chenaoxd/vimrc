@@ -162,14 +162,22 @@ vim.lsp.config('pyright', {
   on_attach = on_attach,
   capabilities = capabilities,
   before_init = function(_, config)
-    -- 自动检测项目中的 .venv 虚拟环境
-    local venv_path = vim.fn.getcwd() .. '/.venv'
+    -- 自动检测项目中的 .venv 虚拟环境 (uv 默认使用 .venv)
+    local cwd = config.root_dir or vim.fn.getcwd()
+    local venv_path = cwd .. '/.venv'
     if vim.fn.isdirectory(venv_path) == 1 then
       config.settings = config.settings or {}
       config.settings.python = config.settings.python or {}
       config.settings.python.pythonPath = venv_path .. '/bin/python'
-      config.settings.python.venvPath = vim.fn.getcwd()
+      config.settings.python.venvPath = cwd
       config.settings.python.venv = '.venv'
+      -- 添加 site-packages 到 extraPaths，确保可以跳转到库定义
+      local site_packages = venv_path .. '/lib/python3.*/site-packages'
+      local expanded = vim.fn.glob(site_packages, false, true)
+      if #expanded > 0 then
+        config.settings.python.analysis = config.settings.python.analysis or {}
+        config.settings.python.analysis.extraPaths = expanded
+      end
     end
   end,
   settings = {
@@ -182,8 +190,13 @@ vim.lsp.config('pyright', {
         autoSearchPaths = true,
         useLibraryCodeForTypes = true,
         diagnosticMode = "workspace",
-        -- 忽略所有诊断，让 ruff 来处理 linting
-        ignore = { "*" },
+        -- 降低诊断级别而不是完全忽略，保持跳转功能
+        diagnosticSeverityOverrides = {
+          reportGeneralTypeIssues = "none",
+          reportOptionalMemberAccess = "none",
+          reportOptionalSubscript = "none",
+          reportPrivateImportUsage = "none",
+        },
       },
     },
   },
@@ -209,8 +222,13 @@ vim.lsp.config('ruff', {
           "I",   -- isort
           "UP",  -- pyupgrade
           "B",   -- flake8-bugbear
-          "SIM", -- flake8-simplify
-          "RUF", -- Ruff-specific rules
+        },
+        ignore = {
+          "E402",   -- module level import not at top of file
+          "I001",   -- import block is un-sorted or un-formatted
+          "RUF001", -- ambiguous unicode character (中文逗号等)
+          "RUF002", -- ambiguous unicode character in docstring
+          "RUF003", -- ambiguous unicode character in comment
         },
       },
     },
