@@ -341,10 +341,39 @@ cmp.setup({
     end,
   },
   mapping = cmp.mapping.preset.insert({
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-b>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.scroll_docs(-4)
+      else
+        -- Emacs: move backward one character
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Left>', true, false, true), 'n', false)
+      end
+    end, { 'i' }),
+    ['<C-f>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.scroll_docs(4)
+      else
+        -- Emacs: move forward one character
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Right>', true, false, true), 'n', false)
+      end
+    end, { 'i' }),
+    ['<C-n>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        -- Emacs: move down one line
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Down>', true, false, true), 'n', false)
+      end
+    end, { 'i' }),
+    ['<C-p>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        -- Emacs: move up one line
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Up>', true, false, true), 'n', false)
+      end
+    end, { 'i' }),
     ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.abort(),
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
     ['<Tab>'] = cmp.mapping(function(fallback)
       local suggestion = get_copilot_suggestion()

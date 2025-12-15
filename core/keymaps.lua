@@ -102,4 +102,14 @@ map("n", "<F8>", ":DlvConnect localhost:33333<CR>", opts)
 map("n", "<F9>", ":DlvToggleBreakpoint<CR>", opts)
 map("n", "<F10>", ":DlvClearAll<CR>", opts)
 
+-- Emacs-style keymaps (Insert mode only)
+-- Navigation (C-n/C-p/C-b/C-f are in lsp.lua with cmp smart mapping)
+map("i", "<C-a>", "<Home>", opts)
+map("i", "<C-e>", "<End>", opts)
+
+-- Editing
+map("i", "<C-d>", "<Del>", opts)
+map("i", "<C-k>", "<C-o>D", opts)
+map("i", "<C-w>", "<C-o>db", opts)
+
 return M
