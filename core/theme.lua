@@ -52,4 +52,10 @@ vim.api.nvim_set_hl(0, "LineNr", { bg = "NONE" })
 vim.api.nvim_set_hl(0, "CursorLineNr", { bg = "NONE" })
 vim.api.nvim_set_hl(0, "FoldColumn", { bg = "NONE" })
 
+-- Diff 高亮 - 柔和深林 (Muted Forest)
+vim.api.nvim_set_hl(0, "DiffAdd",    { bg = "#2d3f34" })
+vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#4a2d2d" })
+vim.api.nvim_set_hl(0, "DiffChange", { bg = "#2d324a" })
+vim.api.nvim_set_hl(0, "DiffText",   { bg = "#3e5c4a", bold = true })
+
 return M

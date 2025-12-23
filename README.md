@@ -43,7 +43,7 @@
 
 ### 开发工具
 
-- 🔄 **Git 集成** - gitgutter + neogit + diffview + git-blame
+- 🔄 **Git 集成** - gitgutter + neogit + vscode-diff + git-blame
 - 🐛 **调试支持** - nvim-dap + vim-delve (Go 语言调试器)
 - 📄 **Markdown** - 实时预览支持
 - 📐 **EditorConfig** - 自动应用项目代码风格规范
@@ -224,15 +224,35 @@ Leader 键: `空格键`
 
 ### Git 操作
 
-#### Neogit & Diffview
+#### Neogit
 | 快捷键 | 功能 |
 |--------|------|
 | `<leader>gg` | 打开 Neogit (Git 状态) |
 | `<leader>gc` | Git commit |
-| `<leader>gd` | 打开 Diffview |
-| `<leader>gh` | 当前文件历史 |
-| `<leader>gH` | 仓库提交历史 |
-| `<leader>gq` | 关闭 Diffview |
+
+#### vscode-diff (Git Diff)
+| 快捷键 | 功能 |
+|--------|------|
+| `<leader>gd` | 打开 Git diff explorer |
+| `<leader>gh` | 当前文件与 HEAD 对比 |
+
+**Diff 视图内快捷键：**
+| 快捷键 | 功能 |
+|--------|------|
+| `]c` | 下一个变更 (chunk) |
+| `[c` | 上一个变更 (chunk) |
+| `]f` | 下一个文件 |
+| `[f` | 上一个文件 |
+| `<leader>b` | 切换文件浏览器 |
+| `q` | 退出 diff 视图 |
+
+**文件浏览器内快捷键：**
+| 快捷键 | 功能 |
+|--------|------|
+| `<CR>` | 选择文件 |
+| `K` | 悬停预览 |
+| `R` | 刷新状态 |
+| `i` | 切换视图模式 |
 
 #### GitGutter
 | 快捷键 | 功能 |
@@ -371,7 +391,7 @@ Leader 键: `空格键`
 
 - **vim-gitgutter** - Git diff 标记
 - **neogit** - Git 命令集成 (Magit 风格)
-- **diffview.nvim** - Git diff 和文件历史查看
+- **vscode-diff.nvim** - VSCode 风格的 Git diff 视图
 - **git-blame.nvim** - Git blame 显示
 
 ### 语法和语言

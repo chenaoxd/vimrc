@@ -52,16 +52,26 @@ require("lazy").setup({
   "airblade/vim-gitgutter",
   "f-person/git-blame.nvim",
   {
+    "esmuellert/vscode-diff.nvim",
+    dependencies = { "MunifTanjim/nui.nvim" },
+    keys = {
+      { "<leader>gd", "<cmd>CodeDiff<cr>", desc = "Git diff explorer" },
+      { "<leader>gh", "<cmd>CodeDiff file HEAD<cr>", desc = "Diff with HEAD" },
+    },
+    cmd = "CodeDiff",
+    config = function()
+      require("vscode-diff").setup({})
+    end,
+  },
+  {
     "NeogitOrg/neogit",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "sindrets/diffview.nvim",
       "nvim-telescope/telescope.nvim",
     },
     config = function()
       require("neogit").setup({
         integrations = {
-          diffview = true,
           telescope = true,
         },
         mappings = {
@@ -73,10 +83,6 @@ require("lazy").setup({
       -- Keymaps
       vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<cr>", { desc = "Neogit" })
       vim.keymap.set("n", "<leader>gc", "<cmd>Neogit commit<cr>", { desc = "Git commit" })
-      vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<cr>", { desc = "Diffview open" })
-      vim.keymap.set("n", "<leader>gh", "<cmd>DiffviewFileHistory %<cr>", { desc = "File history" })
-      vim.keymap.set("n", "<leader>gH", "<cmd>DiffviewFileHistory<cr>", { desc = "Repo history" })
-      vim.keymap.set("n", "<leader>gq", "<cmd>DiffviewClose<cr>", { desc = "Close diffview" })
     end,
   },
 
