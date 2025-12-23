@@ -361,16 +361,16 @@ cmp.setup({
       if cmp.visible() then
         cmp.select_next_item()
       else
-        -- Emacs: move down one line
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Down>', true, false, true), 'n', false)
+        -- Emacs: move down one visual line (like gj)
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-o>gj', true, false, true), 'n', false)
       end
     end, { 'i' }),
     ['<C-p>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       else
-        -- Emacs: move up one line
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Up>', true, false, true), 'n', false)
+        -- Emacs: move up one visual line (like gk)
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-o>gk', true, false, true), 'n', false)
       end
     end, { 'i' }),
     ['<C-Space>'] = cmp.mapping.complete(),
