@@ -380,32 +380,6 @@ require("lazy").setup({
     end,
   },
 
-  -- AI Completion
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    config = function()
-      require("copilot").setup({
-        panel = {
-          auto_refresh = true,
-        },
-        suggestion = {
-          auto_trigger = true,
-          keymap = {
-            accept = "<C-l>",
-            next = "<C-j>",
-            prev = "<C-k>",
-          }
-        },
-        filetypes = {
-          yaml = true,
-          markdown = true,
-        },
-      })
-    end,
-  },
-
   -- LSP and completion
   {
     "neovim/nvim-lspconfig",

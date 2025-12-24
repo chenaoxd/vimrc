@@ -318,11 +318,6 @@ vim.lsp.config('eslint', {
 -- Completion setup
 local cmp = require('cmp')
 local luasnip = require('luasnip')
-local function get_copilot_suggestion()
-  local ok, suggestion = pcall(require, 'copilot.suggestion')
-  if not ok then return nil end
-  return suggestion
-end
 
 cmp.setup({
   window = {
@@ -376,10 +371,7 @@ cmp.setup({
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
     ['<Tab>'] = cmp.mapping(function(fallback)
-      local suggestion = get_copilot_suggestion()
-      if suggestion and suggestion.is_visible() then
-        suggestion.accept()
-      elseif cmp.visible() then
+      if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
@@ -390,15 +382,10 @@ cmp.setup({
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
-        local suggestion = get_copilot_suggestion()
-        if suggestion and suggestion.is_visible() then
-          suggestion.dismiss()
-        elseif luasnip.jumpable(-1) then
-          luasnip.jump(-1)
-        else
-          fallback()
-        end
+        fallback()
       end
     end, { 'i', 's' }),
   }),
