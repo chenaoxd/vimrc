@@ -158,31 +158,10 @@ vim.lsp.config('rust_analyzer', {
 })
 
 -- Python (Pyright for type checking + hover docs)
-vim.lsp.config('pyright', {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  before_init = function(_, config)
-    -- 自动检测项目中的 .venv 虚拟环境 (uv 默认使用 .venv)
-    local cwd = config.root_dir or vim.fn.getcwd()
-    local venv_path = cwd .. '/.venv'
-    if vim.fn.isdirectory(venv_path) == 1 then
-      config.settings = config.settings or {}
-      config.settings.python = config.settings.python or {}
-      config.settings.python.pythonPath = venv_path .. '/bin/python'
-      config.settings.python.venvPath = cwd
-      config.settings.python.venv = '.venv'
-      -- 添加 site-packages 到 extraPaths，确保可以跳转到库定义
-      local site_packages = venv_path .. '/lib/python3.*/site-packages'
-      local expanded = vim.fn.glob(site_packages, false, true)
-      if #expanded > 0 then
-        config.settings.python.analysis = config.settings.python.analysis or {}
-        config.settings.python.analysis.extraPaths = expanded
-      end
-    end
-  end,
-  settings = {
+-- 动态检测 .venv 并配置 pyright
+local function get_pyright_settings(root_dir)
+  local settings = {
     pyright = {
-      -- 禁用 pyright 的 organizing imports，让 ruff 来处理
       disableOrganizeImports = true,
     },
     python = {
@@ -190,7 +169,6 @@ vim.lsp.config('pyright', {
         autoSearchPaths = true,
         useLibraryCodeForTypes = true,
         diagnosticMode = "workspace",
-        -- 降低诊断级别而不是完全忽略，保持跳转功能
         diagnosticSeverityOverrides = {
           reportGeneralTypeIssues = "none",
           reportOptionalMemberAccess = "none",
@@ -199,7 +177,49 @@ vim.lsp.config('pyright', {
         },
       },
     },
-  },
+  }
+
+  -- 自动检测项目中的 .venv 虚拟环境 (uv 默认使用 .venv)
+  local venv_path = root_dir .. '/.venv'
+  if vim.fn.isdirectory(venv_path) == 1 then
+    settings.python.pythonPath = venv_path .. '/bin/python'
+    settings.python.venvPath = root_dir
+    settings.python.venv = '.venv'
+    -- 添加 site-packages 到 extraPaths
+    local site_packages = venv_path .. '/lib/python3.*/site-packages'
+    local expanded = vim.fn.glob(site_packages, false, true)
+    if #expanded > 0 then
+      settings.python.analysis.extraPaths = expanded
+    end
+  end
+
+  return settings
+end
+
+-- 使用 root_dir 函数来动态生成配置
+vim.lsp.config('pyright', {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  root_dir = function(bufnr, on_dir)
+    local fname = vim.api.nvim_buf_get_name(bufnr)
+    local root = vim.fs.root(bufnr, {'pyproject.toml', 'setup.py', 'pyrightconfig.json', '.git'})
+    if root then
+      on_dir(root)
+    end
+  end,
+  settings = get_pyright_settings(vim.fn.getcwd()),
+})
+
+-- 在 LSP attach 时更新 pyright 配置
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client and client.name == 'pyright' then
+      local root_dir = client.root_dir or vim.fn.getcwd()
+      local new_settings = get_pyright_settings(root_dir)
+      client:notify('workspace/didChangeConfiguration', { settings = new_settings })
+    end
+  end,
 })
 
 -- Python (Ruff for linting + formatting，比 flake8/black 快 10-100 倍)
