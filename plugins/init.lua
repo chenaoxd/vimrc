@@ -73,13 +73,122 @@ require("lazy").setup({
       require("neogit").setup({
         integrations = {
           telescope = true,
+          diffview = false, -- Using vscode-diff instead
         },
         mappings = {
           status = {
             ["q"] = "Close",
+            ["d"] = false, -- Disable default, we'll use vscode-diff
+          },
+          popup = {
+            ["d"] = false, -- Disable DiffPopup, we'll use vscode-diff
           },
         },
       })
+
+      -- vscode-diff integration for neogit status view (handles both files and commits)
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "NeogitStatus",
+        callback = function()
+          vim.schedule(function()
+            vim.keymap.set("n", "d", function()
+              local line = vim.api.nvim_get_current_line()
+
+              -- Check if line is a commit (format: "abc1234 message" or " abc1234 message")
+              local commit = line:match("^%s*(%x%x%x%x%x%x%x+)%s")
+              if commit then
+                -- It's a commit line - show commit diff
+                local ok = pcall(function()
+                  vim.cmd("CodeDiff " .. commit .. "^ " .. commit)
+                end)
+                if not ok then
+                  vim.notify("Could not show diff (possibly root commit)", vim.log.levels.WARN)
+                end
+                return
+              end
+
+              -- Otherwise try to find file path
+              local filepath = nil
+
+              -- Try neogit's internal API (wrapped in pcall for safety)
+              pcall(function()
+                local status_buf = require("neogit.buffers.status")
+                local inst = type(status_buf.instance) == "function" and status_buf.instance() or status_buf.instance
+                if inst and inst.buffer and inst.buffer.ui then
+                  local item = inst.buffer.ui:get_item_under_cursor()
+                  if item then
+                    filepath = item.absolute_path or item.escaped_path
+                  end
+                end
+              end)
+
+              -- Fallback: parse file path from line content
+              if not filepath then
+                -- Pattern: "  Modified   lua/foo.lua" or "  New file   src/bar.lua"
+                local parsed = line:match("^%s+%S+%s+(.+)$")
+                if parsed then
+                  parsed = parsed:gsub("^%s+", ""):gsub("%s+$", "")
+                  local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+                  if git_root and vim.v.shell_error == 0 then
+                    filepath = git_root .. "/" .. parsed
+                  end
+                end
+              end
+
+              if filepath and vim.fn.filereadable(filepath) == 1 then
+                vim.cmd("tabnew " .. vim.fn.fnameescape(filepath))
+                vim.cmd("CodeDiff file HEAD")
+              elseif filepath then
+                vim.notify("File deleted or not readable: " .. filepath, vim.log.levels.WARN)
+              else
+                vim.notify("No file or commit under cursor", vim.log.levels.WARN)
+              end
+            end, { buffer = true, desc = "Open diff in vscode-diff" })
+          end)
+        end,
+      })
+
+      -- vscode-diff integration for neogit log view (commit diffs)
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "NeogitLogView",
+        callback = function()
+          vim.schedule(function()
+            vim.keymap.set("n", "d", function()
+            local commit = nil
+
+            -- Try neogit's internal API first (wrapped in pcall for safety)
+            pcall(function()
+              local log_buf = require("neogit.buffers.log_view")
+              local inst = type(log_buf.instance) == "function" and log_buf.instance() or log_buf.instance
+              if inst and inst.buffer and inst.buffer.ui then
+                commit = inst.buffer.ui:get_commit_under_cursor()
+              end
+            end)
+
+            -- Fallback: parse commit hash from line (format: "* abc1234 ...")
+            if not commit then
+              local line = vim.api.nvim_get_current_line()
+              commit = line:match("[%*|]%s*(%x+)%s")
+            end
+
+            if commit then
+              -- Show diff between commit's parent and commit
+              -- Use pcall to handle root commits (no parent)
+              local ok, err = pcall(function()
+                vim.cmd("CodeDiff " .. commit .. "^ " .. commit)
+              end)
+              if not ok then
+                -- Might be root commit, try showing just the commit
+                vim.notify("Could not show diff (possibly root commit): " .. tostring(err), vim.log.levels.WARN)
+              end
+            else
+              vim.notify("No commit under cursor", vim.log.levels.WARN)
+            end
+          end, { buffer = true, desc = "Open commit diff in vscode-diff" })
+          end)
+        end,
+      })
+
       -- Keymaps
       vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<cr>", { desc = "Neogit" })
       vim.keymap.set("n", "<leader>gc", "<cmd>Neogit commit<cr>", { desc = "Git commit" })
