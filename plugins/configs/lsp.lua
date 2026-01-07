@@ -233,7 +233,7 @@ vim.lsp.config('ruff', {
   init_options = {
     settings = {
       -- Ruff 配置
-      lineLength = 88,
+      lineLength = 120,
       -- 选择启用的规则集
       lint = {
         select = {
