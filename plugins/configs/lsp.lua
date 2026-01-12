@@ -32,8 +32,6 @@ local function ensure_installed(packages)
   end
 end
 
--- Note: Java tools (jdtls, java-debug-adapter, java-test) are managed by nvim-java plugin
-
 -- Setup Mason LSPConfig
 require("mason-lspconfig").setup({
   ensure_installed = {
@@ -43,7 +41,7 @@ require("mason-lspconfig").setup({
     "pyright",
     "ruff",  -- Python linting/formatting (fast, written in Rust)
     "gopls",
-    -- jdtls is managed by nvim-java plugin
+    "jdtls",  -- Java LSP
     "cssls",
     "jsonls",
     "tailwindcss",
@@ -261,7 +259,8 @@ vim.lsp.config('gopls', {
   capabilities = capabilities,
 })
 
--- Java (jdtls) is configured by nvim-java plugin
+-- Java: configured in ftplugin/java.lua using nvim-jdtls
+-- nvim-jdtls handles project-specific workspace directories and Gradle/Maven support
 
 -- CSS
 vim.lsp.config('cssls', {
@@ -443,7 +442,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Enable all configured LSP servers (Neovim 0.11+ requires explicit enable)
--- Note: jdtls is enabled by nvim-java plugin
+-- Note: jdtls is managed by nvim-jdtls in ftplugin/java.lua
 vim.lsp.enable({
   'lua_ls',
   'ts_ls',

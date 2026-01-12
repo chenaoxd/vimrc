@@ -201,6 +201,12 @@ require("lazy").setup({
   "pearofducks/ansible-vim",
   "craigmac/vim-mermaid",
 
+  -- Java (nvim-jdtls for proper Gradle/Maven support)
+  {
+    "mfussenegger/nvim-jdtls",
+    ft = "java",
+  },
+
   -- Debugging
   "sebdah/vim-delve",
   {
@@ -212,158 +218,6 @@ require("lazy").setup({
     },
     config = function()
       require("plugins.configs.dap")
-    end,
-  },
-
-  -- Java support (nvim-java 4.0.0+)
-  {
-    "nvim-java/nvim-java",
-    config = function()
-      require("java").setup({
-        checks = {
-          nvim_version = true,
-          nvim_jdtls_conflict = true,
-        },
-        jdtls = {
-          version = "1.43.0",
-          -- jdtls settings for better Gradle support
-          settings = {
-            java = {
-              -- Gradle import settings
-              import = {
-                gradle = {
-                  enabled = true,
-                  wrapper = {
-                    enabled = true,
-                  },
-                  -- Use Gradle for building instead of Eclipse internal builder
-                  buildServer = {
-                    enabled = true,
-                  },
-                },
-              },
-              -- Enable annotation processing for Lombok etc.
-              eclipse = {
-                downloadSources = true,
-              },
-              maven = {
-                downloadSources = true,
-              },
-              autobuild = {
-                enabled = true,
-              },
-            },
-          },
-        },
-        lombok = {
-          enable = true,
-          version = "1.18.40",
-        },
-        java_test = {
-          enable = true,
-          version = "0.40.1",
-        },
-        java_debug_adapter = {
-          enable = true,
-          version = "0.58.2",
-        },
-        spring_boot_tools = {
-          enable = true,
-          version = "1.55.1",
-        },
-        jdk = {
-          auto_install = true,
-          -- nvim-java only supports JDK 17 for auto_install
-          -- jdtls will use system Java 21 if available via JAVA_HOME
-          version = "17",
-        },
-        log = {
-          use_console = true,
-          use_file = true,
-          level = "info",
-          log_file = vim.fn.stdpath("state") .. "/nvim-java.log",
-          max_lines = 1000,
-          show_location = false,
-        },
-      })
-      vim.lsp.enable("jdtls")
-
-      -- Java LSP keymaps (on LspAttach for jdtls)
-      vim.api.nvim_create_autocmd("LspAttach", {
-        callback = function(args)
-          local client = vim.lsp.get_client_by_id(args.data.client_id)
-          if client and client.name == "jdtls" then
-            local opts = { buffer = args.buf, silent = true }
-            -- LSP navigation
-            vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-            vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-            vim.keymap.set('n', 'K', function()
-              require('plugins.configs.lsp-hover-enhanced').show_enhanced_hover()
-            end, opts)
-            vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-            vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-            vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
-            vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
-            vim.keymap.set('n', '<leader>wl', function()
-              print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-            end, opts)
-            vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
-            vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-            vim.keymap.set({ 'n', 'v' }, '<leader>La', vim.lsp.buf.code_action, opts)
-            vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-            vim.keymap.set('n', '<leader>f', function()
-              vim.lsp.buf.format { async = true }
-            end, opts)
-            -- Diagnostic keymaps
-            vim.keymap.set('n', '[g', vim.diagnostic.goto_prev, opts)
-            vim.keymap.set('n', ']g', vim.diagnostic.goto_next, opts)
-            vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
-            vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist, opts)
-          end
-        end,
-      })
-
-      -- Java specific keymaps
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "java",
-        callback = function()
-          local opts = { buffer = true, silent = true }
-
-          -- Build
-          vim.keymap.set("n", "<leader>jbb", "<cmd>JavaBuildBuildWorkspace<cr>", vim.tbl_extend("force", opts, { desc = "Java: Build workspace" }))
-          vim.keymap.set("n", "<leader>jbc", "<cmd>JavaBuildCleanWorkspace<cr>", vim.tbl_extend("force", opts, { desc = "Java: Clean workspace" }))
-
-          -- Runner
-          vim.keymap.set("n", "<leader>jr", "<cmd>JavaRunnerRunMain<cr>", vim.tbl_extend("force", opts, { desc = "Java: Run main" }))
-          vim.keymap.set("n", "<F5>", "<cmd>JavaRunnerRunMain<cr>", vim.tbl_extend("force", opts, { desc = "Java: Run main" }))
-          vim.keymap.set("n", "<leader>js", "<cmd>JavaRunnerStopMain<cr>", vim.tbl_extend("force", opts, { desc = "Java: Stop main" }))
-          vim.keymap.set("n", "<S-F5>", "<cmd>JavaRunnerStopMain<cr>", vim.tbl_extend("force", opts, { desc = "Java: Stop main" }))
-          vim.keymap.set("n", "<leader>jl", "<cmd>JavaRunnerToggleLogs<cr>", vim.tbl_extend("force", opts, { desc = "Java: Toggle logs" }))
-
-          -- DAP
-          vim.keymap.set("n", "<leader>jdc", "<cmd>JavaDapConfig<cr>", vim.tbl_extend("force", opts, { desc = "Java: Configure DAP" }))
-
-          -- Test
-          vim.keymap.set("n", "<leader>jtc", "<cmd>JavaTestRunCurrentClass<cr>", vim.tbl_extend("force", opts, { desc = "Java: Test class" }))
-          vim.keymap.set("n", "<leader>jtC", "<cmd>JavaTestDebugCurrentClass<cr>", vim.tbl_extend("force", opts, { desc = "Java: Debug test class" }))
-          vim.keymap.set("n", "<leader>jtm", "<cmd>JavaTestRunCurrentMethod<cr>", vim.tbl_extend("force", opts, { desc = "Java: Test method" }))
-          vim.keymap.set("n", "<leader>jtM", "<cmd>JavaTestDebugCurrentMethod<cr>", vim.tbl_extend("force", opts, { desc = "Java: Debug test method" }))
-          vim.keymap.set("n", "<leader>jtr", "<cmd>JavaTestViewLastReport<cr>", vim.tbl_extend("force", opts, { desc = "Java: View test report" }))
-
-          -- Profile
-          vim.keymap.set("n", "<leader>jp", "<cmd>JavaProfile<cr>", vim.tbl_extend("force", opts, { desc = "Java: Profiles UI" }))
-
-          -- Refactor
-          vim.keymap.set({ "n", "v" }, "<leader>jrv", "<cmd>JavaRefactorExtractVariable<cr>", vim.tbl_extend("force", opts, { desc = "Java: Extract variable" }))
-          vim.keymap.set({ "n", "v" }, "<leader>jrV", "<cmd>JavaRefactorExtractVariableAllOccurrence<cr>", vim.tbl_extend("force", opts, { desc = "Java: Extract variable (all)" }))
-          vim.keymap.set({ "n", "v" }, "<leader>jrc", "<cmd>JavaRefactorExtractConstant<cr>", vim.tbl_extend("force", opts, { desc = "Java: Extract constant" }))
-          vim.keymap.set({ "n", "v" }, "<leader>jrm", "<cmd>JavaRefactorExtractMethod<cr>", vim.tbl_extend("force", opts, { desc = "Java: Extract method" }))
-          vim.keymap.set({ "n", "v" }, "<leader>jrf", "<cmd>JavaRefactorExtractField<cr>", vim.tbl_extend("force", opts, { desc = "Java: Extract field" }))
-
-          -- Settings
-          vim.keymap.set("n", "<leader>jsr", "<cmd>JavaSettingsChangeRuntime<cr>", vim.tbl_extend("force", opts, { desc = "Java: Change runtime" }))
-        end,
-      })
     end,
   },
 
