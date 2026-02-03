@@ -43,7 +43,7 @@
 
 ### 开发工具
 
-- 🔄 **Git 集成** - gitgutter + neogit + vscode-diff + git-blame
+- 🔄 **Git 集成** - gitgutter + neogit + codediff + git-blame
 - 🐛 **调试支持** - nvim-dap + vim-delve (Go 语言调试器)
 - 📄 **Markdown** - 实时预览支持
 - 📐 **EditorConfig** - 自动应用项目代码风格规范
@@ -230,7 +230,7 @@ Leader 键: `空格键`
 | `<leader>gg` | 打开 Neogit (Git 状态) |
 | `<leader>gc` | Git commit |
 
-#### vscode-diff (Git Diff)
+#### codediff (Git Diff)
 | 快捷键 | 功能 |
 |--------|------|
 | `<leader>gd` | 打开 Git diff explorer |
@@ -391,7 +391,7 @@ Leader 键: `空格键`
 
 - **vim-gitgutter** - Git diff 标记
 - **neogit** - Git 命令集成 (Magit 风格)
-- **vscode-diff.nvim** - VSCode 风格的 Git diff 视图
+- **codediff.nvim** - VSCode 风格的 Git diff 视图
 - **git-blame.nvim** - Git blame 显示
 
 ### 语法和语言

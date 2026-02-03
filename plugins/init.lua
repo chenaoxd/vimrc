@@ -54,7 +54,7 @@ require("lazy").setup({
   "airblade/vim-gitgutter",
   "f-person/git-blame.nvim",
   {
-    "esmuellert/vscode-diff.nvim",
+    "esmuellert/codediff.nvim",
     dependencies = { "MunifTanjim/nui.nvim" },
     keys = {
       { "<leader>gd", "<cmd>CodeDiff<cr>", desc = "Git diff explorer" },
@@ -62,7 +62,7 @@ require("lazy").setup({
     },
     cmd = "CodeDiff",
     config = function()
-      require("vscode-diff").setup({})
+      require("codediff").setup({})
     end,
   },
   {
@@ -75,20 +75,20 @@ require("lazy").setup({
       require("neogit").setup({
         integrations = {
           telescope = true,
-          diffview = false, -- Using vscode-diff instead
+          diffview = false, -- Using codediff instead
         },
         mappings = {
           status = {
             ["q"] = "Close",
-            ["d"] = false, -- Disable default, we'll use vscode-diff
+            ["d"] = false, -- Disable default, we'll use codediff
           },
           popup = {
-            ["d"] = false, -- Disable DiffPopup, we'll use vscode-diff
+            ["d"] = false, -- Disable DiffPopup, we'll use codediff
           },
         },
       })
 
-      -- vscode-diff integration for neogit status view (handles both files and commits)
+      -- codediff integration for neogit status view (handles both files and commits)
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "NeogitStatus",
         callback = function()
@@ -145,12 +145,12 @@ require("lazy").setup({
               else
                 vim.notify("No file or commit under cursor", vim.log.levels.WARN)
               end
-            end, { buffer = true, desc = "Open diff in vscode-diff" })
+            end, { buffer = true, desc = "Open diff in codediff" })
           end)
         end,
       })
 
-      -- vscode-diff integration for neogit log view (commit diffs)
+      -- codediff integration for neogit log view (commit diffs)
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "NeogitLogView",
         callback = function()
@@ -186,7 +186,7 @@ require("lazy").setup({
             else
               vim.notify("No commit under cursor", vim.log.levels.WARN)
             end
-          end, { buffer = true, desc = "Open commit diff in vscode-diff" })
+          end, { buffer = true, desc = "Open commit diff in codediff" })
           end)
         end,
       })
