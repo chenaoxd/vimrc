@@ -55,39 +55,101 @@ else
   config_dir = mason_path .. "/config_win"
 end
 
-local java_executable = "java"
-if java_home and java_home ~= "" then
-  java_executable = java_home .. "/bin/java"
+local java_home = vim.env.JAVA_HOME
+if not java_home or java_home == "" then
+  for _, candidate in ipairs({
+    "/usr/lib/jvm/java-21-openjdk",
+    "/usr/lib/jvm/jdk21-openjdk",
+    "/usr/lib/jvm/java-25-openjdk",
+    "/usr/lib/jvm/jdk25-openjdk",
+  }) do
+    if vim.fn.executable(candidate .. "/bin/java") == 1 then
+      java_home = candidate
+      break
+    end
+  end
+end
+
+local function resolve_java_executable()
+  if java_home and java_home ~= "" then
+    local candidate = java_home .. "/bin/java"
+    if vim.fn.executable(candidate) == 1 then
+      return candidate
+    end
+  end
+
+  local exepath = vim.fn.exepath("java")
+  if exepath ~= "" then
+    return exepath
+  end
+
+  return nil
+end
+
+local function detect_java_major(java_executable)
+  if not java_executable then
+    return nil
+  end
+
+  local result = vim.system({ java_executable, "-version" }, { text = true }):wait()
+  if result.code ~= 0 then
+    return nil
+  end
+
+  local output = table.concat(vim.tbl_filter(function(part)
+    return type(part) == "string" and part ~= ""
+  end, { result.stdout, result.stderr }), "\n")
+
+  local version = output:match('version%s+"(%d+)')
+  if not version then
+    version = output:match('version%s+"1%.(%d+)')
+  end
+
+  return tonumber(version)
+end
+
+local java_executable = resolve_java_executable()
+local java_major = detect_java_major(java_executable)
+
+if not java_major or java_major < 21 then
+  local warn_key = ("jdtls-java-version:%s"):format(root_dir)
+  vim.g._jdtls_java_requirement_warned = vim.g._jdtls_java_requirement_warned or {}
+
+  if not vim.g._jdtls_java_requirement_warned[warn_key] then
+    vim.g._jdtls_java_requirement_warned[warn_key] = true
+    local found = java_major and ("Java " .. java_major) or "no usable Java runtime"
+    local source = java_executable or "$JAVA_HOME/bin/java or PATH"
+
+    vim.schedule(function()
+      vim.notify(
+        ("jdtls disabled for %s: Java 21+ is required, found %s at %s"):format(project_name, found, source),
+        vim.log.levels.WARN
+      )
+    end)
+  end
+
+  return
+end
+
+local jdtls_executable = mason_path .. "/bin/jdtls"
+if vim.fn.executable(jdtls_executable) ~= 1 then
+  vim.notify("jdtls: Could not find Mason wrapper", vim.log.levels.ERROR)
+  return
 end
 
 local cmd = {
-  java_executable,
-  "-Declipse.application=org.eclipse.jdt.ls.core.id1",
-  "-Dosgi.bundles.defaultStartLevel=4",
-  "-Declipse.product=org.eclipse.jdt.ls.core.product",
-  "-Dlog.level=WARNING",
-  "-Xms256m",
-  "-Xmx2g",
-  "--add-modules=ALL-SYSTEM",
-  "--add-opens", "java.base/java.util=ALL-UNNAMED",
-  "--add-opens", "java.base/java.lang=ALL-UNNAMED",
-  "-jar", launcher_jar,
-  "-configuration", config_dir,
+  jdtls_executable,
+  "--java-executable", java_executable,
+  "--jvm-arg=-Dlog.level=WARNING",
+  "--jvm-arg=-Xms256m",
+  "--jvm-arg=-Xmx2g",
   "-data", workspace_dir,
 }
 
 if vim.loop.fs_stat(lombok_jar) then
-  local insert_at = #cmd + 1
-  for i, arg in ipairs(cmd) do
-    if arg == "-jar" then
-      insert_at = i
-      break
-    end
-  end
-  table.insert(cmd, insert_at, "-javaagent:" .. lombok_jar)
+  table.insert(cmd, 4, "--jvm-arg=-javaagent:" .. lombok_jar)
 end
 
-local java_home = vim.env.JAVA_HOME
 local gradle_home = vim.env.GRADLE_HOME
 local gradle_snapshot_wrapper = false
 
