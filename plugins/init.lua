@@ -198,8 +198,6 @@ require("lazy").setup({
   },
 
   -- Language support (only those not fully covered by standard Treesitter/LSP or with unique features)
-  "jceb/vim-orgmode",
-  "tpope/vim-speeddating",
   "pearofducks/ansible-vim",
   "craigmac/vim-mermaid",
 
