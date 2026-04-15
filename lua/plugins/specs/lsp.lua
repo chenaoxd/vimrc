@@ -53,6 +53,11 @@ return {
           auto_show = true,
           border = "rounded",
         },
+        list = {
+          selection = {
+            auto_insert = false,
+          },
+        },
         documentation = {
           auto_show = false,
           auto_show_delay_ms = 150,
@@ -74,7 +79,15 @@ return {
         ["<C-k>"] = false,
       },
       sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
+        default = { "lsp", "snippets", "buffer" },
+        providers = {
+          buffer = {
+            min_keyword_length = 3,
+          },
+          snippets = {
+            min_keyword_length = 2,
+          },
+        },
       },
     },
   },

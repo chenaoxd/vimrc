@@ -62,7 +62,7 @@ Core navigation:
 - `<leader>fg`: project grep
 - `<leader>fb`: buffers
 - `<leader>fh`: help
-- `<C-y>`: open explorer
+- `<C-y>`: open explorer, focus it when already open, or close it when focused
 - `<leader>tt`: toggle terminal on the right
 
 LSP:

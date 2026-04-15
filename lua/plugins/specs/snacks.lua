@@ -19,6 +19,17 @@ end
 
 local function open_explorer()
   if has_fd then
+    local pickers = Snacks.picker.get({ source = "explorer" })
+    local explorer = pickers[#pickers]
+    if explorer then
+      if explorer:is_focused() then
+        explorer:close()
+      else
+        explorer:focus("list", { show = true })
+      end
+      return explorer
+    end
+
     return Snacks.explorer()
   end
 
