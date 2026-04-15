@@ -11,6 +11,11 @@ local function gitsigns_diff_source()
   }
 end
 
+local file_path_component = {
+  "filename",
+  path = 1,
+}
+
 return {
   {
     "nvim-tree/nvim-web-devicons",
@@ -102,7 +107,7 @@ return {
         theme = "dracula",
         component_separators = "|",
         section_separators = "",
-        globalstatus = true,
+        globalstatus = false,
       },
       sections = {
         lualine_b = {
@@ -110,10 +115,18 @@ return {
           { "diff", source = gitsigns_diff_source },
         },
         lualine_c = {
-          { "filename", path = 1 },
+          file_path_component,
         },
         lualine_x = {
           "diagnostics",
+          "filetype",
+        },
+      },
+      inactive_sections = {
+        lualine_c = {
+          file_path_component,
+        },
+        lualine_x = {
           "filetype",
         },
       },
