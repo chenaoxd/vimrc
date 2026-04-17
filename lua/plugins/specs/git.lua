@@ -41,6 +41,9 @@ return {
       { "<leader>gh", "<cmd>CodeDiff file HEAD<cr>", desc = "Diff with HEAD" },
     },
     opts = {},
+    config = function(_, opts)
+      require("config.codediff").setup(opts)
+    end,
   },
   {
     "NeogitOrg/neogit",

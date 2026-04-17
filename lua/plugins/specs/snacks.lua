@@ -17,13 +17,22 @@ local function open_files(opts)
   }, opts or {}))
 end
 
+local function close_picker(picker)
+  if picker.layout and picker.layout:valid() then
+    picker.layout:close()
+    return
+  end
+
+  picker:close()
+end
+
 local function open_explorer()
   if has_fd then
     local pickers = Snacks.picker.get({ source = "explorer" })
     local explorer = pickers[#pickers]
     if explorer then
       if explorer:is_focused() then
-        explorer:close()
+        close_picker(explorer)
       else
         explorer:focus("list", { show = true })
       end
@@ -71,7 +80,7 @@ return {
           explorer = {
             auto_close = false,
             hidden = true,
-            ignored = true,
+            ignored = false,
             layout = {
               preset = "sidebar",
             },

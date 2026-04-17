@@ -8,6 +8,15 @@ local function map(bufnr, modes, lhs, rhs, desc)
   })
 end
 
+local function root_by_markers(markers)
+  return function(bufnr, on_dir)
+    local root = vim.fs.root(bufnr, markers)
+    if root then
+      on_dir(root)
+    end
+  end
+end
+
 function M.on_attach(client, bufnr)
   map(bufnr, "n", "gD", vim.lsp.buf.declaration, "Go to declaration")
   map(bufnr, "n", "gd", vim.lsp.buf.definition, "Go to definition")
@@ -143,6 +152,11 @@ function M.setup()
     capabilities = M.capabilities,
     on_attach = M.on_attach,
     filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+    root_dir = root_by_markers({
+      "tsconfig.json",
+      "jsconfig.json",
+      "package.json",
+    }),
     settings = {
       javascript = {
         inlayHints = {
@@ -257,11 +271,32 @@ function M.setup()
   vim.lsp.config("tailwindcss", {
     capabilities = M.capabilities,
     on_attach = M.on_attach,
+    root_dir = root_by_markers({
+      "tailwind.config.ts",
+      "tailwind.config.mjs",
+      "tailwind.config.cjs",
+      "tailwind.config.js",
+      "postcss.config.ts",
+      "postcss.config.mjs",
+      "postcss.config.cjs",
+      "postcss.config.js",
+      "package.json",
+    }),
   })
 
   vim.lsp.config("eslint", {
     capabilities = M.capabilities,
     filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+    root_dir = root_by_markers({
+      "eslint.config.mjs",
+      "eslint.config.cjs",
+      "eslint.config.js",
+      ".eslintrc",
+      ".eslintrc.json",
+      ".eslintrc.cjs",
+      ".eslintrc.js",
+      "package.json",
+    }),
     on_attach = function(client, bufnr)
       M.on_attach(client, bufnr)
       map(bufnr, "n", "<leader>ef", function()
