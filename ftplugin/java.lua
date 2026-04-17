@@ -6,6 +6,11 @@ end
 local lsp = require("config.lsp")
 local jdtls_setup = require("jdtls.setup")
 
+local function read_cache(name)
+  local value = vim.g[name]
+  return type(value) == "table" and value or {}
+end
+
 local root_dir = jdtls_setup.find_root({
   "settings.gradle.kts",
   "settings.gradle",
@@ -23,11 +28,7 @@ if not root_dir then
 end
 
 if not root_dir then
-  root_dir = jdtls_setup.find_root({ ".git" })
-end
-
-if not root_dir then
-  vim.notify("jdtls: Could not find project root", vim.log.levels.WARN)
+  vim.notify("jdtls: Could not find Gradle/Maven project root", vim.log.levels.WARN)
   return
 end
 
@@ -97,8 +98,24 @@ local function detect_java_major(java_executable)
   return tonumber(version)
 end
 
-local java_executable = resolve_java_executable()
-local java_major = detect_java_major(java_executable)
+local runtime_cache = read_cache("_jdtls_runtime_cache")
+local java_home_cache_key = java_home or "<unset>"
+local runtime = runtime_cache[java_home_cache_key]
+
+if not runtime then
+  local java_executable = resolve_java_executable()
+  runtime = {
+    executable = java_executable,
+    major = detect_java_major(java_executable),
+    home = java_home,
+  }
+  runtime_cache[java_home_cache_key] = runtime
+  vim.g._jdtls_runtime_cache = runtime_cache
+end
+
+local java_executable = runtime.executable
+local java_major = runtime.major
+java_home = runtime.home
 
 if not java_major or java_major < 21 then
   local warn_key = ("jdtls-java-version:%s"):format(root_dir)
@@ -136,19 +153,27 @@ if vim.uv.fs_stat(lombok_jar) then
 end
 
 local gradle_home = vim.env.GRADLE_HOME
-local gradle_snapshot_wrapper = false
-local wrapper_props = root_dir .. "/gradle/wrapper/gradle-wrapper.properties"
+local snapshot_wrapper_cache = read_cache("_jdtls_gradle_snapshot_wrapper_cache")
+local gradle_snapshot_wrapper = snapshot_wrapper_cache[root_dir]
 
-if vim.uv.fs_stat(wrapper_props) then
-  local ok_read, lines = pcall(vim.fn.readfile, wrapper_props)
-  if ok_read then
-    for _, line in ipairs(lines) do
-      if line:match("^distributionUrl=") and line:find("distributions%-snapshots") then
-        gradle_snapshot_wrapper = true
-        break
+if gradle_snapshot_wrapper == nil then
+  gradle_snapshot_wrapper = false
+  local wrapper_props = root_dir .. "/gradle/wrapper/gradle-wrapper.properties"
+
+  if vim.uv.fs_stat(wrapper_props) then
+    local ok_read, lines = pcall(vim.fn.readfile, wrapper_props)
+    if ok_read then
+      for _, line in ipairs(lines) do
+        if line:match("^distributionUrl=") and line:find("distributions%-snapshots") then
+          gradle_snapshot_wrapper = true
+          break
+        end
       end
     end
   end
+
+  snapshot_wrapper_cache[root_dir] = gradle_snapshot_wrapper
+  vim.g._jdtls_gradle_snapshot_wrapper_cache = snapshot_wrapper_cache
 end
 
 local gradle_available = gradle_home ~= nil and gradle_home ~= ""
