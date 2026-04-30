@@ -110,5 +110,6 @@ Toggles:
 ## Notes
 
 - EditorConfig support comes from Neovim’s built-in runtime plugin, not an external plugin.
+- LSP-backed buffers format synchronously before save when the attached server supports formatting.
 - Java configuration lives in [`ftplugin/java.lua`](ftplugin/java.lua) and expects the Mason-installed `jdtls` wrapper plus Java `21+`.
 - The config intentionally no longer includes Copilot, Telescope, `nvim-tree`, `toggleterm`, `nvim-cmp`, `vim-gitgutter`, or the custom hover renderer.

@@ -17,7 +17,29 @@ local function root_by_markers(markers)
   end
 end
 
+local function enable_format_on_save(client, bufnr)
+  if not client:supports_method("textDocument/formatting", bufnr) then
+    return
+  end
+
+  local group = vim.api.nvim_create_augroup("config.lsp.format_on_save", { clear = false })
+  vim.api.nvim_clear_autocmds({ group = group, buffer = bufnr })
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    group = group,
+    buffer = bufnr,
+    callback = function(event)
+      vim.lsp.buf.format({
+        bufnr = event.buf,
+        async = false,
+        timeout_ms = 3000,
+      })
+    end,
+  })
+end
+
 function M.on_attach(client, bufnr)
+  enable_format_on_save(client, bufnr)
+
   map(bufnr, "n", "gD", vim.lsp.buf.declaration, "Go to declaration")
   map(bufnr, "n", "gd", vim.lsp.buf.definition, "Go to definition")
   map(bufnr, "n", "gi", vim.lsp.buf.implementation, "Go to implementation")
