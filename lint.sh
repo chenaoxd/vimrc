@@ -1,4 +1,6 @@
 #!/bin/bash
+set -euo pipefail
+
 # Lua linting script for Neovim configuration
 
 echo "🔍 Running luacheck on Neovim configuration..."

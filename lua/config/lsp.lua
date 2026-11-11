@@ -293,6 +293,22 @@ function M.setup()
   vim.lsp.config("tailwindcss", {
     capabilities = M.capabilities,
     on_attach = M.on_attach,
+    -- The upstream defaults include markdown, which makes plain project docs
+    -- start the Tailwind language server and scan the frontend workspace.
+    filetypes = {
+      "astro",
+      "css",
+      "html",
+      "javascript",
+      "javascriptreact",
+      "less",
+      "sass",
+      "scss",
+      "svelte",
+      "typescript",
+      "typescriptreact",
+      "vue",
+    },
     root_dir = root_by_markers({
       "tailwind.config.ts",
       "tailwind.config.mjs",
